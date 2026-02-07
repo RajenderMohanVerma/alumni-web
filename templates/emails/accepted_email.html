@@ -1,0 +1,18 @@
+{% extends 'emails/base_email.html' %}
+
+{% block content %}
+<h2 style="color: #1e293b; margin-top: 0;">Connection Accepted! 🎉</h2>
+<p style="font-size: 16px; color: #475569;">Hi <strong>{{ sender_name }}</strong>,</p>
+
+<p style="font-size: 16px; color: #475569;">
+    Good news! <strong>{{ receiver_name }}</strong> has accepted your connection request.
+</p>
+
+<p style="font-size: 16px; color: #475569;">
+    You are now connected on Alumni Hub. You can view their full profile and start a conversation.
+</p>
+
+<div style="text-align: center; margin: 35px 0;">
+    <a href="{{ profile_url }}" class="button">View Profile</a>
+</div>
+{% endblock %}

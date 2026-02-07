@@ -1,7 +1,8 @@
-from flask import Blueprint, jsonify, request
+from flask import Blueprint, jsonify, request, render_template, url_for
 from flask_login import login_required, current_user
 import sqlite3
 from flask_mail import Mail, Message
+from datetime import datetime
 from app import app, get_db_connection, mail
 
 connection_bp = Blueprint('connection', __name__, url_prefix='/api/connection-request')
@@ -40,36 +41,66 @@ def send_connection_request():
         ).fetchone()
         
         if existing_request:
-            conn.close()
-            return jsonify({'success': False, 'error': 'Request already sent'}), 400
-        
-        # Insert connection request
-        try:
-            c.execute(
-                'INSERT INTO connection_requests (sender_id, receiver_id, status) VALUES (?, ?, "pending")',
-                (current_user.id, receiver_id)
-            )
+            # Check cooldown (5 mins)
+            # Convert sqlite3.Row to dict to use .get()
+            req_dict = dict(existing_request)
+            created_at_str = req_dict.get('created_at') or req_dict.get('updated_at')
+            if created_at_str:
+                created_at = datetime.strptime(created_at_str, '%Y-%m-%d %H:%M:%S')
+                time_diff = datetime.now() - created_at
+                
+                if time_diff.total_seconds() < 300:
+                    conn.close()
+                    remaining = int(5 - time_diff.total_seconds()/60)
+                    return jsonify({'success': False, 'error': f'Please wait {remaining} minutes before sending again'}), 400
+            
+            # Allow resending
+            c.execute('UPDATE connection_requests SET created_at = ? WHERE id = ?', 
+                     (datetime.now().strftime('%Y-%m-%d %H:%M:%S'), existing_request['id']))
             conn.commit()
             
-            # Send email notification
+        else:
+            # Insert new request
+            try:
+                c.execute(
+                    'INSERT INTO connection_requests (sender_id, receiver_id, status) VALUES (?, ?, "pending")',
+                    (current_user.id, receiver_id)
+                )
+                conn.commit()
+            except sqlite3.IntegrityError:
+                conn.close()
+                return jsonify({'success': False, 'error': 'Request already exists'}), 400
+        
+        # Send email (Common for both)
+        try:
             sender = c.execute('SELECT * FROM users WHERE id = ?', (current_user.id,)).fetchone()
             receiver = c.execute('SELECT * FROM users WHERE id = ?', (receiver_id,)).fetchone()
             
+            
             if sender and receiver:
                 subject = f"New Connection Request from {sender['name']}"
-                body = f"""
-                Hi {receiver['name']},
                 
-                {sender['name']} has sent you a connection request!
+                # Link to dashboard to view request
+                dashboard_route = f"dashboard_{receiver['role']}"
+                try:
+                    profile_url = url_for(dashboard_route, _external=True)
+                except:
+                    profile_url = url_for('home', _external=True)
+
+                html_body = render_template(
+                    'emails/request_email.html',
+                    receiver_name=receiver['name'],
+                    sender_name=sender['name'],
+                    profile_url=profile_url,
+                    year=2026
+                )
                 
-                Click the link below to view their profile and respond to the request:
-                http://yourapp.com/profile/{sender['id']}
-                
-                Best regards,
-                Alumni Hub Team
-                """
-                
-                msg = Message(subject=subject, recipients=[receiver['email']], body=body)
+                msg = Message(
+                    subject=subject,
+                    recipients=[receiver['email']],
+                    html=html_body,
+                    sender=("Alumni Hub", app.config['MAIL_DEFAULT_SENDER'])
+                )
                 try:
                     mail.send(msg)
                 except Exception as e:
@@ -126,19 +157,29 @@ def accept_connection_request(request_id):
         receiver = c.execute('SELECT * FROM users WHERE id = ?', (current_user.id,)).fetchone()
         
         if sender and receiver:
-            subject = f"{receiver['name']} accepted your connection request"
-            body = f"""
-            Hi {sender['name']},
+            subject = f"Connection Accepted! {receiver['name']} is now in your network"
             
-            {receiver['name']} has accepted your connection request!
+            # Link to dashboard
+            dashboard_route = f"dashboard_{sender['role']}"
+            try:
+                profile_url = url_for(dashboard_route, _external=True)
+            except:
+                profile_url = url_for('home', _external=True)
+
+            html_body = render_template(
+                'emails/accepted_email.html',
+                sender_name=sender['name'],
+                receiver_name=receiver['name'],
+                profile_url=profile_url,
+                year=2026
+            )
             
-            You can now connect and collaborate together.
-            
-            Best regards,
-            Alumni Hub Team
-            """
-            
-            msg = Message(subject=subject, recipients=[sender['email']], body=body)
+            msg = Message(
+                subject=subject,
+                recipients=[sender['email']],
+                html=html_body,
+                sender=("Alumni Hub", app.config['MAIL_DEFAULT_SENDER'])
+            )
             try:
                 mail.send(msg)
             except Exception as e:

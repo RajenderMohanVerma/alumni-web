@@ -1,0 +1,28 @@
+{% extends 'emails/base_email.html' %}
+
+{% block content %}
+<h2 style="color: #1e293b; margin-top: 0;">New Connection Request</h2>
+<p style="font-size: 16px; color: #475569;">Hi <strong>{{ receiver_name }}</strong>,</p>
+
+<p style="font-size: 16px; color: #475569;">
+    You have a new connection request from <strong>{{ sender_name }}</strong> on Alumni Hub.
+</p>
+
+<div style="background-color: #f1f5f9; padding: 20px; border-radius: 8px; margin: 25px 0;">
+    <p style="margin: 0; color: #334155; font-weight: 500;">
+        "I'd like to join your professional network on Alumni Hub."
+    </p>
+</div>
+
+<p style="font-size: 16px; color: #475569;">
+    Expanding your network helps you discover new opportunities and stay connected with your alma mater.
+</p>
+
+<div style="text-align: center; margin: 35px 0;">
+    <a href="{{ profile_url }}" class="button">View Profile & Respond</a>
+</div>
+
+<p style="font-size: 14px; color: #94a3b8; margin-top: 30px;">
+    If the button above doesn't work, verify by logging into your account.
+</p>
+{% endblock %}
