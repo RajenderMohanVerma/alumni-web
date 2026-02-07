@@ -875,10 +875,44 @@ def dashboard_faculty():
             ORDER BY cr.created_at DESC
         """, (current_user.id,)).fetchall()
 
+        # Fetch alumni for directory
+        alumni = conn.execute("""
+            SELECT u.id, u.name, u.email, u.phone, u.profile_pic,
+                   a.enrollment_no, a.department, a.degree, a.pass_year,
+                   a.company_name, a.designation, a.work_location, a.experience_years
+            FROM users u
+            JOIN alumni_profile a ON u.id = a.user_id
+            WHERE u.role='alumni'
+            ORDER BY a.pass_year DESC
+        """).fetchall()
+
+        # Fetch all students for directory
+        students = conn.execute("""
+            SELECT u.id, u.name, u.email, u.phone, u.profile_pic,
+                   s.department, s.degree, s.semester, s.skills, s.cgpa
+            FROM users u
+            JOIN student_profile s ON u.id = s.user_id
+            WHERE u.role='student'
+            ORDER BY u.name ASC
+        """).fetchall()
+
+        # Fetch other faculty members (colleagues)
+        faculty_members = conn.execute("""
+            SELECT u.id, u.name, u.email, u.phone, u.profile_pic,
+                   f.department, f.designation, f.office_location, f.specialization
+            FROM users u
+            JOIN faculty_profile f ON u.id = f.user_id
+            WHERE u.role='faculty' AND u.id != ?
+            ORDER BY f.department
+        """, (current_user.id,)).fetchall()
+
         return render_template('dashboard_faculty.html',
                              profile=profile,
                              pending_requests=pending_requests,
-                             pending_count=len(pending_requests))
+                             pending_count=len(pending_requests),
+                             alumni=alumni,
+                             students=students,
+                             faculty=faculty_members)
 
     except Exception as e:
         print(f"Dashboard faculty error: {e}")

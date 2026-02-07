@@ -1,691 +1,756 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="faculty-dashboard">
+<div class="dashboard-wrapper">
     <!-- Hero Section -->
-    <div style="background: linear-gradient(135deg, var(--accent) 0%, var(--primary) 100%); padding: 40px 0; margin-bottom: 40px;">
-        <div class="container">
+    <div class="hero-section glass-hero"
+        style="background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); padding: 80px 0; position: relative; overflow: hidden; border-bottom: 1px solid rgba(255,255,255,0.1);">
+        <!-- Animated Background Blobs -->
+        <div class="hero-bg">
+            <div class="blob blob-1"></div>
+            <div class="blob blob-2"></div>
+            <div class="blob blob-3"></div>
+        </div>
+
+        <div class="container" style="position: relative; z-index: 2;">
             <div class="row align-items-center">
-                <div class="col-lg-8">
-                    <h1 class="text-white mb-2" style="font-size: 2.5rem; font-weight: 700;">
-                        <i class="fas fa-chalkboard-user"></i> Welcome, {{ current_user.name }}!
-                    </h1>
-                    <p class="text-white" style="font-size: 1.1rem; opacity: 0.9;">
-                        Faculty Portal - Manage Your Profile & Connect with Alumni & Students
-                    </p>
+                <div class="col-lg-7">
+                    <div class="hero-content" style="animation: fadeInLeft 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);">
+                        <div class="badge rounded-pill bg-white text-warning px-3 py-2 mb-3 shadow-sm border-0"
+                            id="timeGreetingBadge">
+                            <i class="far fa-clock me-1"></i> <span id="dynamicGreeting">Loading...</span>
+                        </div>
+                        <h1 class="text-white display-4 fw-bold mb-3">
+                            <i class="fas fa-chalkboard-user me-3"></i>Welcome, <span class="text-gradient-gold">{{
+                                current_user.name }}!</span>
+                        </h1>
+                        <p class="text-white-50 lead mb-4" style="font-size: 1.25rem; max-width: 600px;">
+                            Guide the next generation. Connect with students, alumni, and colleagues.
+                        </p>
+
+                        <!-- Actions -->
+                        <div class="d-flex gap-3">
+                            <a href="{{ url_for('edit_faculty_profile', user_id=current_user.id) }}"
+                                class="btn btn-light rounded-pill px-4 py-2 fw-bold shadow-sm">
+                                <i class="fas fa-edit me-2"></i> Edit Profile
+                            </a>
+                        </div>
+                    </div>
                 </div>
-                <div class="col-lg-4 text-center">
-                    <img src="https://ui-avatars.com/api/?name={{ current_user.name }}&size=120&background={{ 'f59e0b'|lower }}&color=000&rounded=true" 
-                         alt="Profile" class="rounded-circle" style="border: 4px solid white; box-shadow: 0 10px 30px rgba(0,0,0,0.2);">
+                <div class="col-lg-5 text-center d-none d-lg-block">
+                    <div class="hero-image-wrapper" style="animation: float 4s ease-in-out infinite;">
+                        <div class="avatar-glass-card shadow-lg">
+                            <img src="{{ current_user.profile_pic or 'https://ui-avatars.com/api/?name=' + current_user.name + '&size=200&background=f59e0b&color=fff' }}"
+                                alt="Profile" class="rounded-pill border border-4 border-white shadow-lg"
+                                style="width: 180px; height: 180px; object-fit: cover;">
+                            <div class="glass-tag">Faculty</div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="container mb-5">
-        <!-- Quick Stats Row -->
-        <div class="row mb-5">
-            <div class="col-md-3 mb-3">
-                <div class="card shadow-sm" style="border-radius: 12px; border: none; transition: all 0.3s ease;">
-                    <div class="card-body text-center py-4">
-                        <div style="font-size: 2.5rem; color: var(--primary); margin-bottom: 10px;">
+    <!-- Stats Section -->
+    <div class="stats-container container-fluid px-lg-5">
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-md-3">
+                    <div class="stat-card" style="animation: slideUp 0.6s ease; --card-accent: #667eea;">
+                        <div class="stat-trend"><i class="fas fa-users"></i> Network</div>
+                        <div class="stat-icon" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                            <i class="fas fa-users-viewfinder"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3 class="stat-number">{{ alumni | length }}</h3>
+                            <p class="stat-label">Alumni</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="stat-card" style="animation: slideUp 0.7s ease; --card-accent: #f5576c;">
+                        <div class="stat-trend"><i class="fas fa-user-graduate"></i> Active</div>
+                        <div class="stat-icon" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
                             <i class="fas fa-graduation-cap"></i>
                         </div>
-                        <h3 class="fw-bold mb-1" id="totalStudents">0</h3>
-                        <p class="text-muted mb-0">Total Students</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3 mb-3">
-                <div class="card shadow-sm" style="border-radius: 12px; border: none; transition: all 0.3s ease;">
-                    <div class="card-body text-center py-4">
-                        <div style="font-size: 2.5rem; color: var(--success); margin-bottom: 10px;">
-                            <i class="fas fa-user-tie"></i>
+                        <div class="stat-content">
+                            <h3 class="stat-number">{{ students | length }}</h3>
+                            <p class="stat-label">Students</p>
                         </div>
-                        <h3 class="fw-bold mb-1" id="totalAlumni">0</h3>
-                        <p class="text-muted mb-0">Alumni Network</p>
                     </div>
                 </div>
-            </div>
-            <div class="col-md-3 mb-3">
-                <div class="card shadow-sm" style="border-radius: 12px; border: none; transition: all 0.3s ease;">
-                    <div class="card-body text-center py-4">
-                        <div style="font-size: 2.5rem; color: var(--secondary); margin-bottom: 10px;">
+                <div class="col-md-3">
+                    <div class="stat-card" style="animation: slideUp 0.8s ease; --card-accent: #00d4ff;">
+                        <div class="stat-icon" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
                             <i class="fas fa-building"></i>
                         </div>
-                        <h3 class="fw-bold mb-1">{{ profile['department'] }}</h3>
-                        <p class="text-muted mb-0">Department</p>
+                        <div class="stat-content">
+                            <h3 class="stat-number" style="font-size: 1.5rem;">{{ profile['department'] or 'N/A' }}</h3>
+                            <p class="stat-label">Department</p>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-md-3 mb-3">
-                <div class="card shadow-sm" style="border-radius: 12px; border: none; transition: all 0.3s ease;">
-                    <div class="card-body text-center py-4">
-                        <div style="font-size: 2.5rem; color: var(--accent); margin-bottom: 10px;">
+                <div class="col-md-3">
+                    <div class="stat-card" style="animation: slideUp 0.9s ease; --card-accent: #10b981;">
+                        <div class="stat-trend bg-success text-white" style="padding: 2px 6px;">Seniority</div>
+                        <div class="stat-icon" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);">
                             <i class="fas fa-briefcase"></i>
                         </div>
-                        <h3 class="fw-bold mb-1">{{ profile['experience_years'] or 0 }}</h3>
-                        <p class="text-muted mb-0">Years Experience</p>
+                        <div class="stat-content">
+                            <h3 class="stat-number" style="color: #059669;">{{ (profile['experience_years'] or 0) }} Yrs
+                            </h3>
+                            <p class="stat-label">Experience</p>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
 
-        <!-- Main Content Row -->
-        <div class="row">
-            <!-- Faculty Profile Card -->
-            <div class="col-lg-4 mb-4">
-                <div class="card shadow h-100" style="border-radius: 15px; border: none; overflow: hidden;">
-                    <div style="background: linear-gradient(135deg, var(--accent) 0%, var(--primary) 100%); padding: 30px; text-align: center; color: white;">
-                        {% if current_user.profile_pic and current_user.profile_pic.startswith('/') %}
-                            <img src="{{ current_user.profile_pic }}" alt="Profile" class="rounded-circle" 
-                                 style="width: 120px; height: 120px; border: 4px solid white; object-fit: cover; margin-bottom: 15px;">
-                        {% else %}
-                            <img src="https://ui-avatars.com/api/?name={{ current_user.name }}&size=120&background=f59e0b&color=000&rounded=true" 
-                                 alt="Profile" class="rounded-circle" style="width: 120px; height: 120px; border: 4px solid white; margin-bottom: 15px;">
-                        {% endif %}
-                        <h4 class="fw-bold mb-1">{{ current_user.name }}</h4>
-                        <p class="mb-0">{{ profile['designation'] }}</p>
+    <!-- Main Content -->
+    <!-- Category Navigation Tabs -->
+    <div class="category-tabs mb-5" style="animation: slideUp 0.6s ease;">
+        <ul class="nav nav-pills nav-fill gradient-pills p-2 shadow-sm"
+            style="background: rgba(255,255,255,0.8); backdrop-filter: blur(10px); border-radius: 18px; border: 1px solid #e0e7ff;">
+            <li class="nav-item">
+                <button class="nav-link category-btn active" data-category="student"
+                    onclick="switchCategory('student')">
+                    <i class="fas fa-user-graduate me-2"></i> Students
+                </button>
+            </li>
+            <li class="nav-item">
+                <button class="nav-link category-btn" data-category="alumni" onclick="switchCategory('alumni')">
+                    <i class="fas fa-graduation-cap me-2"></i> Alumni
+                </button>
+            </li>
+            <li class="nav-item">
+                <button class="nav-link category-btn" data-category="faculty" onclick="switchCategory('faculty')">
+                    <i class="fas fa-chalkboard-teacher me-2"></i> Colleagues
+                </button>
+            </li>
+        </ul>
+    </div>
+
+    <!-- Connection Requests (Collapsible) -->
+    {% if pending_requests %}
+    <div class="mb-5" id="pendingRequestsSection">
+        <div class="section-header mb-4" style="animation: slideInLeft 0.6s ease;">
+            <h2 class="section-title">
+                <i class="fas fa-bell me-2" style="color: #f59e0b;"></i> Pending Requests
+                <span class="badge bg-danger ms-2" id="requestCountBadge">{{ pending_count }}</span>
+            </h2>
+        </div>
+        <div class="card border-0 shadow-lg mb-4" style="border-radius: 20px; border-left: 5px solid #ef4444;">
+            <div class="card-body p-4">
+                <div id="pendingRequestsList" class="row g-3">
+                    {% for req in pending_requests %}
+                    <div class="col-md-6 col-lg-4">
+                        <div class="d-flex align-items-center p-3 border rounded-3 bg-light">
+                            <div class="avatar-sm me-3">
+                                <img src="{{ req['profile_pic'] or 'https://ui-avatars.com/api/?name=' + req['name'] }}"
+                                    class="rounded-circle" style="width: 45px; height: 45px; object-fit: cover;">
+                            </div>
+                            <div class="flex-grow-1">
+                                <h6 class="mb-0 fw-bold">{{ req['name'] }}</h6>
+                                <small class="text-muted">{{ req['role'] | capitalize }}</small>
+                            </div>
+                            <div class="d-flex gap-2">
+                                <button class="btn btn-sm btn-success rounded-circle shadow-sm"
+                                    onclick="handleRequest('{{ req.sender_id }}', 'accept')"><i
+                                        class="fas fa-check"></i></button>
+                                <button class="btn btn-sm btn-outline-danger rounded-circle shadow-sm"
+                                    onclick="handleRequest('{{ req.sender_id }}', 'reject')"><i
+                                        class="fas fa-times"></i></button>
+                            </div>
+                        </div>
                     </div>
-                    <div class="card-body">
-                        <div class="mb-3">
-                            <small class="text-muted"><i class="fas fa-envelope"></i> Email</small>
-                            <p class="fw-bold mb-0">{{ current_user.email }}</p>
-                        </div>
-                        <div class="mb-3">
-                            <small class="text-muted"><i class="fas fa-phone"></i> Phone</small>
-                            <p class="fw-bold mb-0">{{ current_user.phone }}</p>
-                        </div>
-                        <div class="mb-3">
-                            <small class="text-muted"><i class="fas fa-door-open"></i> Office</small>
-                            <p class="fw-bold mb-0">{{ profile['office_location'] or 'N/A' }}</p>
-                        </div>
-                        <div class="mb-3">
-                            <small class="text-muted"><i class="fas fa-clock"></i> Office Hours</small>
-                            <p class="fw-bold mb-0">{{ profile['office_hours'] or 'N/A' }}</p>
-                        </div>
-                        <hr>
-                        <div class="d-grid gap-2">
-                            <a href="{{ url_for('edit_faculty_profile', user_id=current_user.id) }}" class="btn btn-warning btn-sm fw-bold">
-                                <i class="fas fa-edit"></i> Edit Profile
-                            </a>
-                            <a href="{{ url_for('change_password') }}" class="btn btn-outline-secondary btn-sm fw-bold">
-                                <i class="fas fa-lock"></i> Change Password
-                            </a>
-                        </div>
-                    </div>
+                    {% endfor %}
                 </div>
             </div>
+        </div>
+    </div>
+    {% endif %}
 
-            <!-- Right Section -->
-            <div class="col-lg-8">
-                <!-- Faculty Info Card -->
-                <div class="card shadow mb-4" style="border-radius: 15px; border: none;">
-                    <div class="card-header" style="background: linear-gradient(135deg, var(--accent) 0%, var(--primary) 100%); color: white; border-radius: 15px 15px 0 0;">
-                        <h5 class="mb-0"><i class="fas fa-id-card"></i> Faculty Information</h5>
-                    </div>
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <small class="text-muted d-block">Department</small>
-                                <h6 class="fw-bold">{{ profile['department'] }}</h6>
-                            </div>
-                            <div class="col-md-6 mb-3">
-                                <small class="text-muted d-block">Designation</small>
-                                <h6 class="fw-bold">{{ profile['designation'] }}</h6>
-                            </div>
-                            <div class="col-md-6 mb-3">
-                                <small class="text-muted d-block">Experience</small>
-                                <h6 class="fw-bold">{{ profile['experience_years'] or 0 }} Years</h6>
-                            </div>
-                            <div class="col-md-6 mb-3">
-                                <small class="text-muted d-block">Specialization</small>
-                                <h6 class="fw-bold">{{ profile['specialization'] or 'N/A' }}</h6>
-                            </div>
-                        </div>
-                        <div class="mt-3">
-                            <small class="text-muted d-block mb-2">Bio</small>
-                            <p class="mb-0">{{ profile['bio'] or 'No bio added yet.' }}</p>
-                        </div>
+    <!-- Filter & Search Section -->
+    <div class="card border-0 shadow-lg mb-5" style="border-radius: 20px; overflow: hidden; border: 2px solid #e9ecef;">
+        <div class="filter-section p-4 p-md-5" style="background: linear-gradient(135deg, #fffbeb 0%, #fff1f2 100%);">
+            <div class="row g-4 align-items-end">
+                <div class="col-lg-6">
+                    <label class="form-label fw-bold mb-2"><i class="fas fa-search me-2 text-warning"></i> Global
+                        Search</label>
+                    <div class="search-input-group">
+                        <input type="text" class="form-control form-control-lg" id="globalSearch"
+                            placeholder="Search by name, department, expertise..."
+                            style="border-radius: 12px; border: 2px solid #fcd34d; padding-right: 45px;">
+                        <i class="fas fa-search search-icon text-muted"></i>
                     </div>
                 </div>
-
-                <!-- Pending Connection Requests Section -->
-                <div class="card shadow mb-4" style="border-radius: 15px; border: none;" id="pendingRequestsSection" style="display: none;">
-                    <div class="card-header" style="background: linear-gradient(135deg, #f59e0b 0%, #dc2626 100%); color: white; border-radius: 15px 15px 0 0;">
-                        <h5 class="mb-0"><i class="fas fa-hourglass-half"></i> Pending Connection Requests</h5>
-                    </div>
-                    <div class="card-body">
-                        <div id="pendingRequestsList" class="row g-3">
-                            <!-- Requests will be loaded here -->
-                        </div>
-                    </div>
+                <div class="col-lg-3">
+                    <label class="form-label fw-bold mb-2"><i class="fas fa-filter me-2 text-warning"></i> Category
+                        View</label>
+                    <select class="form-select form-select-lg" id="activeCategorySelect"
+                        onchange="switchCategory(this.value)" style="border-radius: 12px; border: 2px solid #fcd34d;">
+                        <option value="student">Students</option>
+                        <option value="alumni">Alumni</option>
+                        <option value="faculty">Faculty</option>
+                    </select>
                 </div>
+                <div class="col-lg-3">
+                    <button class="btn btn-warning text-white btn-lg w-100 py-3 fw-bold shadow-sm"
+                        onclick="resetAllFilters()" style="border-radius: 12px;">
+                        <i class="fas fa-redo-alt me-2"></i> Reset Filters
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
 
-                <!-- Tabs for Students & Alumni -->
-                <ul class="nav nav-tabs mb-3" role="tablist" style="border-bottom: 2px solid var(--light);">
-                    <li class="nav-item" role="presentation">
-                        <button class="nav-link active fw-bold" id="students-tab" data-bs-toggle="tab" data-bs-target="#students-tab-pane" type="button" role="tab">
-                            <i class="fas fa-graduation-cap"></i> Students
-                        </button>
-                    </li>
-                    <li class="nav-item" role="presentation">
-                        <button class="nav-link fw-bold" id="alumni-tab" data-bs-toggle="tab" data-bs-target="#alumni-tab-pane" type="button" role="tab">
-                            <i class="fas fa-user-tie"></i> Alumni
-                        </button>
-                    </li>
-                </ul>
-
-                <div class="tab-content">
-                    <!-- Students Tab -->
-                    <div class="tab-pane fade show active" id="students-tab-pane" role="tabpanel">
-                        <div class="card shadow" style="border-radius: 12px; border: none;">
-                            <div class="card-header bg-light border-0" style="border-radius: 12px 12px 0 0;">
-                                <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
-                                    <h6 class="mb-0"><i class="fas fa-graduation-cap"></i> Recent Students</h6>
-                                    <div class="d-flex gap-2" style="flex-wrap: wrap;">
-                                        <select class="form-select form-select-sm" id="studentDeptFilter" style="width: auto;">
-                                            <option value="">All Departments</option>
-                                            <option value="IT">IT</option>
-                                            <option value="CSE">CSE</option>
-                                            <option value="ECE">ECE</option>
-                                            <option value="Mechanical">Mechanical</option>
-                                            <option value="Civil">Civil</option>
-                                        </select>
-                                        <select class="form-select form-select-sm" id="studentSemesterFilter" style="width: auto;">
-                                            <option value="">All Semesters</option>
-                                            <option value="1">Semester 1</option>
-                                            <option value="2">Semester 2</option>
-                                            <option value="3">Semester 3</option>
-                                            <option value="4">Semester 4</option>
-                                            <option value="5">Semester 5</option>
-                                            <option value="6">Semester 6</option>
-                                            <option value="7">Semester 7</option>
-                                            <option value="8">Semester 8</option>
-                                        </select>
-                                        <div class="input-group" style="width: 200px;">
-                                            <span class="input-group-text bg-white border" style="border-right: none;">
-                                                <i class="fas fa-search"></i>
-                                            </span>
-                                            <input type="text" class="form-control border" id="studentSearchInput" placeholder="Search name, email..." style="border-left: none;">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="card-body p-0">
-                                <div class="table-responsive">
-                                    <table class="table table-hover mb-0" id="studentsTable">
-                                        <thead class="table-light">
-                                            <tr>
-                                                <th>Name</th>
-                                                <th>Email</th>
-                                                <th>Department</th>
-                                                <th>Semester</th>
-                                                <th>CGPA</th>
-                                                <th>Action</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody id="studentsBody">
-                                            <tr><td colspan="6" class="text-center py-4">Loading students...</td></tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
+    <!-- Directory Content -->
+    <div class="directory-container">
+        <!-- Students Tab (Active by default) -->
+        <div id="studentContent" class="category-panel active-panel">
+            <div class="row g-4" id="studentGrid">
+                {% for s in students %}
+                <div class="col-lg-4 col-md-6 user-card student-card" data-name="{{ s['name'].lower() }}"
+                    data-info="{{ (s['department'] or s['degree'] or '').lower() }}">
+                    <div class="premium-card">
+                        <div class="card-gradient-top student-gradient"></div>
+                        <div class="card-avatar-wrapper">
+                            <img src="{{ s['profile_pic'] or 'https://ui-avatars.com/api/?name=' + s['name'] + '&bg=4facfe&color=fff' }}"
+                                class="card-avatar">
                         </div>
-                    </div>
-
-                    <!-- Alumni Tab -->
-                    <div class="tab-pane fade" id="alumni-tab-pane" role="tabpanel">
-                        <div class="card shadow" style="border-radius: 12px; border: none;">
-                            <div class="card-header bg-light border-0" style="border-radius: 12px 12px 0 0;">
-                                <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
-                                    <h6 class="mb-0"><i class="fas fa-user-tie"></i> Alumni Network</h6>
-                                    <div class="d-flex gap-2" style="flex-wrap: wrap;">
-                                        <select class="form-select form-select-sm" id="alumniDeptFilter" style="width: auto;">
-                                            <option value="">All Departments</option>
-                                            <option value="IT">IT</option>
-                                            <option value="CSE">CSE</option>
-                                            <option value="ECE">ECE</option>
-                                            <option value="Mechanical">Mechanical</option>
-                                            <option value="Civil">Civil</option>
-                                        </select>
-                                        <select class="form-select form-select-sm" id="alumniYearFilter" style="width: auto;">
-                                            <option value="">All Experience Levels</option>
-                                            <option value="0-2">0-2 Years</option>
-                                            <option value="2-5">2-5 Years</option>
-                                            <option value="5-10">5-10 Years</option>
-                                            <option value="10+">10+ Years</option>
-                                        </select>
-                                        <div class="input-group" style="width: 200px;">
-                                            <span class="input-group-text bg-white border" style="border-right: none;">
-                                                <i class="fas fa-search"></i>
-                                            </span>
-                                            <input type="text" class="form-control border" id="alumniSearchInput" placeholder="Search name, company..." style="border-left: none;">
-                                        </div>
-                                    </div>
-                                </div>
+                        <div class="card-body-content text-center pt-2">
+                            <h5 class="fw-bold mb-1 text-dark">{{ s['name'] }}</h5>
+                            <div class="badge bg-soft-info text-info mb-3 px-3 py-2 rounded-pill small">
+                                <i class="fas fa-university me-1"></i> {{ s['department'] }}
                             </div>
-                            <div class="card-body p-0">
-                                <div class="table-responsive">
-                                    <table class="table table-hover mb-0" id="alumniTable">
-                                        <thead class="table-light">
-                                            <tr>
-                                                <th>Name</th>
-                                                <th>Email</th>
-                                                <th>Company</th>
-                                                <th>Designation</th>
-                                                <th>Experience</th>
-                                                <th>Action</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody id="alumniBody">
-                                            <tr><td colspan="6" class="text-center py-4">Loading alumni...</td></tr>
-                                        </tbody>
-                                    </table>
-                                </div>
+                            <p class="text-muted small fw-600 mb-3">{{ s['degree'] }} | Semester {{ s['semester'] }}</p>
+
+                            <!-- Skills Preview -->
+                            <div class="skills-preview mb-4 d-flex flex-wrap justify-content-center gap-1">
+                                {% if s['skills'] %}
+                                {% for skill in s['skills'].split(',')[:3] %}
+                                <span class="skill-tag">{{ skill.strip() }}</span>
+                                {% endfor %}
+                                {% else %}
+                                <span class="text-muted small italic">No skills listed</span>
+                                {% endif %}
+                            </div>
+
+                            <div class="card-footer-actions d-grid gap-2 mt-auto">
+                                <a href="{{ url_for('student_profile', user_id=s['id']) }}"
+                                    class="btn btn-info text-white rounded-pill py-2 shadow-sm fw-bold">
+                                    <i class="fas fa-user me-2"></i>Profile
+                                </a>
+                                <button class="btn btn-outline-info rounded-pill btn-sm py-2 fw-600"
+                                    data-user-id="{{ s['id'] }}"
+                                    onclick="connectUser(this.getAttribute('data-user-id'), 'student')">
+                                    <i class="fas fa-plus me-2"></i>Connect
+                                </button>
                             </div>
                         </div>
                     </div>
                 </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- Alumni Tab -->
+        <div id="alumniContent" class="category-panel">
+            <div class="row g-4" id="alumniGrid">
+                {% for alum in alumni %}
+                <div class="col-lg-4 col-md-6 user-card alum-card" data-name="{{ alum['name'].lower() }}"
+                    data-info="{{ (alum['company_name'] or alum['department'] or '').lower() }}">
+                    <div class="premium-card">
+                        <div class="card-gradient-top alumni-gradient"></div>
+                        <div class="card-avatar-wrapper">
+                            <img src="{{ alum['profile_pic'] or 'https://ui-avatars.com/api/?name=' + alum['name'] + '&bg=667eea&color=fff' }}"
+                                class="card-avatar">
+                        </div>
+                        <div class="card-body-content text-center pt-2">
+                            <h5 class="fw-bold mb-1 text-dark">{{ alum['name'] }}</h5>
+                            <div class="badge bg-soft-primary text-primary mb-3 px-3 py-2 rounded-pill small">
+                                <i class="fas fa-graduation-cap me-1"></i> Batch {{ alum['pass_year'] }}
+                            </div>
+                            <div class="info-badges mb-4 d-flex flex-wrap justify-content-center gap-1">
+                                <span class="badge rounded-pill bg-light text-muted border py-2 px-3"><i
+                                        class="fas fa-briefcase me-1"></i> {{ alum['company_name'] or 'N/A' }}</span>
+                                <span class="badge rounded-pill bg-light text-muted border py-2 px-3"><i
+                                        class="fas fa-location-dot me-1 text-danger"></i> {{ alum['work_location'] or
+                                    'Remote' }}</span>
+                            </div>
+                            <div class="card-footer-actions d-grid gap-2 mt-auto">
+                                <a href="{{ url_for('alumni_profile', user_id=alum['id']) }}"
+                                    class="btn btn-primary rounded-pill py-2 shadow-sm fw-bold"><i
+                                        class="fas fa-user-circle me-2"></i>Profile</a>
+                                <button class="btn btn-outline-primary rounded-pill btn-sm py-2 fw-600"
+                                    data-user-id="{{ alum['id'] }}"
+                                    onclick="connectUser(this.getAttribute('data-user-id'), 'alumni')"><i
+                                        class="fas fa-plus me-2"></i>Connect</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- Faculty Tab -->
+        <div id="facultyContent" class="category-panel">
+            <div class="row g-4" id="facultyGrid">
+                {% for fac in faculty %}
+                <div class="col-lg-4 col-md-6 user-card faculty-card" data-name="{{ fac['name'].lower() }}"
+                    data-info="{{ (fac['department'] or '').lower() }}">
+                    <div class="premium-card">
+                        <div class="card-gradient-top faculty-gradient"></div>
+                        <div class="card-avatar-wrapper">
+                            <img src="{{ fac['profile_pic'] or 'https://ui-avatars.com/api/?name=' + fac['name'] + '&bg=f59e0b&color=fff' }}"
+                                class="card-avatar">
+                        </div>
+                        <div class="card-body-content text-center pt-2">
+                            <h5 class="fw-bold mb-1 text-dark">{{ fac['name'] }}</h5>
+                            <div class="badge bg-soft-warning text-warning mb-3 px-3 py-2 rounded-pill small">
+                                <i class="fas fa-chalkboard-teacher me-1"></i> {{ fac['designation'] or 'Faculty' }}
+                            </div>
+                            <div class="info-badges mb-4 d-flex flex-wrap justify-content-center gap-1">
+                                <span class="badge rounded-pill bg-light text-muted border py-2 px-3">
+                                    <i class="fas fa-building me-1"></i> {{ fac['department'] }}
+                                </span>
+                                <span class="badge rounded-pill bg-light text-muted border py-2 px-3">
+                                    <i class="fas fa-door-open me-1 text-secondary"></i> {{ fac['office_location'] or
+                                    'N/A' }}
+                                </span>
+                            </div>
+                            <div class="card-footer-actions d-grid gap-2 mt-auto">
+                                <a href="{{ url_for('faculty_profile', user_id=fac['id']) }}"
+                                    class="btn btn-warning text-white rounded-pill py-2 shadow-sm fw-bold">
+                                    <i class="fas fa-user-tie me-2"></i>Profile
+                                </a>
+                                <button class="btn btn-outline-warning rounded-pill btn-sm py-2 fw-600"
+                                    data-user-id="{{ fac['id'] }}"
+                                    onclick="connectUser(this.getAttribute('data-user-id'), 'faculty')">
+                                    <i class="fas fa-plus me-2"></i>Connect
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
             </div>
         </div>
     </div>
 </div>
 
+<!-- Styles and Scripts -->
 <style>
-    .card {
+    /* Premium Dashboard Styles from Student Dashboard */
+    .dashboard-wrapper {
+        background-color: #f8f9fa;
+        min-height: 100vh;
+    }
+
+    .glass-hero {
+        position: relative;
+    }
+
+    .hero-bg {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+    }
+
+    .blob {
+        position: absolute;
+        border-radius: 50%;
+        filter: blur(50px);
+        opacity: 0.4;
+        animation: floatBlob 10s infinite alternate;
+    }
+
+    .blob-1 {
+        top: -10%;
+        left: -10%;
+        width: 300px;
+        height: 300px;
+        background: rgba(255, 255, 255, 0.3);
+    }
+
+    .blob-2 {
+        bottom: -10%;
+        right: -10%;
+        width: 400px;
+        height: 400px;
+        background: rgba(255, 255, 255, 0.2);
+        animation-delay: -5s;
+    }
+
+    .blob-3 {
+        top: 40%;
+        left: 40%;
+        width: 200px;
+        height: 200px;
+        background: rgba(255, 255, 255, 0.1);
+        animation-delay: -2s;
+    }
+
+    @keyframes floatBlob {
+        0% {
+            transform: translate(0, 0) scale(1);
+        }
+
+        100% {
+            transform: translate(30px, 50px) scale(1.1);
+        }
+    }
+
+    .text-gradient-gold {
+        background: linear-gradient(to right, #fff, #ffeaa7);
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    /* Stats Cards */
+    .stats-container {
+        margin-top: -60px;
+        position: relative;
+        z-index: 10;
+        margin-bottom: 40px;
+    }
+
+    .stat-card {
+        background: white;
+        border-radius: 20px;
+        padding: 25px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        border: 1px solid rgba(0, 0, 0, 0.03);
+        height: 100%;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .stat-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    }
+
+    .stat-card::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 4px;
+        background: var(--card-accent, #667eea);
+    }
+
+    .stat-icon {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 1.5rem;
+        margin-bottom: 15px;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    }
+
+    .stat-number {
+        font-size: 2.2rem;
+        font-weight: 800;
+        margin-bottom: 5px;
+        color: #2d3748;
+    }
+
+    .stat-label {
+        color: #718096;
+        font-weight: 600;
+        text-transform: uppercase;
+        font-size: 0.8rem;
+        letter-spacing: 0.5px;
+    }
+
+    .stat-trend {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        font-size: 0.75rem;
+        font-weight: bold;
+        color: #a0aec0;
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        background: #f7fafc;
+        padding: 4px 8px;
+        border-radius: 12px;
+    }
+
+    /* Category Tabs */
+    .category-tabs {
+        display: flex;
+        justify-content: center;
+    }
+
+    .gradient-pills .nav-link {
+        color: #4a5568;
+        font-weight: 600;
+        border-radius: 12px;
+        padding: 12px 20px;
         transition: all 0.3s ease;
     }
 
-    .card:hover {
+    .gradient-pills .nav-link.active {
+        background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+        color: white;
+        box-shadow: 0 4px 15px rgba(245, 158, 11, 0.3);
+    }
+
+    /* Premium User Cards */
+    .user-card {
+        transition: transform 0.4s ease;
+    }
+
+    .premium-card {
+        background: white;
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        border: 1px solid rgba(0, 0, 0, 0.02);
+        transition: all 0.3s ease;
+    }
+
+    .premium-card:hover {
         transform: translateY(-5px);
-        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15) !important;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
     }
 
-    .table tbody tr {
-        transition: all 0.2s ease;
+    .card-gradient-top {
+        height: 80px;
+        width: 100%;
     }
 
-    .table tbody tr:hover {
-        background-color: var(--light);
+    .alumni-gradient {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     }
 
-    .nav-tabs .nav-link {
-        color: var(--text-light);
-        border: none;
-        padding: 0.75rem 1.5rem;
-        transition: all 0.3s ease;
+    .student-gradient {
+        background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
     }
 
-    .nav-tabs .nav-link.active {
-        color: var(--primary);
-        border-bottom: 3px solid var(--accent);
+    .faculty-gradient {
+        background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
     }
 
-    .nav-tabs .nav-link:hover {
-        color: var(--primary);
+    .card-avatar-wrapper {
+        margin-top: -50px;
+        display: flex;
+        justify-content: center;
+    }
+
+    .card-avatar {
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        border: 5px solid white;
+        object-fit: cover;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        background: white;
+    }
+
+    .card-body-content {
+        padding: 15px 25px 25px;
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .skill-tag {
+        background: #f1f5f9;
+        color: #64748b;
+        padding: 4px 10px;
+        border-radius: 6px;
+        font-size: 0.75rem;
+        font-weight: 600;
+        border: 1px solid #e2e8f0;
+    }
+
+    /* Filters */
+    .search-input-group {
+        position: relative;
+    }
+
+    .search-icon {
+        position: absolute;
+        right: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #a0aec0;
+    }
+
+    /* Visibility Logic */
+    .category-panel {
+        display: none;
+        animation: fadeIn 0.5s ease;
+    }
+
+    .active-panel {
+        display: block;
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(10px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
     }
 </style>
 
 <script>
-    let studentsCache = [];
-    let alumniCache = [];
-
-    // Filter Students
-    function filterStudents(searchTerm, deptFilter = '', semesterFilter = '') {
-        const filtered = studentsCache.filter(student => {
-            const name = (student['name'] || '').toLowerCase();
-            const email = (student['email'] || '').toLowerCase();
-            const dept = (student['department'] || '').toLowerCase();
-            const semester = (student['semester'] || '').toString();
-            const term = searchTerm.toLowerCase();
-            
-            const matchesSearch = name.includes(term) || email.includes(term) || dept.includes(term);
-            const matchesDept = !deptFilter || dept === deptFilter.toLowerCase();
-            const matchesSemester = !semesterFilter || semester === semesterFilter;
-            
-            return matchesSearch && matchesDept && matchesSemester;
+    // Tab Switching Logic
+    function switchCategory(category) {
+        // Update Buttons
+        document.querySelectorAll('.category-btn').forEach(btn => {
+            btn.classList.remove('active');
+            if (btn.dataset.category === category) {
+                btn.classList.add('active');
+            }
         });
 
-        const tbody = document.getElementById('studentsBody');
-        if (filtered.length > 0) {
-            tbody.innerHTML = filtered.map(student => `
-                <tr>
-                    <td>
-                        <div class="d-flex align-items-center">
-                            <img src="https://ui-avatars.com/api/?name=${student['name']}&size=32&background=0D6EFD&color=fff&rounded=true" 
-                                 alt="${student['name']}" class="rounded-circle me-2" style="width: 32px; height: 32px;">
-                            <span class="fw-bold">${student['name']}</span>
-                        </div>
-                    </td>
-                    <td><small>${student['email']}</small></td>
-                    <td>${student['department'] || 'N/A'}</td>
-                    <td><span class="badge bg-primary">${student['semester'] || 'N/A'}</span></td>
-                    <td>${student['cgpa'] ? parseFloat(student['cgpa']).toFixed(2) : 'N/A'}</td>
-                    <td>
-                        <a href="/student/profile/${student['id']}" class="btn btn-sm btn-outline-primary" title="View Details">
-                            <i class="fas fa-arrow-right"></i>
-                        </a>
-                    </td>
-                </tr>
-            `).join('');
-        } else {
-            tbody.innerHTML = '<tr><td colspan="6" class="text-center py-4 text-muted">No students found matching filters</td></tr>';
-        }
-    }
+        // Update Select (if used)
+        const select = document.getElementById('activeCategorySelect');
+        if (select) select.value = category;
 
-    // Filter Alumni
-    function filterAlumni(searchTerm, deptFilter = '', yearFilter = '') {
-        const filtered = alumniCache.filter(alumnus => {
-            const name = (alumnus['name'] || '').toLowerCase();
-            const email = (alumnus['email'] || '').toLowerCase();
-            const company = (alumnus['company_name'] || '').toLowerCase();
-            const dept = (alumnus['department'] || '').toLowerCase();
-            const experience = parseInt(alumnus['experience_years']) || 0;
-            const term = searchTerm.toLowerCase();
-            
-            const matchesSearch = name.includes(term) || email.includes(term) || company.includes(term);
-            const matchesDept = !deptFilter || dept === deptFilter.toLowerCase();
-            
-            let matchesYear = true;
-            if (yearFilter) {
-                if (yearFilter === '0-2') matchesYear = experience >= 0 && experience <= 2;
-                else if (yearFilter === '2-5') matchesYear = experience > 2 && experience <= 5;
-                else if (yearFilter === '5-10') matchesYear = experience > 5 && experience <= 10;
-                else if (yearFilter === '10+') matchesYear = experience > 10;
-            }
-            
-            return matchesSearch && matchesDept && matchesYear;
+        // Update Panels
+        document.querySelectorAll('.category-panel').forEach(panel => {
+            panel.classList.remove('active-panel');
         });
-
-        const tbody = document.getElementById('alumniBody');
-        if (filtered.length > 0) {
-            tbody.innerHTML = filtered.map(alumnus => `
-                <tr>
-                    <td>
-                        <div class="d-flex align-items-center">
-                            <img src="https://ui-avatars.com/api/?name=${alumnus['name']}&size=32&background=28A745&color=fff&rounded=true" 
-                                 alt="${alumnus['name']}" class="rounded-circle me-2" style="width: 32px; height: 32px;">
-                            <span class="fw-bold">${alumnus['name']}</span>
-                        </div>
-                    </td>
-                    <td><small>${alumnus['email']}</small></td>
-                    <td>${alumnus['company_name'] || 'N/A'}</td>
-                    <td>${alumnus['designation'] || 'N/A'}</td>
-                    <td><span class="badge bg-success">${alumnus['experience_years'] || 0} yrs</span></td>
-                    <td>
-                        <a href="/alumni/profile/${alumnus['id']}" class="btn btn-sm btn-outline-success" title="View Details">
-                            <i class="fas fa-arrow-right"></i>
-                        </a>
-                    </td>
-                </tr>
-            `).join('');
-        } else {
-            tbody.innerHTML = '<tr><td colspan="6" class="text-center py-4 text-muted">No alumni found matching filters</td></tr>';
-        }
+        document.getElementById(category + 'Content').classList.add('active-panel');
     }
 
-    // Load Students Data
-    async function loadStudents() {
-        try {
-            const response = await fetch('/api/faculty/students');
-            const data = await response.json();
-            studentsCache = data.students || [];
-            
-            if (studentsCache.length > 0) {
-                const tbody = document.getElementById('studentsBody');
-                tbody.innerHTML = studentsCache.map(student => `
-                    <tr>
-                        <td>
-                            <div class="d-flex align-items-center">
-                                <img src="https://ui-avatars.com/api/?name=${student['name']}&size=32&background=0D6EFD&color=fff&rounded=true" 
-                                     alt="${student['name']}" class="rounded-circle me-2" style="width: 32px; height: 32px;">
-                                <span class="fw-bold">${student['name']}</span>
-                            </div>
-                        </td>
-                        <td><small>${student['email']}</small></td>
-                        <td>${student['department'] || 'N/A'}</td>
-                        <td><span class="badge bg-primary">${student['semester'] || 'N/A'}</span></td>
-                        <td>${student['cgpa'] ? parseFloat(student['cgpa']).toFixed(2) : 'N/A'}</td>
-                        <td>
-                            <a href="/student/profile/${student['id']}" class="btn btn-sm btn-outline-primary" title="View Details">
-                                <i class="fas fa-arrow-right"></i>
-                            </a>
-                        </td>
-                    </tr>
-                `).join('');
+    // Filter Logic
+    document.getElementById('globalSearch').addEventListener('keyup', function () {
+        const term = this.value.toLowerCase();
+
+        // Filter current active grid
+        const cards = document.querySelectorAll('.user-card');
+
+        cards.forEach(card => {
+            const name = card.dataset.name;
+            const info = card.dataset.info;
+
+            if (name.includes(term) || info.includes(term)) {
+                card.style.display = 'block';
             } else {
-                document.getElementById('studentsBody').innerHTML = '<tr><td colspan="6" class="text-center py-4 text-muted">No students found</td></tr>';
+                card.style.display = 'none';
             }
-            
-            if (data.total_students !== undefined) {
-                document.getElementById('totalStudents').textContent = data.total_students;
-            }
-        } catch (error) {
-            console.error('Error loading students:', error);
-            document.getElementById('studentsBody').innerHTML = '<tr><td colspan="6" class="text-center py-4 text-danger">Error loading students</td></tr>';
-        }
-    }
-
-    // Load Alumni Data
-    async function loadAlumni() {
-        try {
-            const response = await fetch('/api/faculty/alumni');
-            const data = await response.json();
-            alumniCache = data.alumni || [];
-            
-            if (alumniCache.length > 0) {
-                const tbody = document.getElementById('alumniBody');
-                tbody.innerHTML = alumniCache.map(alumnus => `
-                    <tr>
-                        <td>
-                            <div class="d-flex align-items-center">
-                                <img src="https://ui-avatars.com/api/?name=${alumnus['name']}&size=32&background=28A745&color=fff&rounded=true" 
-                                     alt="${alumnus['name']}" class="rounded-circle me-2" style="width: 32px; height: 32px;">
-                                <span class="fw-bold">${alumnus['name']}</span>
-                            </div>
-                        </td>
-                        <td><small>${alumnus['email']}</small></td>
-                        <td>${alumnus['company_name'] || 'N/A'}</td>
-                        <td>${alumnus['designation'] || 'N/A'}</td>
-                        <td><span class="badge bg-success">${alumnus['experience_years'] || 0} yrs</span></td>
-                        <td>
-                            <a href="/alumni/profile/${alumnus['id']}" class="btn btn-sm btn-outline-success" title="View Details">
-                                <i class="fas fa-arrow-right"></i>
-                            </a>
-                        </td>
-                    </tr>
-                `).join('');
-            } else {
-                document.getElementById('alumniBody').innerHTML = '<tr><td colspan="6" class="text-center py-4 text-muted">No alumni found</td></tr>';
-            }
-            
-            if (data.total_alumni !== undefined) {
-                document.getElementById('totalAlumni').textContent = data.total_alumni;
-            }
-        } catch (error) {
-            console.error('Error loading alumni:', error);
-            document.getElementById('alumniBody').innerHTML = '<tr><td colspan="6" class="text-center py-4 text-danger">Error loading alumni</td></tr>';
-        }
-    }
-
-    // Load data when page loads
-    document.addEventListener('DOMContentLoaded', function() {
-        loadStudents();
-        loadAlumni();
-
-        // Student Search/Filter event listeners
-        const studentSearch = document.getElementById('studentSearchInput');
-        if (studentSearch) {
-            studentSearch.addEventListener('keyup', function() {
-                const deptFilter = document.getElementById('studentDeptFilter').value;
-                const semesterFilter = document.getElementById('studentSemesterFilter').value;
-                filterStudents(this.value, deptFilter, semesterFilter);
-            });
-        }
-
-        const studentDeptFilter = document.getElementById('studentDeptFilter');
-        if (studentDeptFilter) {
-            studentDeptFilter.addEventListener('change', function() {
-                const searchTerm = document.getElementById('studentSearchInput').value;
-                const semesterFilter = document.getElementById('studentSemesterFilter').value;
-                filterStudents(searchTerm, this.value, semesterFilter);
-            });
-        }
-
-        const studentSemesterFilter = document.getElementById('studentSemesterFilter');
-        if (studentSemesterFilter) {
-            studentSemesterFilter.addEventListener('change', function() {
-                const searchTerm = document.getElementById('studentSearchInput').value;
-                const deptFilter = document.getElementById('studentDeptFilter').value;
-                filterStudents(searchTerm, deptFilter, this.value);
-            });
-        }
-
-        // Alumni Search/Filter event listeners
-        const alumniSearch = document.getElementById('alumniSearchInput');
-        if (alumniSearch) {
-            alumniSearch.addEventListener('keyup', function() {
-                const deptFilter = document.getElementById('alumniDeptFilter').value;
-                const yearFilter = document.getElementById('alumniYearFilter').value;
-                filterAlumni(this.value, deptFilter, yearFilter);
-            });
-        }
-
-        const alumniDeptFilter = document.getElementById('alumniDeptFilter');
-        if (alumniDeptFilter) {
-            alumniDeptFilter.addEventListener('change', function() {
-                const searchTerm = document.getElementById('alumniSearchInput').value;
-                const yearFilter = document.getElementById('alumniYearFilter').value;
-                filterAlumni(searchTerm, this.value, yearFilter);
-            });
-        }
-
-        const alumniYearFilter = document.getElementById('alumniYearFilter');
-        if (alumniYearFilter) {
-            alumniYearFilter.addEventListener('change', function() {
-                const searchTerm = document.getElementById('alumniSearchInput').value;
-                const deptFilter = document.getElementById('alumniDeptFilter').value;
-                filterAlumni(searchTerm, deptFilter, this.value);
-            });
-        }
+        });
     });
 
-    // Reload alumni when alumni tab is clicked
-    document.getElementById('alumni-tab').addEventListener('click', function() {
-        loadAlumni();
-    });
+    function resetAllFilters() {
+        document.getElementById('globalSearch').value = '';
+        document.querySelectorAll('.user-card').forEach(card => card.style.display = 'block');
+        switchCategory('student');
+    }
 
-    // Load pending connection requests on page load
-    loadPendingRequests();
+    // Dynamic Greeting
+    const hour = new Date().getHours();
+    const greeting = hour < 12 ? 'Good Morning' : hour < 18 ? 'Good Afternoon' : 'Good Evening';
+    document.getElementById('dynamicGreeting').textContent = greeting;
+
+    // Handle Requests
+    function handleRequest(senderId, action) {
+        if (!confirm('Are you sure you want to ' + action + ' this request?')) return;
+
+        fetch('/api/connection-request/' + action + '/' + senderId, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' }
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Request ' + action + 'ed successfully!');
+                    location.reload();
+                } else {
+                    alert('Error: ' + data.error);
+                }
+            })
+            .catch(err => console.error(err));
+    }
+
+    // Note: Previous logic review for handleRequest
+    // Ensure we use the correct ID for the API call.
+
+
+    // I will use `connectUser` logic for the cards.
+    function connectUser(userId, role) {
+        // Find button
+        const btn = event.currentTarget;
+        const originalText = btn.innerHTML;
+        btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+        btn.disabled = true;
+
+        fetch('/api/connection-request/send', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ receiver_id: userId })
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    btn.innerHTML = '<i class="fas fa-check"></i> Sent';
+                    btn.classList.remove('btn-outline-primary', 'btn-outline-info', 'btn-outline-warning');
+                    btn.classList.add('btn-success', 'text-white');
+                } else {
+                    btn.innerHTML = originalText;
+                    btn.disabled = false;
+                    alert(data.error || 'eRROR');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+            });
+    }
+
+
 </script>
 
 <script>
-// Load pending connection requests
-async function loadPendingRequests() {
-    try {
-        const response = await fetch('/api/connection-request/pending');
-        const data = await response.json();
-        
-        if (data.success && data.requests.length > 0) {
-            const requestsList = document.getElementById('pendingRequestsList');
-            const section = document.getElementById('pendingRequestsSection');
-            
-            requestsList.innerHTML = '';
-            
-            data.requests.forEach(req => {
-                const html = `
-                    <div class="col-md-4">
-                        <div class="card border-0 shadow-sm h-100" style="border-radius: 12px; border-left: 4px solid #f59e0b; transition: all 0.3s;">
-                            <div class="card-body text-center">
-                                <div style="width: 70px; height: 70px; margin: 0 auto mb-3; border-radius: 50%; border: 3px solid #f59e0b; overflow: hidden; display: flex; align-items: center; justify-content: center;">
-                                    ${req.sender_pic && req.sender_pic.startsWith('/') 
-                                        ? `<img src="${req.sender_pic}" alt="Avatar" style="width: 100%; height: 100%; object-fit: cover;">` 
-                                        : `<img src="https://ui-avatars.com/api/?name=${req.sender_name}&size=70&background=f59e0b&color=000" alt="Avatar" style="width: 100%;">`
-                                    }
-                                </div>
-                                <h6 class="card-title fw-bold mb-1">${req.sender_name}</h6>
-                                <small class="text-muted d-block mb-3">${req.sender_email}</small>
-                                
-                                <div class="d-grid gap-2">
-                                    <button class="btn btn-success btn-sm" onclick="acceptRequest(${req.id})">
-                                        <i class="fas fa-check"></i> Accept
-                                    </button>
-                                    <button class="btn btn-danger btn-sm" onclick="rejectRequest(${req.id})">
-                                        <i class="fas fa-times"></i> Reject
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                `;
-                requestsList.innerHTML += html;
+    // Overwriting handleRequest to use req.id properly
+    function handleRequest(requestId, action) {
+        fetch('/api/connection-request/' + action + '/' + requestId, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' }
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    location.reload();
+                } else {
+                    alert('Error: ' + data.error);
+                }
             });
-            
-            section.style.display = 'block';
-        }
-    } catch(error) {
-        console.error('Error loading pending requests:', error);
     }
-}
-
-async function acceptRequest(requestId) {
-    try {
-        const response = await fetch(`/api/connection-request/accept/${requestId}`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            }
-        });
-        
-        const data = await response.json();
-        
-        if (data.success) {
-            showToast('Connection request accepted! ✓', 'success');
-            loadPendingRequests();
-        } else {
-            showToast(data.error || 'Error accepting request', 'danger');
-        }
-    } catch(error) {
-        console.error('Error:', error);
-        showToast('Error: ' + error.message, 'danger');
-    }
-}
-
-async function rejectRequest(requestId) {
-    try {
-        const response = await fetch(`/api/connection-request/reject/${requestId}`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            }
-        });
-        
-        const data = await response.json();
-        
-        if (data.success) {
-            showToast('Connection request rejected', 'warning');
-            loadPendingRequests();
-        } else {
-            showToast(data.error || 'Error rejecting request', 'danger');
-        }
-    } catch(error) {
-        console.error('Error:', error);
-        showToast('Error: ' + error.message, 'danger');
-    }
-}
-
-function showToast(message, type = 'info') {
-    const toast = document.createElement('div');
-    toast.className = `alert alert-${type} position-fixed bottom-0 end-0 m-3`;
-    toast.style.zIndex = '9999';
-    toast.textContent = message;
-    
-    document.body.appendChild(toast);
-    
-    setTimeout(() => {
-        toast.remove();
-    }, 3000);
-}
 </script>
 {% endblock %}
