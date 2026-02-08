@@ -97,7 +97,7 @@
 
     <!-- ===== NAVBAR ===== -->
     <!-- ===== ADVANCED FLOATING NAVBAR ===== -->
-    <nav class="navbar navbar-expand-lg navbar-floating fixed-top" id="mainNavbar">
+    <nav class="navbar navbar-expand-lg navbar-floating fixed-top smart-scroll-nav" id="mainNavbar">
         <div class="container-fluid navbar-container">
             <a class="navbar-brand brand-premium" href="/">
                 <div class="brand-logo-container">
@@ -118,7 +118,7 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto align-items-center">
                     <li class="nav-item">
-                        <a class="nav-link nav-pill-link active" href="/">
+                        <a class="nav-link nav-pill-link" href="/">
                             <i class="fas fa-home"></i> <span>Home</span>
                         </a>
                     </li>
@@ -198,14 +198,48 @@
         <!-- Mobile Menu Overlay -->
         <div class="mobile-menu-overlay" id="mobileMenuOverlay">
             <div class="mobile-menu-content">
-                <a href="/" class="mobile-nav-link" style="--delay: 0.1s"><i class="fas fa-home"></i> Home</a>
-                <a href="/about" class="mobile-nav-link" style="--delay: 0.2s"><i class="fas fa-info-circle"></i>
-                    About</a>
-                <a href="/services" class="mobile-nav-link" style="--delay: 0.3s"><i class="fas fa-briefcase"></i>
-                    Services</a>
-                <a href="/contact" class="mobile-nav-link" style="--delay: 0.4s"><i class="fas fa-envelope"></i>
-                    Contact</a>
-                {% if not current_user.is_authenticated %}
+                <!-- User Profile Section for Mobile -->
+                {% if current_user.is_authenticated %}
+                <div class="mobile-profile-card" style="--delay: 0.05s">
+                    <div class="mobile-avatar">
+                        {{ current_user.name[0] }}
+                    </div>
+                    <div class="mobile-user-info">
+                        <h4>{{ current_user.name }}</h4>
+                        <span class="badge badge-role">{{ current_user.role|capitalize }}</span>
+                    </div>
+                    <div class="mobile-quick-actions">
+                        {% if current_user.role == 'admin' %}
+                        <a href="/admin/dashboard" class="action-btn"><i class="fas fa-chart-pie"></i> Dashboard</a>
+                        {% elif current_user.role == 'alumni' %}
+                        <a href="/alumni/dashboard" class="action-btn"><i class="fas fa-user-tie"></i> Dashboard</a>
+                        {% elif current_user.role == 'student' %}
+                        <a href="/student/dashboard" class="action-btn"><i class="fas fa-search"></i> Dashboard</a>
+                        {% elif current_user.role == 'faculty' %}
+                        <a href="/faculty/dashboard" class="action-btn"><i class="fas fa-chalkboard-user"></i>
+                            Dashboard</a>
+                        {% endif %}
+                        <a href="/profile" class="action-btn"><i class="fas fa-user"></i> Profile</a>
+                    </div>
+                </div>
+                {% endif %}
+
+                <div class="mobile-links-container">
+                    <a href="/" class="mobile-nav-link" style="--delay: 0.1s"><i class="fas fa-home"></i> Home</a>
+                    <a href="/about" class="mobile-nav-link" style="--delay: 0.2s"><i class="fas fa-info-circle"></i>
+                        About</a>
+                    <a href="/services" class="mobile-nav-link" style="--delay: 0.3s"><i class="fas fa-briefcase"></i>
+                        Services</a>
+                    <a href="/contact" class="mobile-nav-link" style="--delay: 0.4s"><i class="fas fa-envelope"></i>
+                        Contact</a>
+                </div>
+
+                {% if current_user.is_authenticated %}
+                <div class="mobile-logout-section" style="--delay: 0.5s">
+                    <a href="/logout" class="btn btn-danger-soft btn-lg w-100"><i class="fas fa-sign-out-alt"></i>
+                        Logout</a>
+                </div>
+                {% else %}
                 <div class="mobile-auth-buttons" style="--delay: 0.5s">
                     <a href="/login" class="btn btn-outline-light btn-lg w-100 mb-3">Login</a>
                     <a href="/register" class="btn btn-premium-gradient btn-lg w-100">Register</a>
@@ -381,14 +415,41 @@
             offset: 50
         });
 
-        // Sticky Floating Navbar Logic
+        // 1. ACTIVE LINK HIGHLIGHTING
+        document.addEventListener("DOMContentLoaded", function () {
+            const currentPath = window.location.pathname;
+            const navLinks = document.querySelectorAll('.nav-pill-link, .mobile-nav-link');
+
+            navLinks.forEach(link => {
+                const href = link.getAttribute('href');
+                if (href === currentPath || (href !== '/' && currentPath.startsWith(href))) {
+                    link.classList.add('active');
+                }
+            });
+        });
+
+        // 2. SMART SCROLL LOGIC
+        let lastScrollY = window.scrollY;
+        const nav = document.getElementById('mainNavbar');
+
         window.addEventListener('scroll', () => {
-            const nav = document.getElementById('mainNavbar');
-            if (window.scrollY > 50) {
-                nav.classList.add('scrolled');
+            const currentScrollY = window.scrollY;
+
+            // Hide/Show Logic
+            if (currentScrollY > lastScrollY && currentScrollY > 100) {
+                // Scrolling DOWN -> Hide
+                nav.classList.add('scrolled-down');
+                nav.classList.remove('scrolled-up');
             } else {
-                nav.classList.remove('scrolled');
+                // Scrolling UP -> Show
+                nav.classList.remove('scrolled-down');
+                if (currentScrollY > 50) {
+                    nav.classList.add('scrolled-up');
+                } else {
+                    nav.classList.remove('scrolled-up');
+                }
             }
+            lastScrollY = currentScrollY;
         });
 
         // Mobile Menu Toggle Logic
