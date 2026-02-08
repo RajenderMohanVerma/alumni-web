@@ -64,28 +64,15 @@ document.addEventListener('DOMContentLoaded', function () {
         cursorDot.classList.remove('cursor-click');
     });
 
-    // Particle Trail
-    const particlesContainer = document.createElement('div');
-    particlesContainer.className = 'particles-container';
-    document.body.appendChild(particlesContainer);
-
+    // Particle Trail (Disabled here, handled by global Canvas Sparkle System)
+    /* 
     document.addEventListener('mousemove', (e) => {
         if (Math.random() > 0.85) {
             const p = document.createElement('div');
-            p.className = 'cursor-particle';
-            p.style.left = e.clientX + 'px';
-            p.style.top = e.clientY + 'px';
-            particlesContainer.appendChild(p);
-
-            // Randomize particle movement slightly
-            const tx = (Math.random() - 0.5) * 20;
-            const ty = (Math.random() - 0.5) * 20 - 20; // Move up generally
-            p.style.setProperty('--tx', `${tx}px`);
-            p.style.setProperty('--ty', `${ty}px`);
-
-            setTimeout(() => p.remove(), 1000);
+            ...
         }
     });
+    */
 
     // Parallax Effect (Home Page Hero) - only if .hero exists
     const hero = document.querySelector('.hero');

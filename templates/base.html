@@ -86,7 +86,9 @@
     </style>
 </head>
 
-<body>
+<body class="premium-theme">
+    <!-- Global Particle Canvas -->
+    <canvas id="particle-canvas" class="particle-canvas"></canvas>
     <!-- ===== NAVBAR ===== -->
     <nav class="navbar navbar-expand-lg navbar-custom sticky-top">
         <div class="container-fluid">
@@ -427,6 +429,7 @@
     </script>
 
     <!-- Advanced Animations Library -->
+    <script src="{{ url_for('static', filename='js/sparkles.js') }}"></script>
     <script src="{{ url_for('static', filename='js/animations.js') }}"></script>
     <script src="{{ url_for('static', filename='js/custom_cursor.js') }}"></script>
 </body>
