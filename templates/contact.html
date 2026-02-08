@@ -18,25 +18,24 @@
     </div>
 
     <!-- Hero Section -->
-    <div class="contact-hero glass-hero">
+    <section class="contact-hero glass-hero">
         <div class="hero-particles"></div>
-        <div class="hero-glow-point"></div>
         <div class="container" style="position: relative; z-index: 2;">
             <div class="hero-content text-center">
                 <div class="badge rounded-pill bg-white text-primary px-3 py-2 mb-3 shadow-sm reveal-fade"
-                    style="font-weight: 700; letter-spacing: 0.5px;">
+                    style="font-weight: 700; letter-spacing: 1px;">
                     <i class="fas fa-paper-plane me-2"></i> CONNECT WITH US
                 </div>
-                <h1 class="text-white display-3 fw-bold mb-3 reveal-text">
+                <h1 class="display-3 fw-bold mb-3 reveal-text text-white">
                     Get in <span class="text-holographic">Touch</span>
                 </h1>
                 <p class="text-white-50 lead mb-0 reveal-fade"
-                    style="font-size: 1.4rem; max-width: 700px; margin: 0 auto;">
+                    style="font-size: 1.4rem; max-width: 800px; margin: 0 auto; font-weight: 500;">
                     Have questions or feedback? We're here to help you bridge the gap between students and alumni.
                 </p>
             </div>
         </div>
-    </div>
+    </section>
 
     <div class="container mt-n5 pb-5" style="position: relative; z-index: 5; margin-top: -60px;">
         <div class="row g-4 justify-content-center">
@@ -244,8 +243,8 @@
 
     /* Hero Section */
     .contact-hero {
-        padding: 120px 0 100px;
-        background: linear-gradient(135deg, #1e1b4b 0%, #312e81 100%);
+        padding: 140px 0 120px;
+        background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
         position: relative;
         overflow: hidden;
     }
@@ -485,7 +484,7 @@
                 if (entry.isIntersecting) {
                     setTimeout(() => {
                         entry.target.classList.add('revealed');
-                    }, idx * 100);
+                    }, idx * 120);
                 }
             });
         }, { threshold: 0.1 });
@@ -499,7 +498,7 @@
                 const { left, top, width, height } = magneticBtn.getBoundingClientRect();
                 const x = e.clientX - left; const y = e.clientY - top;
                 if (btnGlow) { btnGlow.style.left = `${x}px`; btnGlow.style.top = `${y}px`; }
-                const moveX = (x - width / 2) * 0.3; const moveY = (y - height / 2) * 0.3;
+                const moveX = (x - width / 2) * 0.35; const moveY = (y - height / 2) * 0.35;
                 magneticBtn.style.transform = `translate(${moveX}px, ${moveY}px)`;
             });
             magneticBtn.addEventListener('mouseleave', () => { magneticBtn.style.transform = `translate(0, 0)`; });
@@ -512,19 +511,19 @@
                 const { left, top, width, height } = el.getBoundingClientRect();
                 const x = (e.clientX - left) / width;
                 const y = (e.clientY - top) / height;
-                const rX = (y - 0.5) * 8; const rY = (x - 0.5) * -8;
-                el.style.transform = `perspective(1000px) rotateX(${rX}deg) rotateY(${rY}deg) translateZ(10px)`;
+                const rX = (y - 0.5) * 10; const rY = (x - 0.5) * -10;
+                el.style.transform = `perspective(1000px) rotateX(${rX}deg) rotateY(${rY}deg) translateZ(15px)`;
             });
             el.addEventListener('mouseleave', () => { el.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) translateZ(0px)`; });
         });
 
-        // Typing Effect
-        const title = document.querySelector('.text-holographic');
-        if (title) {
+        // Typing Effect for Holographic Text
+        const holograms = document.querySelectorAll('.text-holographic');
+        holograms.forEach(title => {
             const txt = title.innerText; title.innerHTML = ''; let i = 0;
             const type = () => { if (i < txt.length) { title.innerHTML += txt.charAt(i); i++; setTimeout(type, 150); } };
-            setTimeout(type, 1000);
-        }
+            setTimeout(type, 800);
+        });
     });
 </script>
 {% endblock %}
