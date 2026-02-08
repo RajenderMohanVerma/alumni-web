@@ -1,246 +1,536 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="profile-background" style="background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%); padding: 40px 0; margin-bottom: 40px;">
-    <div class="container">
-        <!-- Marquee Section -->
-        <div class="marquee-container mb-4" style="background: rgba(255,255,255,0.1); border-radius: 10px; overflow: hidden;">
-            <div class="marquee" style="animation: scroll 20s linear infinite;">
-                <span style="color: white; font-weight: bold; font-size: 1.1rem; margin-right: 50px;">
-                    📚 Knowledge Sharing | 🎓 Mentorship | 🤝 Collaboration | 💡 Innovation
-                </span>
-            </div>
-        </div>
+<!-- Font Awesome & Google Fonts are inherited from base.html -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+
+<div class="profile-container">
+    <!-- Mesh Gradient Background -->
+    <div class="mesh-gradient-bg">
+        <div class="mesh-1"></div>
+        <div class="mesh-2"></div>
+        <div class="mesh-3"></div>
+        <div class="mesh-4"></div>
     </div>
-</div>
 
-<div class="container mt-5 mb-5">
-    <div class="row">
-        <!-- Profile Card -->
-        <div class="col-lg-4 mb-4">
-            <div class="card shadow h-100" style="border-radius: 15px; animation: slideInLeft 0.8s ease;">
-                <div class="card-body text-center">
-                    <div class="mb-3" style="position: relative;">
-                        <!-- Display uploaded profile photo or avatar -->
-                        {% if user['profile_pic'] and user['profile_pic'].startswith('/') %}
-                            <img src="{{ user['profile_pic'] }}" alt="Avatar" class="rounded-circle profile-pic-display" 
-                                 style="width: 150px; height: 150px; border: 5px solid #FFC107; box-shadow: 0 10px 30px rgba(255, 193, 7, 0.3); object-fit: cover;">
-                        {% else %}
-                            <img src="https://ui-avatars.com/api/?name={{ user['name'] }}&size=150&background=FFC107&color=000&rounded=true" 
-                                 alt="Avatar" class="rounded-circle profile-pic-display" style="width: 150px; height: 150px; border: 5px solid #FFC107; box-shadow: 0 10px 30px rgba(255, 193, 7, 0.3);">
-                        {% endif %}
-                        <span class="badge bg-warning text-dark" style="position: absolute; bottom: 0; right: 0;">Active</span>
-                    </div>
-                    <h4 class="card-title fw-bold">{{ user['name'] }}</h4>
-                    <p class="text-warning fw-bold mb-3"><i class="fas fa-chalkboard-user"></i> Faculty</p>
-                    
-                    <div class="badge bg-warning text-dark mb-3">{{ profile['designation'] }}</div>
-                    
-                    <hr>
-                    
-                    <div class="d-grid gap-2 mb-3">
-                        <button class="btn btn-outline-warning btn-sm"><i class="fas fa-envelope"></i> {{ user['email'] }}</button>
-                        <button class="btn btn-outline-secondary btn-sm"><i class="fas fa-phone"></i> {{ user['phone'] }}</button>
-                    </div>
+    <div class="container position-relative z-index-10 py-5">
 
-                    {% if profile['office_location'] %}
-                    <div class="alert alert-light text-center mb-3">
-                        <small><i class="fas fa-door-open"></i> {{ profile['office_location'] }}</small>
-                    </div>
-                    {% endif %}
-                    
-                    {% if profile['office_hours'] %}
-                    <div class="alert alert-light text-center mb-3">
-                        <small><i class="fas fa-clock"></i> {{ profile['office_hours'] }}</small>
-                    </div>
-                    {% endif %}
-                    
-                    {% if current_user.id == user['id'] %}
-                    <div class="d-grid gap-2">
-                        <a href="{{ url_for('edit_faculty_profile', user_id=user['id']) }}" class="btn btn-warning btn-sm">
-                            <i class="fas fa-edit"></i> Edit Profile
-                        </a>
-                        <a href="{{ url_for('change_password') }}" class="btn btn-outline-secondary btn-sm">
-                            <i class="fas fa-lock"></i> Change Password
-                        </a>
-                    </div>
-                    {% else %}
-                    <!-- Connection Request Button -->
-                    <div class="d-grid gap-2">
-                        <button id="connection-btn" class="btn btn-success btn-sm" onclick="sendConnectionRequest({{ user['id'] }})">
-                            <i class="fas fa-user-plus"></i> Send Connection Request
-                        </button>
-                    </div>
-                    {% endif %}
-                </div>
+        <!-- Marquee Section (Optional but kept for continuity) -->
+        <div class="marquee-container mb-5 glass-panel py-2" data-aos="fade-down">
+            <div class="marquee">
+                <span class="text-white fw-bold mx-4"><i class="fas fa-book-reader me-2 text-warning"></i> Knowledge
+                    Sharing</span>
+                <span class="text-white fw-bold mx-4"><i class="fas fa-chalkboard-teacher me-2 text-warning"></i>
+                    Mentorship</span>
+                <span class="text-white fw-bold mx-4"><i class="fas fa-handshake me-2 text-warning"></i>
+                    Collaboration</span>
+                <span class="text-white fw-bold mx-4"><i class="fas fa-lightbulb me-2 text-warning"></i>
+                    Innovation</span>
+                <span class="text-white fw-bold mx-4"><i class="fas fa-university me-2 text-warning"></i> Academic
+                    Excellence</span>
             </div>
         </div>
-        
-        <!-- Details Cards -->
-        <div class="col-lg-8">
-            <!-- Faculty Information -->
-            <div class="card shadow mb-4" style="border-radius: 15px; animation: slideInRight 0.8s ease; border: none;">
-                <div class="card-header bg-warning text-dark" style="border-radius: 15px 15px 0 0;">
-                    <h5 class="mb-0"><i class="fas fa-id-card"></i> Faculty Information</h5>
-                </div>
-                <div class="card-body">
-                    <div class="row mb-3">
-                        <div class="col-md-6">
-                            <label class="text-muted"><small>Employee ID</small></label>
-                            <p class="fs-5 fw-bold">{{ profile['employee_id'] }}</p>
+
+        <div class="row g-4">
+            <!-- Left Column: Main Profile Card -->
+            <div class="col-lg-4 mb-4 mb-lg-0">
+                <div class="profile-card-3d h-100" data-tilt data-tilt-max="5" data-tilt-speed="400" data-tilt-glare
+                    data-tilt-max-glare="0.2">
+                    <div class="glass-panel text-center p-4 p-xl-5 h-100 position-relative overflow-hidden">
+
+                        <!-- Floating Status Badge -->
+                        <div class="position-absolute top-0 end-0 m-4">
+                            <span class="badge bg-success-gradient rounded-pill shadow-sm px-3 py-2">
+                                <span class="status-dot"></span> Active Faculty
+                            </span>
                         </div>
-                        <div class="col-md-6">
-                            <label class="text-muted"><small>Department</small></label>
-                            <p class="fs-5 fw-bold">{{ profile['department'] }}</p>
+
+                        <!-- Profile Image -->
+                        <div class="profile-img-wrap mb-4 mx-auto position-relative">
+                            {% if user['profile_pic'] and user['profile_pic'].startswith('/') %}
+                            <img src="{{ user['profile_pic'] }}" alt="{{ user['name'] }}"
+                                class="rounded-circle shadow-lg main-profile-img animate__animated animate__zoomIn">
+                            {% else %}
+                            <img src="https://ui-avatars.com/api/?name={{ user['name'] }}&background=f59e0b&color=fff&size=200"
+                                alt="{{ user['name'] }}"
+                                class="rounded-circle shadow-lg main-profile-img animate__animated animate__zoomIn">
+                            {% endif %}
+                            <div class="status-indicator online border-white"></div>
                         </div>
+
+                        <!-- User Info -->
+                        <h2 class="text-white fw-bold mb-1 animate__animated animate__fadeInUp animate__delay-1s">{{
+                            user['name'] }}</h2>
+                        <p class="text-warning fw-bold mb-3 animate__animated animate__fadeInUp animate__delay-1s">{{
+                            profile['designation'] }}</p>
+
+                        <div
+                            class="d-flex justify-content-center gap-2 mb-4 animate__animated animate__fadeInUp animate__delay-2s">
+                            <span class="badge bg-white-10 text-white border border-white-20 rounded-pill px-3 py-2">
+                                <i class="fas fa-building me-2 text-warning"></i> {{ profile['department'] }}
+                            </span>
+                        </div>
+
+                        <hr class="border-white opacity-25 my-4">
+
+                        <!-- Contact Actions -->
+                        <div class="d-grid gap-3 mb-4 animate__animated animate__fadeInUp animate__delay-2s">
+                            <a href="mailto:{{ user['email'] }}" class="btn btn-glass-light rounded-pill">
+                                <i class="fas fa-envelope me-2"></i> {{ user['email'] }}
+                            </a>
+                            <a href="tel:{{ user['phone'] }}" class="btn btn-glass-light rounded-pill">
+                                <i class="fas fa-phone me-2"></i> {{ user['phone'] }}
+                            </a>
+                        </div>
+
+                        <!-- Location/Hours -->
+                        <div class="row g-2 text-start animate__animated animate__fadeInUp animate__delay-3s">
+                            {% if profile['office_location'] %}
+                            <div class="col-12">
+                                <div class="info-pill">
+                                    <i class="fas fa-door-open text-warning me-2"></i>
+                                    <span class="text-white small">Office: {{ profile['office_location'] }}</span>
+                                </div>
+                            </div>
+                            {% endif %}
+                            {% if profile['office_hours'] %}
+                            <div class="col-12">
+                                <div class="info-pill">
+                                    <i class="fas fa-clock text-warning me-2"></i>
+                                    <span class="text-white small">Hours: {{ profile['office_hours'] }}</span>
+                                </div>
+                            </div>
+                            {% endif %}
+                        </div>
+
+                        <!-- Action Buttons -->
+                        <div class="mt-4 pt-2 animate__animated animate__fadeInUp animate__delay-3s">
+                            {% if current_user.id == user['id'] %}
+                            <div class="d-grid gap-2">
+                                <a href="{{ url_for('edit_faculty_profile', user_id=user['id']) }}"
+                                    class="btn btn-warning rounded-pill shadow-lg hover-lift">
+                                    <i class="fas fa-edit me-2"></i> Edit Profile
+                                </a>
+                                <a href="{{ url_for('change_password') }}"
+                                    class="btn btn-outline-light rounded-pill hover-lift">
+                                    <i class="fas fa-lock me-2"></i> Change Password
+                                </a>
+                            </div>
+                            {% else %}
+                            <div class="d-grid gap-2">
+                                <button id="connection-btn"
+                                    class="btn btn-success-gradient rounded-pill shadow-lg hover-lift py-2 fw-bold"
+                                    onclick="sendConnectionRequest('{{ user['id'] }}')">
+                                    <i class="fas fa-user-plus me-2"></i> Connect
+                                </button>
+                            </div>
+                            {% endif %}
+                        </div>
+
                     </div>
-                    
-                    <div class="row">
-                        <div class="col-md-6 mb-3">
-                            <label class="text-muted"><small>Qualification</small></label>
-                            <p class="fw-bold"><i class="fas fa-certificate text-warning"></i> {{ profile['qualification'] }}</p>
-                        </div>
-                        <div class="col-md-6 mb-3">
-                            <label class="text-muted"><small>Experience</small></label>
-                            <p class="fw-bold">
-                                <div class="progress" style="height: 20px;">
-                                    <div class="progress-bar bg-warning" style="width: {% if profile['experience_years'] %}{{ (profile['experience_years'] | int / 30) * 100 }}%{% else %}0%{% endif %}">
-                                        {{ profile['experience_years'] or 0 }} Yrs
+                </div>
+            </div>
+
+            <!-- Right Column: Details & Bio -->
+            <div class="col-lg-8">
+                <!-- Bio Section -->
+                {% if profile['bio'] %}
+                <div
+                    class="glass-panel p-4 mb-4 position-relative animate__animated animate__fadeInRight animate__delay-1s">
+                    <div class="position-absolute top-0 end-0 m-3 opacity-10">
+                        <i class="fas fa-quote-right fa-4x text-white"></i>
+                    </div>
+                    <h4 class="text-white fw-bold mb-3"><i class="fas fa-user-tie me-2 text-warning"></i> About</h4>
+                    <p class="text-white lead" style="line-height: 1.8;">{{ profile['bio'] }}</p>
+                </div>
+                {% endif %}
+
+                <!-- Faculty Info Grid -->
+                <div class="row g-4 mb-4">
+                    <div class="col-12">
+                        <div class="glass-panel p-4 h-100 animate__animated animate__fadeInUp animate__delay-2s">
+                            <h5 class="text-white fw-bold mb-4 border-bottom border-white-20 pb-3">
+                                <i class="fas fa-id-card me-2 text-warning"></i> Professional Overview
+                            </h5>
+
+                            <div class="row g-4 align-items-center">
+                                <!-- ID & Qualification -->
+                                <div class="col-md-6 border-end border-white-20">
+                                    <div class="d-flex align-items-center mb-4">
+                                        <div class="icon-square bg-white-10 text-white rounded-3 p-3 me-3">
+                                            <i class="fas fa-fingerprint fa-lg"></i>
+                                        </div>
+                                        <div>
+                                            <span class="text-white-50 small d-block mb-1">Employee ID</span>
+                                            <h5 class="text-white fw-bold mb-0">{{ profile['employee_id'] }}</h5>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex align-items-center">
+                                        <div class="icon-square bg-white-10 text-white rounded-3 p-3 me-3">
+                                            <i class="fas fa-graduation-cap fa-lg"></i>
+                                        </div>
+                                        <div>
+                                            <span class="text-white-50 small d-block mb-1">Qualification</span>
+                                            <h5 class="text-white fw-bold mb-0">{{ profile['qualification'] }}</h5>
+                                        </div>
                                     </div>
                                 </div>
-                            </p>
+
+                                <!-- Enhanced Experience Bar -->
+                                <div class="col-md-6 ps-md-4">
+                                    <div class="experience-box p-3 rounded-4" style="background: rgba(0,0,0,0.2);">
+                                        <div class="d-flex justify-content-between align-items-end mb-2">
+                                            <span class="text-warning fw-bold"><i class="fas fa-briefcase me-2"></i>
+                                                Experience</span>
+                                            <span class="display-6 fw-bold text-white">{{ profile['experience_years'] or
+                                                0 }}<span class="fs-6 text-white-50 ms-1">Years</span></span>
+                                        </div>
+
+                                        <div class="progress"
+                                            style="height: 10px; background: rgba(255,255,255,0.1); border-radius: 10px;">
+                                            <div class="progress-bar bg-warning progress-bar-striped progress-bar-animated"
+                                                role="progressbar"
+                                                style="width: {% if profile['experience_years'] %}{{ (profile['experience_years'] | int / 30) * 100 }}%{% else %}0%{% endif %}">
+                                            </div>
+                                        </div>
+                                        <div class="d-flex justify-content-between mt-2">
+                                            <small class="text-white-50">Junior</small>
+                                            <small class="text-white-50">Expert</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Specialization Full Width -->
+                    <div class="col-12">
+                        <div class="glass-panel p-4 h-100 animate__animated animate__fadeInUp animate__delay-2s">
+                            <h5 class="text-white fw-bold mb-3 border-bottom border-white-20 pb-2">
+                                <i class="fas fa-flask me-2 text-warning"></i> Specialization
+                            </h5>
+                            {% if profile['specialization'] %}
+                            <div class="d-flex flex-wrap gap-2">
+                                {% for spec in profile['specialization'].split(',') %}
+                                <span
+                                    class="badge bg-white-10 text-white border border-white-20 rounded-pill px-3 py-2 hover-scale">
+                                    {{ spec.strip() }}
+                                </span>
+                                {% endfor %}
+                            </div>
+                            {% else %}
+                            <p class="text-white-50 fst-italic">No specializations listed.</p>
+                            {% endif %}
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <!-- Specialization -->
-            {% if profile['specialization'] %}
-            <div class="card shadow mb-4" style="border-radius: 15px; animation: slideInRight 0.9s ease; border: none;">
-                <div class="card-header bg-info text-white" style="border-radius: 15px 15px 0 0;">
-                    <h5 class="mb-0"><i class="fas fa-flask"></i> Specialization</h5>
-                </div>
-                <div class="card-body">
-                    <div>
-                        {% for spec in profile['specialization'].split(',') %}
-                        <span class="badge bg-info me-2 mb-2" style="animation: fadeIn 0.5s ease;">{{ spec.strip() }}</span>
-                        {% endfor %}
-                    </div>
-                </div>
             </div>
-            {% endif %}
-
-            <!-- Bio -->
-            {% if profile['bio'] %}
-            <div class="card shadow" style="border-radius: 15px; animation: slideInRight 1.0s ease; border: none;">
-                <div class="card-header bg-secondary text-white" style="border-radius: 15px 15px 0 0;">
-                    <h5 class="mb-0"><i class="fas fa-book"></i> About</h5>
-                </div>
-                <div class="card-body">
-                    <p style="font-style: italic; border-left: 4px solid #FFC107; padding-left: 15px;">{{ profile['bio'] }}</p>
-                </div>
-            </div>
-            {% endif %}
         </div>
     </div>
 </div>
 
 <style>
-    .card {
-        border: none;
-        border-radius: 15px;
-        transition: all 0.3s ease;
+    /* VARIABLES - MODERN PALETTE */
+    :root {
+        --primary-gradient: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+        --warning-gradient: linear-gradient(135deg, #f59e0b 0%, #ea580c 100%);
+        --success-gradient: linear-gradient(135deg, #10b981 0%, #059669 100%);
+        --hover-shadow: 0 20px 40px -5px rgba(0, 0, 0, 0.1);
     }
 
-    .card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2) !important;
+    /* MESH BACKGROUND */
+    .profile-container {
+        position: relative;
+        background: #0f172a;
+        min-height: 100vh;
+        overflow-x: hidden;
     }
 
-    .card-header {
-        border-radius: 15px 15px 0 0 !important;
+    .mesh-gradient-bg {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        z-index: 0;
+        background: radial-gradient(at 0% 0%, hsla(253, 16%, 7%, 1) 0, transparent 50%),
+            radial-gradient(at 50% 0%, hsla(225, 39%, 30%, 1) 0, transparent 50%),
+            radial-gradient(at 100% 0%, hsla(339, 49%, 30%, 1) 0, transparent 50%);
     }
 
-    .profile-pic-display {
+    .mesh-1,
+    .mesh-2,
+    .mesh-3,
+    .mesh-4 {
+        position: absolute;
+        filter: blur(80px);
+        opacity: 0.6;
+        animation: float 20s infinite alternate;
+        border-radius: 50%;
+    }
+
+    .mesh-1 {
+        top: -10%;
+        left: -10%;
+        width: 50vw;
+        height: 50vw;
+        background: #4f46e5;
+        animation-delay: 0s;
+    }
+
+    .mesh-2 {
+        bottom: 10%;
+        right: -10%;
+        width: 40vw;
+        height: 40vw;
+        background: #f59e0b;
+        animation-delay: -5s;
+    }
+
+    .mesh-3 {
+        top: 30%;
+        right: 20%;
+        width: 30vw;
+        height: 30vw;
+        background: #ec4899;
+        animation-delay: -10s;
+    }
+
+    .mesh-4 {
+        bottom: 20%;
+        left: 20%;
+        width: 25vw;
+        height: 25vw;
+        background: #06b6d4;
+        animation-delay: -15s;
+    }
+
+    /* GLASS PANEL */
+    .glass-panel {
+        background: rgba(255, 255, 255, 0.05);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 24px;
+        box-shadow: 0 30px 60px rgba(0, 0, 0, 0.12);
         transition: transform 0.3s ease;
     }
 
-    .profile-pic-display:hover {
-        transform: scale(1.1) rotate(2deg);
-        box-shadow: 0 15px 40px rgba(255, 193, 7, 0.5) !important;
+    .bg-white-10 {
+        background: rgba(255, 255, 255, 0.1);
     }
 
-    @keyframes slideInLeft {
-        from { opacity: 0; transform: translateX(-30px); }
-        to { opacity: 1; transform: translateX(0); }
+    .border-white-20 {
+        border-color: rgba(255, 255, 255, 0.2) !important;
     }
 
-    @keyframes slideInRight {
-        from { opacity: 0; transform: translateX(30px); }
-        to { opacity: 1; transform: translateX(0); }
+    .bg-success-gradient {
+        background: var(--success-gradient);
+        color: white;
+        border: none;
     }
 
-    @keyframes fadeIn {
-        from { opacity: 0; }
-        to { opacity: 1; }
+    /* COMPONENTS */
+    .btn-glass-light {
+        background: rgba(255, 255, 255, 0.05);
+        color: rgba(255, 255, 255, 0.8);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        transition: all 0.3s ease;
+    }
+
+    .btn-glass-light:hover {
+        background: white;
+        color: #0f172a;
+        transform: translateY(-2px);
+    }
+
+    .hover-lift {
+        transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    .hover-lift:hover {
+        transform: translateY(-3px);
+    }
+
+    .hover-scale {
+        transition: transform 0.2s ease;
+        display: inline-block;
+        cursor: default;
+    }
+
+    .hover-scale:hover {
+        transform: scale(1.05);
+        background: rgba(255, 255, 255, 0.2);
+    }
+
+    .main-profile-img {
+        width: 160px;
+        height: 160px;
+        object-fit: cover;
+        border: 4px solid rgba(255, 255, 255, 0.2);
+        padding: 4px;
+        background: rgba(255, 255, 255, 0.1);
+    }
+
+    .info-pill {
+        background: rgba(0, 0, 0, 0.6);
+        padding: 10px 16px;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        backdrop-filter: blur(5px);
+        transition: all 0.3s ease;
+    }
+
+    .info-pill:hover {
+        background: rgba(0, 0, 0, 0.8);
+        transform: translateX(5px);
+        border-color: rgba(255, 255, 255, 0.3);
+    }
+
+    .status-dot {
+        height: 8px;
+        width: 8px;
+        background-color: white;
+        border-radius: 50%;
+        display: inline-block;
+        margin-right: 6px;
+        animation: pulse 2s infinite;
+    }
+
+    /* ANIMATIONS */
+    @keyframes float {
+        0% {
+            transform: translate(0, 0) scale(1);
+        }
+
+        100% {
+            transform: translate(30px, -30px) scale(1.1);
+        }
+    }
+
+    @keyframes pulse {
+        0% {
+            opacity: 0.6;
+            transform: scale(0.9);
+        }
+
+        50% {
+            opacity: 1;
+            transform: scale(1.1);
+        }
+
+        100% {
+            opacity: 0.6;
+            transform: scale(0.9);
+        }
     }
 
     @keyframes scroll {
-        0% { transform: translateX(0); }
-        100% { transform: translateX(-100%); }
+        0% {
+            transform: translateX(0);
+        }
+
+        100% {
+            transform: translateX(-100%);
+        }
     }
 
-    .marquee-container { white-space: nowrap; }
-    .marquee { display: inline-block; padding-left: 100%; }
+    .marquee-container {
+        overflow: hidden;
+        white-space: nowrap;
+    }
+
+    .marquee {
+        display: inline-block;
+        animation: scroll 30s linear infinite;
+    }
+
+    .marquee:hover {
+        animation-play-state: paused;
+    }
 </style>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.7.0/vanilla-tilt.min.js"></script>
 <script>
-async function sendConnectionRequest(receiverId) {
-    const btn = document.getElementById('connection-btn');
-    btn.disabled = true;
-    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
-    
-    try {
-        const response = await fetch('/api/connection-request/send', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ receiver_id: receiverId })
-        });
-        
-        const data = await response.json();
-        
-        if (data.success) {
-            btn.classList.remove('btn-success');
-            btn.classList.add('btn-secondary');
-            btn.innerHTML = '<i class="fas fa-check"></i> Request Sent';
-            btn.disabled = true;
-            showToast('Connection request sent! ✓', 'success');
-        } else {
-            btn.disabled = false;
-            btn.innerHTML = '<i class="fas fa-user-plus"></i> Send Connection Request';
-            showToast(data.error || 'Error sending request', 'danger');
-        }
-    } catch(error) {
-        console.error('Error:', error);
-        btn.disabled = false;
-        btn.innerHTML = '<i class="fas fa-user-plus"></i> Send Connection Request';
-        showToast('Error: ' + error.message, 'danger');
-    }
-}
+    async function sendConnectionRequest(receiverId) {
+        // Ensure ID is an integer
+        receiverId = parseInt(receiverId);
+        const btn = document.getElementById('connection-btn');
+        const originalContent = btn.innerHTML;
 
-function showToast(message, type = 'info') {
-    const toast = document.createElement('div');
-    toast.className = `alert alert-${type} position-fixed bottom-0 end-0 m-3`;
-    toast.style.zIndex = '9999';
-    toast.textContent = message;
-    
-    document.body.appendChild(toast);
-    
-    setTimeout(() => {
-        toast.remove();
-    }, 3000);
-}
+        btn.disabled = true;
+        btn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i> Sending...';
+
+        try {
+            const response = await fetch('/api/connection-request/send', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ receiver_id: receiverId })
+            });
+
+            const data = await response.json();
+
+            if (data.success) {
+                btn.className = 'btn btn-secondary rounded-pill py-2 w-100 fw-bold';
+                btn.innerHTML = '<i class="fas fa-check me-2"></i> Request Sent';
+                showToast('Connection request sent successfully! 🚀', 'success');
+            } else {
+                btn.disabled = false;
+                btn.innerHTML = originalContent;
+                showToast(data.error || 'Error sending request', 'danger');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            btn.disabled = false;
+            btn.innerHTML = originalContent;
+            showToast('Network error: ' + error.message, 'danger');
+        }
+    }
+
+    function showToast(message, type = 'info') {
+        // Create toast container implementation
+        const toast = document.createElement('div');
+        const bgColor = type === 'success' ? '#10b981' : '#ef4444';
+
+        toast.style.cssText = `
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background: ${bgColor};
+        color: white;
+        padding: 12px 24px;
+        border-radius: 12px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        z-index: 10000;
+        font-weight: 500;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        animation: slideInRight 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    `;
+
+        toast.innerHTML = type === 'success' ? `<i class="fas fa-check-circle"></i> ${message}` : `<i class="fas fa-exclamation-circle"></i> ${message}`;
+
+        document.body.appendChild(toast);
+
+        setTimeout(() => {
+            toast.style.animation = 'slideOutRight 0.3s forwards';
+            setTimeout(() => toast.remove(), 300);
+        }, 3000);
+    }
+
+    // Add keyframes for toast dynamically
+    const styleSheet = document.createElement("style");
+    styleSheet.innerText = `
+    @keyframes slideInRight { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+    @keyframes slideOutRight { from { transform: translateX(0); opacity: 1; } to { transform: translateX(100%); opacity: 0; } }
+`;
+    document.head.appendChild(styleSheet);
 </script>
 {% endblock %}

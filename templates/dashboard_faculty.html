@@ -277,37 +277,44 @@
         {% endif %}
 
         <!-- Directory Controls -->
-        <div class="directory-header mb-4 p-4 rounded-4 bg-white shadow-sm" data-aos="fade-up">
-            <div class="row g-4 align-items-center">
-                <div class="col-lg-6">
-                    <h3 class="mb-1 fw-bold">Academic Directory</h3>
-                    <p class="text-muted mb-0">Connect with students, alumni, and faculty members.</p>
-                </div>
-                <div class="col-lg-6">
-                    <div class="search-box position-relative">
-                        <input type="text" id="globalSearch"
-                            class="form-control form-control-lg rounded-pill ps-5 border-0 bg-light"
-                            placeholder="Search people, departments, skills...">
-                        <i
-                            class="fas fa-search position-absolute top-50 start-0 translate-middle-y ms-3 text-muted"></i>
+        <div class="directory-header mb-5 position-relative" data-aos="fade-up">
+            <div class="glass-panel p-4 p-lg-5" style="background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);">
+                <div class="row g-4 align-items-center">
+                    <div class="col-lg-6">
+                        <div class="d-flex align-items-center mb-2">
+                            <span class="badge bg-primary-gradient rounded-pill px-3 py-2 me-2">Directory</span>
+                            <h3 class="mb-0 fw-bold text-white">Academic Network</h3>
+                        </div>
+                        <p class="text-white-50 mb-0">Connect with students, alumni, and faculty members to expand your
+                            professional circle.</p>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="search-box position-relative">
+                            <input type="text" id="globalSearch"
+                                class="form-control form-control-lg rounded-pill ps-5 border-0 bg-white-10 text-white placeholder-white-50 shadow-inner"
+                                placeholder="Search people, departments, skills...">
+                            <i
+                                class="fas fa-search position-absolute top-50 start-0 translate-middle-y ms-3 text-white-50"></i>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="nav nav-pills custom-pills mt-4 justify-content-center justify-content-lg-start"
-                id="directoryTabs" role="tablist">
-                <button class="nav-link active rounded-pill px-4" id="tab-student" data-bs-toggle="pill"
-                    data-bs-target="#content-student" type="button" role="tab">
-                    <i class="fas fa-user-graduate me-2"></i>Students
-                </button>
-                <button class="nav-link rounded-pill px-4" id="tab-alumni" data-bs-toggle="pill"
-                    data-bs-target="#content-alumni" type="button" role="tab">
-                    <i class="fas fa-graduation-cap me-2"></i>Alumni
-                </button>
-                <button class="nav-link rounded-pill px-4" id="tab-faculty" data-bs-toggle="pill"
-                    data-bs-target="#content-faculty" type="button" role="tab">
-                    <i class="fas fa-chalkboard-teacher me-2"></i>Faculty
-                </button>
+                <div class="nav nav-pills custom-pills mt-4 justify-content-center justify-content-lg-start gap-2"
+                    id="directoryTabs" role="tablist">
+                    <button class="nav-link active rounded-pill px-4 py-2 d-flex align-items-center gap-2"
+                        id="tab-student" data-bs-toggle="pill" data-bs-target="#content-student" type="button"
+                        role="tab">
+                        <i class="fas fa-user-graduate"></i> Students
+                    </button>
+                    <button class="nav-link rounded-pill px-4 py-2 d-flex align-items-center gap-2" id="tab-alumni"
+                        data-bs-toggle="pill" data-bs-target="#content-alumni" type="button" role="tab">
+                        <i class="fas fa-graduation-cap"></i> Alumni
+                    </button>
+                    <button class="nav-link rounded-pill px-4 py-2 d-flex align-items-center gap-2" id="tab-faculty"
+                        data-bs-toggle="pill" data-bs-target="#content-faculty" type="button" role="tab">
+                        <i class="fas fa-chalkboard-teacher"></i> Faculty
+                    </button>
+                </div>
             </div>
         </div>
 
@@ -438,237 +445,185 @@
 </div>
 
 <style>
-    /* VARIABLES */
+    /* VARIABLES - MODERN PALETTE */
     :root {
-        --primary-gradient: linear-gradient(135deg, #4f46e5 0%, #3b82f6 100%);
-        --warning-gradient: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
-        --info-gradient: linear-gradient(135deg, #0ea5e9 0%, #06b6d4 100%);
-        --glass-bg: rgba(255, 255, 255, 0.9);
-        --glass-border: rgba(255, 255, 255, 0.4);
-        --card-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.08);
-        --hover-shadow: 0 20px 40px -5px rgba(0, 0, 0, 0.12);
-        --animate-duration: 0.8s;
-        /* Global animation speed */
+        --primary-gradient: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+        --warning-gradient: linear-gradient(135deg, #f59e0b 0%, #ea580c 100%);
+        --info-gradient: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
+        --success-gradient: linear-gradient(135deg, #10b981 0%, #059669 100%);
+        --purple-gradient: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+
+        --glass-bg: rgba(255, 255, 255, 0.7);
+        --glass-border: rgba(255, 255, 255, 0.5);
+        --card-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.05);
+        --hover-shadow: 0 20px 40px -5px rgba(0, 0, 0, 0.1);
     }
 
     /* GENERAL */
+    body {
+        font-family: 'Inter', sans-serif;
+    }
+
     .dashboard-container {
-        background-color: #f8fafc;
+        background-color: #f3f4f6;
         min-height: 100vh;
         overflow-x: hidden;
     }
 
-    /* HERO SECTION */
+    /* HERO SECTION - MESH GRADIENT */
     .hero-wrap {
         position: relative;
-        background: var(--warning-gradient);
+        background: #0f172a;
         color: white;
         overflow: hidden;
-        padding-bottom: 80px;
-        clip-path: polygon(0 0, 100% 0, 100% 90%, 0 100%);
+        padding-bottom: 100px;
+        clip-path: polygon(0 0, 100% 0, 100% 95%, 0 100%);
     }
 
-    .animated-bg {
+    .mesh-gradient-bg {
         position: absolute;
         top: 0;
         left: 0;
-        width: 100%;
-        height: 100%;
-        z-index: 1;
+        width: 100vw;
+        height: 100vh;
+        overflow: hidden;
+        z-index: 0;
+        background: radial-gradient(at 0% 0%, hsla(253, 16%, 7%, 1) 0, transparent 50%),
+            radial-gradient(at 50% 0%, hsla(225, 39%, 30%, 1) 0, transparent 50%),
+            radial-gradient(at 100% 0%, hsla(339, 49%, 30%, 1) 0, transparent 50%);
     }
 
-    .blob-shape {
+    .mesh-1,
+    .mesh-2,
+    .mesh-3,
+    .mesh-4 {
         position: absolute;
-        border-radius: 50%;
-        filter: blur(60px);
-        opacity: 0.4;
+        filter: blur(80px);
+        opacity: 0.6;
         animation: float 20s infinite alternate;
+        border-radius: 50%;
     }
 
-    .blob-1 {
+    .mesh-1 {
         top: -10%;
         left: -10%;
-        width: 400px;
-        height: 400px;
-        background: #fff;
+        width: 50vw;
+        height: 50vw;
+        background: #4f46e5;
+        animation-delay: 0s;
     }
 
-    .blob-2 {
+    .mesh-2 {
         bottom: 10%;
-        right: -5%;
-        width: 300px;
-        height: 300px;
-        background: #ffd700;
+        right: -10%;
+        width: 40vw;
+        height: 40vw;
+        background: #f59e0b;
         animation-delay: -5s;
     }
 
-    .blob-3 {
-        top: 40%;
-        left: 40%;
-        width: 200px;
-        height: 200px;
-        background: #ffffff;
+    .mesh-3 {
+        top: 30%;
+        right: 20%;
+        width: 30vw;
+        height: 30vw;
+        background: #ec4899;
         animation-delay: -10s;
     }
 
-    @keyframes float {
-        from {
-            transform: translate(0, 0) scale(1);
-        }
-
-        to {
-            transform: translate(40px, -40px) scale(1.1);
-        }
+    .mesh-4 {
+        bottom: 20%;
+        left: 20%;
+        width: 25vw;
+        height: 25vw;
+        background: #06b6d4;
+        animation-delay: -15s;
     }
 
-    .inline-badge {
-        display: inline-block;
-        background: rgba(255, 255, 255, 0.2);
-        backdrop-filter: blur(10px);
-        padding: 6px 16px;
-        border-radius: 30px;
-        font-size: 0.9rem;
-        font-weight: 500;
-        border: 1px solid rgba(255, 255, 255, 0.3);
+    .glass-panel {
+        background: rgba(255, 255, 255, 0.05);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 24px;
+        box-shadow: 0 30px 60px rgba(0, 0, 0, 0.12);
+        transition: transform 0.3s ease;
     }
 
+    .bg-white-10 {
+        background: rgba(255, 255, 255, 0.1);
+    }
+
+    .border-white-20 {
+        border-color: rgba(255, 255, 255, 0.2) !important;
+    }
+
+    /* UTILS & BUTTONS */
     .btn-glass-light {
-        background: rgba(255, 255, 255, 0.9);
-        color: #d97706;
-        border: none;
-        font-weight: 600;
-        transition: all 0.3s ease;
+        background: rgba(255, 255, 255, 0.1);
+        color: white;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        backdrop-filter: blur(10px);
     }
 
     .btn-glass-light:hover {
         background: white;
-        transform: translateY(-3px);
-        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-        color: #b45309;
+        color: #4f46e5;
+        transform: translateY(-2px);
     }
 
-    .typing-text {
-        border-right: 2px solid white;
-        white-space: nowrap;
-        overflow: hidden;
-        animation: typing 3.5s steps(30, end), blink-caret 0.75s step-end infinite;
-        display: inline-block;
-        max-width: 100%;
+    .bg-primary-gradient {
+        background: var(--primary-gradient);
+        color: white;
+        border: none;
     }
 
-    @keyframes typing {
-        from {
-            width: 0
-        }
-
-        to {
-            width: 100%
-        }
+    .placeholder-white-50::placeholder {
+        color: rgba(255, 255, 255, 0.5);
     }
 
-    @keyframes blink-caret {
-
-        from,
-        to {
-            border-color: transparent
-        }
-
-        50% {
-            border-color: orange;
-        }
-    }
-
-    /* 3D CARD */
-    .hero-card-3d {
-        transform-style: preserve-3d;
-        transform: perspective(1000px);
-    }
-
-    .glass-panel {
-        background: rgba(255, 255, 255, 0.1);
-        backdrop-filter: blur(15px);
-        border: 1px solid rgba(255, 255, 255, 0.2);
-        border-radius: 24px;
-        box-shadow: 0 25px 45px rgba(0, 0, 0, 0.1);
-        transition: transform 0.3s ease;
-    }
-
-    .main-profile-img {
-        width: 140px;
-        height: 140px;
-        object-fit: cover;
-        border: 4px solid rgba(255, 255, 255, 0.8);
-    }
-
-    /* STATS CARDS */
-    .stat-card {
-        background: white;
-        border-radius: 20px;
-        padding: 24px;
-        display: flex;
-        align-items: center;
-        gap: 20px;
-        box-shadow: var(--card-shadow);
-        transition: all 0.3s ease;
-        position: relative;
-        overflow: hidden;
-    }
-
-    .hover-float:hover {
-        transform: translateY(-8px);
-        box-shadow: var(--hover-shadow);
-    }
-
-    .stat-icon-wrap {
-        width: 64px;
-        height: 64px;
-        border-radius: 18px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 1.75rem;
-        flex-shrink: 0;
-    }
-
-    .bg-soft-primary {
-        background: rgba(59, 130, 246, 0.1);
-        color: #3b82f6;
-    }
-
-    .bg-soft-success {
-        background: rgba(16, 185, 129, 0.1);
-        color: #10b981;
-    }
-
-    .bg-soft-warning {
-        background: rgba(245, 158, 11, 0.1);
-        color: #f59e0b;
-    }
-
-    .bg-soft-info {
-        background: rgba(6, 182, 212, 0.1);
-        color: #06b6d4;
-    }
-
-    .counter-value {
-        font-weight: 800;
-        margin-bottom: 0;
-        color: #1e293b;
+    .shadow-inner {
+        box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
     }
 
     /* TABS & SEARCH */
     .custom-pills .nav-link {
-        color: #64748b;
-        font-weight: 600;
-        border: 1px solid transparent;
+        color: rgba(255, 255, 255, 0.7);
+        font-weight: 500;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
         transition: all 0.3s ease;
     }
 
-    .custom-pills .nav-link.active {
-        background-color: #f59e0b;
+    .custom-pills .nav-link:hover {
+        background: rgba(255, 255, 255, 0.1);
         color: white;
-        box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
     }
+
+    .custom-pills .nav-link.active {
+        background: var(--warning-gradient);
+        color: white;
+        box-shadow: 0 4px 12px rgba(245, 158, 11, 0.4);
+        border-color: transparent;
+        transform: translateY(-2px);
+    }
+
+    .main-profile-img {
+        width: 150px;
+        height: 150px;
+        border: 4px solid rgba(255, 255, 255, 0.2);
+    }
+
+    @keyframes float {
+        0% {
+            transform: translate(0, 0) scale(1);
+        }
+
+        100% {
+            transform: translate(30px, -30px) scale(1.1);
+        }
+    }
+
 
     /* PROFILE CARDS MODERN */
     .profile-card-modern {
@@ -679,33 +634,31 @@
         transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         height: 100%;
         position: relative;
-        border: 1px solid #f1f5f9;
-        opacity: 0;
-        /* Initially hidden for animation */
+        border: 1px solid rgba(0, 0, 0, 0.05);
         animation: fadeUpCard 0.6s ease forwards;
-        animation-delay: 0.3s;
-    }
-
-    @keyframes fadeUpCard {
-        from {
-            opacity: 0;
-            transform: translateY(20px);
-        }
-
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
+        opacity: 0;
     }
 
     .profile-card-modern:hover {
         transform: translateY(-8px);
         box-shadow: var(--hover-shadow);
+        z-index: 10;
     }
 
     .card-cover {
-        height: 80px;
+        height: 100px;
         width: 100%;
+        position: relative;
+    }
+
+    .card-cover::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 50%;
+        background: linear-gradient(to top, white, transparent);
     }
 
     .bg-gradient-info {
@@ -721,14 +674,16 @@
     }
 
     .avatar-holder {
-        margin-top: -45px;
+        margin-top: -55px;
         display: flex;
         justify-content: center;
+        position: relative;
+        z-index: 2;
     }
 
     .avatar-holder img {
-        width: 90px;
-        height: 90px;
+        width: 100px;
+        height: 100px;
         border-radius: 50%;
         border: 4px solid white;
         object-fit: cover;
@@ -739,10 +694,11 @@
 
     .profile-card-modern:hover .avatar-holder img {
         transform: scale(1.1);
+        border-color: #f8fafc;
     }
 
     .card-content {
-        padding: 15px 20px 25px;
+        padding: 10px 25px 25px;
     }
 
     .skill-pill {
@@ -750,36 +706,56 @@
         background: #f1f5f9;
         color: #475569;
         font-size: 0.75rem;
-        padding: 4px 10px;
-        border-radius: 4px;
+        padding: 4px 12px;
+        border-radius: 20px;
         margin: 2px;
         font-weight: 600;
+        border: 1px solid #e2e8f0;
     }
 
     .action-buttons-grid {
         display: grid;
         grid-template-columns: 1fr 1fr;
-        gap: 10px;
-        margin-top: 15px;
+        gap: 12px;
+        margin-top: 20px;
+        padding-top: 15px;
+        border-top: 1px dashed #e2e8f0;
     }
 
-    /* SCROLLBAR */
-    .custom-scrollbar::-webkit-scrollbar {
-        height: 8px;
+    .btn-sm {
+        padding: 0.4rem 0.8rem;
+        font-weight: 500;
+        letter-spacing: 0.3px;
     }
 
-    .custom-scrollbar::-webkit-scrollbar-track {
+    /* SCROLLBAR & ANIMATIONS */
+    ::-webkit-scrollbar {
+        width: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
         background: #f1f5f9;
-        border-radius: 4px;
     }
 
-    .custom-scrollbar::-webkit-scrollbar-thumb {
+    ::-webkit-scrollbar-thumb {
         background: #cbd5e1;
         border-radius: 4px;
     }
 
-    .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    ::-webkit-scrollbar-thumb:hover {
         background: #94a3b8;
+    }
+
+    @keyframes fadeUpCard {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
     }
 
     /* MEDIA QUERIES */
