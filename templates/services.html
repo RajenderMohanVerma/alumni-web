@@ -1,636 +1,615 @@
 {% extends 'base.html' %}
 
-{% block title %}Services - Alumni Management System
-
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    const cursor = document.createElement('div'); cursor.className = 'custom-cursor';
-    const cursorDot = document.createElement('div'); cursorDot.className = 'cursor-dot';
-    document.body.appendChild(cursor); document.body.appendChild(cursorDot);
-    let mouseX=0,mouseY=0,cursorX=0,cursorY=0,dotX=0,dotY=0;
-    document.addEventListener('mousemove',(e)=>{mouseX=e.clientX;mouseY=e.clientY;dotX=e.clientX;dotY=e.clientY;});
-    function animateCursor(){const delay=0.15;cursorX+=(mouseX-cursorX)*delay;cursorY+=(mouseY-cursorY)*delay;cursor.style.left=cursorX+'px';cursor.style.top=cursorY+'px';cursorDot.style.left=dotX+'px';cursorDot.style.top=dotY+'px';requestAnimationFrame(animateCursor);}
-    animateCursor();
-    document.querySelectorAll('a,button,.service-card,.feature-card,.process-step').forEach(el=>{el.addEventListener('mouseenter',()=>{cursor.classList.add('cursor-hover');cursorDot.classList.add('cursor-hover');});el.addEventListener('mouseleave',()=>{cursor.classList.remove('cursor-hover');cursorDot.classList.remove('cursor-hover');});});
-    document.addEventListener('mousedown',()=>{cursor.classList.add('cursor-click');cursorDot.classList.add('cursor-click');});
-    document.addEventListener('mouseup',()=>{cursor.classList.remove('cursor-click');cursorDot.classList.remove('cursor-click');});
-    const particlesContainer=document.createElement('div');particlesContainer.className='particles-container';document.body.appendChild(particlesContainer);
-    document.addEventListener('mousemove',(e)=>{if(Math.random()>0.85){const p=document.createElement('div');p.className='cursor-particle';p.style.left=e.clientX+'px';p.style.top=e.clientY+'px';particlesContainer.appendChild(p);setTimeout(()=>p.remove(),1000);}});
-});
-</script>
-<style>
-body,a,button,.service-card,.feature-card,.process-step{cursor:none!important}.custom-cursor{width:40px;height:40px;border:2px solid rgba(102,126,234,.8);border-radius:50%;position:fixed;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:width .3s,height .3s,border-color .3s,background .3s;mix-blend-mode:difference}.cursor-dot{width:8px;height:8px;background:rgba(102,126,234,1);border-radius:50%;position:fixed;pointer-events:none;z-index:10000;transform:translate(-50%,-50%);transition:width .2s,height .2s,background .2s}.custom-cursor.cursor-hover{width:60px;height:60px;border-color:rgba(245,158,11,.9);background:rgba(245,158,11,.1)}.cursor-dot.cursor-hover{width:12px;height:12px;background:rgba(245,158,11,1)}.custom-cursor.cursor-click{width:30px;height:30px;border-color:rgba(16,185,129,1)}.cursor-dot.cursor-click{width:6px;height:6px;background:rgba(16,185,129,1)}.particles-container{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:9998}.cursor-particle{position:absolute;width:4px;height:4px;background:radial-gradient(circle,rgba(102,126,234,.8),transparent);border-radius:50%;pointer-events:none;animation:particleFade 1s ease-out forwards;transform:translate(-50%,-50%)}@keyframes particleFade{0%{opacity:1;transform:translate(-50%,-50%) scale(1)}100%{opacity:0;transform:translate(-50%,-50%) scale(0) translateY(-30px)}}@media (max-width:768px){.custom-cursor,.cursor-dot,.cursor-particle{display:none!important}body,a,button,.service-card,.feature-card,.process-step{cursor:auto!important}}
-</style>
-
-{% endblock %}
+{% block title %}Our Services - Alumni Management System{% endblock %}
 
 {% block content %}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/services-enhancements.css') }}">
+<!-- Premium Fonts -->
+<link
+    href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet">
 
+<div class="services-wrapper">
+    <!-- Animated Mesh Background -->
+    <div class="mesh-background">
+        <div class="mesh-ball ball-1"></div>
+        <div class="mesh-ball ball-2"></div>
+        <div class="mesh-ball ball-3"></div>
+        <div class="mesh-ball ball-4"></div>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="services-hero glass-hero">
+        <div class="hero-particles"></div>
+        <div class="container" style="position: relative; z-index: 2;">
+            <div class="hero-content text-center">
+                <div class="badge rounded-pill bg-white text-primary px-3 py-2 mb-3 shadow-sm reveal-fade"
+                    style="font-weight: 700; letter-spacing: 1px;">
+                    <i class="fas fa-sparkles me-2"></i> EXCELLENCE IN SERVICE
+                </div>
+                <h1 class="display-3 fw-bold mb-3 reveal-text text-white">
+                    Our <span class="text-holographic">Services</span>
+                </h1>
+                <p class="text-white-50 lead mb-0 reveal-fade"
+                    style="font-size: 1.4rem; max-width: 800px; margin: 0 auto; font-weight: 500;">
+                    Tailored professional solutions designed to empower our alumni community and guide our future
+                    graduates.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <div class="container pb-5" style="position: relative; z-index: 5; margin-top: -80px;">
+        <!-- Alumni Services Section -->
+        <div class="services-group mb-5 pt-5">
+            <div class="section-tag mb-4 reveal-text">
+                <span class="tag-label">ALUMNI HUB</span>
+                <h2 class="fw-bold display-6 mt-2">Professional <span class="text-gradient-indigo">Alumni
+                        Services</span></h2>
+            </div>
+
+            <div class="row g-4">
+                <div class="col-lg-3 col-md-6 reveal-fade">
+                    <div class="card border-0 glass-card service-card tilt-element">
+                        <div class="card-body p-4">
+                            <div class="service-icon-box icon-blue mb-4">
+                                <i class="fas fa-id-card"></i>
+                            </div>
+                            <h4 class="fw-bold mb-3">Profile Mastery</h4>
+                            <p class="text-muted small">Advanced tools to showcase your career trajectory and
+                                professional milestones.</p>
+                            <ul class="feature-list mt-3">
+                                <li><i class="fas fa-check-circle me-2"></i> Career Timeline</li>
+                                <li><i class="fas fa-check-circle me-2"></i> Skills Portfolios</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <!-- Job Posting -->
+                <div class="col-lg-3 col-md-6 reveal-fade" style="animation-delay: 0.1s;">
+                    <div class="card border-0 glass-card service-card tilt-element">
+                        <div class="card-body p-4">
+                            <div class="service-icon-box icon-green mb-4">
+                                <i class="fas fa-briefcase"></i>
+                            </div>
+                            <h4 class="fw-bold mb-3">Talent Sourcing</h4>
+                            <p class="text-muted small">Post exclusive opportunities and recruit top talent from your
+                                alma mater.</p>
+                            <ul class="feature-list mt-3">
+                                <li><i class="fas fa-check-circle me-2"></i> Direct Hiring</li>
+                                <li><i class="fas fa-check-circle me-2"></i> Resume Filtering</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <!-- Mentorship -->
+                <div class="col-lg-3 col-md-6 reveal-fade" style="animation-delay: 0.2s;">
+                    <div class="card border-0 glass-card service-card tilt-element">
+                        <div class="card-body p-4">
+                            <div class="service-icon-box icon-orange mb-4">
+                                <i class="fas fa-user-graduate"></i>
+                            </div>
+                            <h4 class="fw-bold mb-3">Mentorship Hub</h4>
+                            <p class="text-muted small">Share your wisdom and guide the next generation of industry
+                                leaders.</p>
+                            <ul class="feature-list mt-3">
+                                <li><i class="fas fa-check-circle me-2"></i> 1:1 Guidance</li>
+                                <li><i class="fas fa-check-circle me-2"></i> Industry Talks</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <!-- Networking -->
+                <div class="col-lg-3 col-md-6 reveal-fade" style="animation-delay: 0.3s;">
+                    <div class="card border-0 glass-card service-card tilt-element">
+                        <div class="card-body p-4">
+                            <div class="service-icon-box icon-purple mb-4">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <h4 class="fw-bold mb-3">Global Network</h4>
+                            <p class="text-muted small">Reconnect with peers through exclusive virtual and physical
+                                meetups.</p>
+                            <ul class="feature-list mt-3">
+                                <li><i class="fas fa-check-circle me-2"></i> Alumni Chapters</li>
+                                <li><i class="fas fa-check-circle me-2"></i> Special Events</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Student Services Section -->
+        <div class="services-group mb-5">
+            <div class="section-tag mb-4 reveal-text text-end">
+                <span class="tag-label">FUTURE LEADERS</span>
+                <h2 class="fw-bold display-6 mt-2">Empowering <span class="text-gradient-purple">Student Success</span>
+                </h2>
+            </div>
+
+            <div class="row g-4">
+                <div class="col-lg-3 col-md-6 reveal-fade">
+                    <div class="card border-0 glass-card service-card tilt-element">
+                        <div class="card-body p-4">
+                            <div class="service-icon-box icon-pink mb-4">
+                                <i class="fas fa-search"></i>
+                            </div>
+                            <h4 class="fw-bold mb-3">Career Discovery</h4>
+                            <p class="text-muted small">Uncover paths of success through detailed alumni career
+                                roadmaps.</p>
+                            <ul class="feature-list mt-3">
+                                <li><i class="fas fa-check-circle me-2"></i> Path Visualization</li>
+                                <li><i class="fas fa-check-circle me-2"></i> Industry Data</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 reveal-fade" style="animation-delay: 0.1s;">
+                    <div class="card border-0 glass-card service-card tilt-element">
+                        <div class="card-body p-4">
+                            <div class="service-icon-box icon-cyan mb-4">
+                                <i class="fas fa-chalkboard-teacher"></i>
+                            </div>
+                            <h4 class="fw-bold mb-3">Expert Guidance</h4>
+                            <p class="text-muted small">Get personalized coaching from veterans who were once in your
+                                shoes.</p>
+                            <ul class="feature-list mt-3">
+                                <li><i class="fas fa-check-circle me-2"></i> Mock Interviews</li>
+                                <li><i class="fas fa-check-circle me-2"></i> Resume Review</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 reveal-fade" style="animation-delay: 0.2s;">
+                    <div class="card border-0 glass-card service-card tilt-element">
+                        <div class="card-body p-4">
+                            <div class="service-icon-box icon-indigo mb-4">
+                                <i class="fas fa-laptop-code"></i>
+                            </div>
+                            <h4 class="fw-bold mb-3">Placement Portal</h4>
+                            <p class="text-muted small">Access an exclusive stream of jobs and internships curated for
+                                DBITians.</p>
+                            <ul class="feature-list mt-3">
+                                <li><i class="fas fa-check-circle me-2"></i> Direct Referrals</li>
+                                <li><i class="fas fa-check-circle me-2"></i> Early Access</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 reveal-fade" style="animation-delay: 0.3s;">
+                    <div class="card border-0 glass-card service-card tilt-element">
+                        <div class="card-body p-4">
+                            <div class="service-icon-box icon-yellow mb-4">
+                                <i class="fas fa-book-reader"></i>
+                            </div>
+                            <h4 class="fw-bold mb-3">Resource Vault</h4>
+                            <p class="text-muted small">Learn from curated webinars and workshops led by industry
+                                specialists.</p>
+                            <ul class="feature-list mt-3">
+                                <li><i class="fas fa-check-circle me-2"></i> Tech Webinars</li>
+                                <li><i class="fas fa-check-circle me-2"></i> Soft Skills</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Premium Services -->
+        <div class="services-group mb-5">
+            <div class="text-center mb-5 reveal-text">
+                <h2 class="fw-bold display-6">Premium <span class="text-holographic">Experience</span></h2>
+                <p class="text-muted">Unlock the full potential of high-tier professional networking.</p>
+            </div>
+
+            <div class="row g-4 justify-content-center">
+                <div class="col-md-4 reveal-fade">
+                    <div class="card border-0 glass-card premium-service-card tilt-element">
+                        <div class="premium-badge"><i class="fas fa-crown me-1"></i> DIAMOND</div>
+                        <div class="card-body p-5">
+                            <div class="service-icon-box mb-4 no-bg"><i
+                                    class="fas fa-handshake-angle fa-3x text-gradient-indigo"></i></div>
+                            <h4 class="fw-bold">Executive Council</h4>
+                            <p class="text-muted mb-0">Direct access to the executive-level alumni council and private
+                                roundtables.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 reveal-fade" style="animation-delay: 0.2s;">
+                    <div class="card border-0 glass-card premium-service-card tilt-element">
+                        <div class="premium-badge"><i class="fas fa-chart-line me-1"></i> ANALYTICS</div>
+                        <div class="card-body p-5">
+                            <div class="service-icon-box mb-4 no-bg"><i
+                                    class="fas fa-microchip fa-3x text-gradient-purple"></i></div>
+                            <h4 class="fw-bold">Market Intelligence</h4>
+                            <p class="text-muted mb-0">Hyper-localized salary data and job market forecasting for your
+                                specific field.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CTA Section -->
+        <div class="cta-section text-center mt-5 py-5 reveal-fade">
+            <div class="card border-0 glass-card p-5 holographic-border">
+                <h2 class="fw-bold mb-3">Ready to Accelerate Your Journey?</h2>
+                <p class="text-muted mb-5 mx-auto" style="max-width: 600px;">Join 15,000+ members who are building the
+                    future of our prestigious alumni network.</p>
+                <div class="d-flex justify-content-center">
+                    <a href="/register" class="btn btn-premium-gradient px-5 py-3 magnetic-button">
+                        <span class="btn-text fw-bold" style="font-size: 1.1rem;">
+                            Get Started Now <i class="fas fa-arrow-right ms-2"></i>
+                        </span>
+                        <div class="btn-glow"></div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 <style>
-    /* ===== PROFESSIONAL SERVICES STYLES ===== */
-    
-    /* Hero Section */
-    .page-hero {
+    /* Base Styles */
+    body {
+        font-family: 'Outfit', sans-serif;
+        background-color: #f8fafc;
+        overflow-x: hidden;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    .services-wrapper {
         position: relative;
         overflow: hidden;
-        min-height: 700px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
+        min-height: 100vh;
     }
 
-    .page-hero::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="20" cy="20" r="2" fill="rgba(255,255,255,0.1)"/><circle cx="80" cy="80" r="2" fill="rgba(255,255,255,0.1)"/></svg>');
-        animation: slideBackground 20s linear infinite;
-    }
-
-    .page-hero::after {
-        content: '';
-        position: absolute;
+    /* Mesh Background */
+    .mesh-background {
+        position: fixed;
         top: 0;
         left: 0;
         width: 100%;
         height: 100%;
-        background: radial-gradient(circle at 20% 50%, rgba(255,255,255,0.1) 0%, transparent 50%),
-                    radial-gradient(circle at 80% 80%, rgba(255,255,255,0.15) 0%, transparent 50%);
-        animation: pulse 8s ease-in-out infinite;
-    }
-
-    @keyframes slideBackground {
-        0% { transform: translate(0, 0); }
-        100% { transform: translate(100px, 100px); }
-    }
-
-    @keyframes pulse {
-        0%, 100% { opacity: 0.5; }
-        50% { opacity: 0.8; }
-    }
-
-    .page-hero-content {
-        position: relative;
-        z-index: 2;
-        text-align: center;
-        color: white;
-    }
-
-    .page-hero h1 {
-        font-size: 4rem;
-        font-weight: 900;
-        margin-bottom: 1.5rem;
-        text-shadow: 3px 3px 6px rgba(0,0,0,0.3);
-        animation: slideInDown 1s ease-out;
-        letter-spacing: -1px;
-    }
-
-    .page-hero p {
-        font-size: 1.5rem;
-        opacity: 0.95;
-        animation: slideInUp 1s ease-out 0.2s both;
-        font-weight: 500;
-    }
-
-    /* Marquee Effect */
-    .marquee-container {
-        background: linear-gradient(90deg, var(--primary), var(--secondary));
-        color: white;
-        overflow: hidden;
-        padding: 1rem 0;
-        margin: 2rem 0;
-        position: relative;
-    }
-
-    .marquee {
-        animation: marquee 30s linear infinite;
-        white-space: nowrap;
-        font-weight: 600;
-        font-size: 1.1rem;
-        letter-spacing: 1px;
-    }
-
-    @keyframes marquee {
-        0% { transform: translateX(100%); }
-        100% { transform: translateX(-100%); }
-    }
-
-    .marquee-container:hover .marquee {
-        animation-play-state: paused;
-    }
-
-    /* Service Cards */
-    .service-card {
-        background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(250, 251, 252, 1) 100%);
-        border-radius: 18px;
-        padding: 2.5rem;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.08);
-        transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
-        border: 2px solid rgba(255, 255, 255, 0.8);
-        position: relative;
-        overflow: hidden;
-    }
-
-    /* Alternating card styles - Odd */
-    .service-card:nth-child(odd) {
-        border: 2px solid rgba(245, 158, 11, 0.3);
-        background: linear-gradient(135deg, rgba(245, 158, 11, 0.08) 0%, rgba(255, 255, 255, 1) 100%);
-    }
-
-    /* Alternating card styles - Even */
-    .service-card:nth-child(even) {
-        border: 2px solid rgba(14, 165, 233, 0.3);
-        background: linear-gradient(135deg, rgba(14, 165, 233, 0.08) 0%, rgba(255, 255, 255, 1) 100%);
-    }
-
-    .service-card::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 4px;
-        background: linear-gradient(90deg, var(--primary), var(--accent), var(--secondary));
-        animation: slideGradient 3s ease infinite;
-    }
-
-    @keyframes slideGradient {
-        0% { transform: translateX(-100%); }
-        100% { transform: translateX(100%); }
-    }
-
-    .service-card::after {
-        content: '';
-        position: absolute;
-        top: -50%;
-        right: -50%;
-        width: 200%;
-        height: 200%;
-        background: radial-gradient(circle, rgba(255,255,255,0.5) 0%, transparent 70%);
-        opacity: 0;
-        transition: opacity 0.6s ease;
+        z-index: -1;
         pointer-events: none;
     }
 
-    .service-card:hover::after {
-        opacity: 1;
+    .mesh-ball {
+        position: absolute;
+        border-radius: 50%;
+        filter: blur(80px);
+        opacity: 0.15;
+        animation: mesh-float 20s infinite alternate cubic-bezier(0.45, 0, 0.55, 1);
+    }
+
+    .ball-1 {
+        width: 600px;
+        height: 600px;
+        background: #6366f1;
+        top: -10%;
+        left: -10%;
+    }
+
+    .ball-2 {
+        width: 500px;
+        height: 500px;
+        background: #a855f7;
+        bottom: 10%;
+        right: -5%;
+        animation-delay: -5s;
+    }
+
+    .ball-3 {
+        width: 400px;
+        height: 400px;
+        background: #ec4899;
+        top: 40%;
+        left: 30%;
+        animation-delay: -10s;
+    }
+
+    @keyframes mesh-float {
+        0% {
+            transform: translate(0, 0) rotate(0deg);
+        }
+
+        100% {
+            transform: translate(100px, 100px) rotate(180deg);
+        }
+    }
+
+    /* Hero */
+    .services-hero {
+        padding: 140px 0 120px;
+        background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .hero-particles {
+        position: absolute;
+        inset: 0;
+        background-image: radial-gradient(rgba(99, 102, 241, 0.1) 2px, transparent 2px);
+        background-size: 30px 30px;
+        opacity: 0.5;
+    }
+
+    .text-holographic {
+        background: linear-gradient(90deg, #60a5fa, #a78bfa, #f472b6, #60a5fa);
+        background-size: 300% 100%;
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+        animation: holographic-move 8s linear infinite;
+    }
+
+    @keyframes holographic-move {
+        0% {
+            background-position: 0% 50%;
+        }
+
+        100% {
+            background-position: 300% 50%;
+        }
+    }
+
+    /* Tags & Gradients */
+    .section-tag .tag-label {
+        font-size: 0.85rem;
+        font-weight: 800;
+        color: #6366f1;
+        letter-spacing: 2px;
+    }
+
+    .text-gradient-indigo {
+        background: linear-gradient(90deg, #4f46e5, #6366f1);
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    .text-gradient-purple {
+        background: linear-gradient(90deg, #9333ea, #a855f7);
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    /* Service Cards */
+    .glass-card {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(25px);
+        border: 1px solid rgba(255, 255, 255, 0.7) !important;
+        border-radius: 40px !important;
+        box-shadow: 0 40px 80px rgba(0, 0, 0, 0.06) !important;
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    .service-card {
+        height: 100%;
+        transform-style: preserve-3d;
     }
 
     .service-card:hover {
-        transform: translateY(-25px) scale(1.05);
-        box-shadow: 0 35px 80px rgba(0,0,0,0.2);
-        border-color: var(--accent);
+        transform: translateY(-15px) scale(1.02);
+        box-shadow: 0 50px 100px rgba(99, 102, 241, 0.1) !important;
     }
 
-    .service-card:nth-child(odd):hover {
-        box-shadow: 0 35px 80px rgba(245, 158, 11, 0.25);
-    }
-
-    .service-card:nth-child(even):hover {
-        box-shadow: 0 35px 80px rgba(14, 165, 233, 0.25);
-    }
-
-    .service-icon {
-        font-size: 3.8rem;
-        margin-bottom: 1.5rem;
-        display: inline-block;
-        transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
-        position: relative;
-        z-index: 2;
-    }
-
-    .service-card:hover .service-icon {
-        transform: scale(1.3) rotateY(360deg) rotateZ(10deg);
-        filter: drop-shadow(0 10px 25px rgba(0,0,0,0.25));
-    }
-
-    .service-card h4 {
-        color: var(--primary);
-        font-size: 1.5rem;
-        margin-bottom: 0.8rem;
-        font-weight: 700;
-        position: relative;
-        z-index: 2;
-    }
-
-    .service-card p {
-        color: var(--text-dark);
-        line-height: 1.7;
-        position: relative;
-        z-index: 2;
-        font-size: 1rem;
-    }
-
-    .service-card ul {
-        margin-top: 1.5rem;
-        padding-left: 1.5rem;
-        position: relative;
-        z-index: 2;
-    }
-
-    .service-card li {
-        color: var(--text-light);
-        margin-bottom: 0.7rem;
-        transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-        font-size: 0.95rem;
-    }
-
-    .service-card:hover li {
-        color: var(--primary);
-        transform: translateX(8px);
-    }
-
-    /* Premium Cards */
-    .premium-card {
-        background: linear-gradient(135deg, var(--accent) 0%, var(--secondary) 100%);
-        color: white;
+    .service-icon-box {
+        width: 60px;
+        height: 60px;
         border-radius: 18px;
-        padding: 2.5rem;
-        box-shadow: 0 15px 50px rgba(0,0,0,0.2);
-        transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
-        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+        transition: transform 0.5s;
+    }
+
+    .service-card:hover .service-icon-box {
+        transform: rotateY(360deg) scale(1.2);
+    }
+
+    .icon-blue {
+        background: rgba(99, 102, 241, 0.1);
+        color: #6366f1;
+    }
+
+    .icon-green {
+        background: rgba(16, 185, 129, 0.1);
+        color: #10b981;
+    }
+
+    .icon-orange {
+        background: rgba(245, 158, 11, 0.1);
+        color: #f59e0b;
+    }
+
+    .icon-purple {
+        background: rgba(168, 85, 247, 0.1);
+        color: #a855f7;
+    }
+
+    .icon-pink {
+        background: rgba(236, 72, 153, 0.1);
+        color: #ec4899;
+    }
+
+    .icon-cyan {
+        background: rgba(6, 182, 212, 0.1);
+        color: #0891b2;
+    }
+
+    .icon-indigo {
+        background: rgba(79, 70, 229, 0.1);
+        color: #4f46e5;
+    }
+
+    .icon-yellow {
+        background: rgba(234, 179, 8, 0.1);
+        color: #ca8a04;
+    }
+
+    .feature-list {
+        list-style: none;
+        padding: 0;
+    }
+
+    .feature-list li {
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: #64748b;
+        margin-bottom: 8px;
+    }
+
+    .feature-list li i {
+        color: #10b981;
+    }
+
+    /* Premium Section */
+    .premium-service-card {
+        text-align: center;
+        border: 2px solid rgba(168, 85, 247, 0.1) !important;
         overflow: hidden;
-        border: 2px solid rgba(255, 255, 255, 0.2);
-    }
-
-    .premium-card::before {
-        content: '';
-        position: absolute;
-        top: -50%;
-        right: -50%;
-        width: 200%;
-        height: 200%;
-        background: radial-gradient(circle, rgba(255,255,255,0.15) 0%, transparent 70%);
-        animation: pulse 4s ease-in-out infinite;
-    }
-
-    .premium-card:hover {
-        transform: translateY(-30px) scale(1.05);
-        box-shadow: 0 40px 100px rgba(0,0,0,0.3), 0 0 60px rgba(255, 255, 255, 0.1);
-        border-color: rgba(255, 255, 255, 0.4);
     }
 
     .premium-badge {
         position: absolute;
-        top: 1rem;
-        right: 1rem;
-        background: rgba(255,255,255,0.3);
-        color: white;
-        padding: 0.5rem 1rem;
+        top: 20px;
+        right: 20px;
+        background: rgba(168, 85, 247, 0.1);
+        color: #a855f7;
+        padding: 4px 12px;
         border-radius: 50px;
-        font-size: 0.8rem;
-        font-weight: 700;
-        backdrop-filter: blur(10px);
+        font-size: 0.7rem;
+        font-weight: 800;
+        letter-spacing: 1px;
     }
 
-    .premium-card .service-icon {
-        position: relative;
-        z-index: 2;
-        filter: drop-shadow(0 2px 10px rgba(0,0,0,0.2));
+    .no-bg {
+        background: transparent !important;
     }
 
-    .premium-card h4,
-    .premium-card p {
-        position: relative;
-        z-index: 2;
+    /* CTA Section */
+    .holographic-border::after {
+        content: '';
+        position: absolute;
+        inset: -2px;
+        z-index: -1;
+        background: linear-gradient(90deg, #60a5fa, #a78bfa, #f472b6, #60a5fa);
+        background-size: 300% 100%;
+        border-radius: 42px;
+        opacity: 0.15;
+        animation: holographic-move 8s linear infinite;
+    }
+
+    .btn-premium-gradient {
+        background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
         color: white;
+        border-radius: 20px;
+        border: none;
+        box-shadow: 0 20px 40px rgba(99, 102, 241, 0.2);
+        transition: all 0.3s;
     }
 
-    /* Section Header */
-    .section-header {
-        text-align: center;
-        margin-bottom: 3rem;
+    .magnetic-button {
+        transition: transform 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+        overflow: hidden;
+        position: relative;
     }
 
-    .section-header h2 {
-        font-size: 3rem;
-        color: var(--primary);
-        margin-bottom: 0.8rem;
-        font-weight: 900;
-        letter-spacing: -1px;
+    .btn-glow {
+        position: absolute;
+        width: 120px;
+        height: 120px;
+        background: radial-gradient(circle, rgba(255, 255, 255, 0.4) 0%, transparent 70%);
+        border-radius: 50%;
+        pointer-events: none;
+        opacity: 0;
+        transition: opacity 0.3s;
+        transform: translate(-50%, -50%);
     }
 
-    .section-header p {
-        font-size: 1.2rem;
-        color: var(--text-light);
-        max-width: 600px;
-        margin: 0 auto;
-        line-height: 1.6;
-    }
-
-    /* Services Showcase */
-    .services-showcase {
-        padding: 6rem 2rem;
-        background: white;
-    }
-
-    .service-category {
-        margin-bottom: 4rem;
-    }
-
-    /* Services Grid */
-    .services-grid {
-        max-width: 1400px;
-        margin: 3rem auto 0;
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-        gap: 2.5rem;
-    }
-
-    .premium-grid {
-        max-width: 1400px;
-        margin: 3rem auto 0;
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
-        gap: 2.5rem;
+    .magnetic-button:hover .btn-glow {
+        opacity: 1;
     }
 
     /* Animations */
-    @keyframes slideInDown {
-        from { opacity: 0; transform: translateY(-40px); }
-        to { opacity: 1; transform: translateY(0); }
+    .reveal-text {
+        opacity: 0;
+        transform: translateY(20px);
+        transition: all 0.8s ease;
     }
 
-    @keyframes slideInUp {
-        from { opacity: 0; transform: translateY(40px); }
-        to { opacity: 1; transform: translateY(0); }
+    .reveal-fade {
+        opacity: 0;
+        transform: scale(0.98);
+        transition: all 0.8s ease;
     }
 
-    @keyframes fadeDown {
-        from { opacity: 0; transform: translateY(-20px); }
-        to { opacity: 1; transform: translateY(0); }
-    }
-
-    .animate-fade-down {
-        animation: fadeDown 0.8s ease-out;
-    }
-
-    .animate-feature {
-        animation: featureBounce 0.7s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-    }
-
-    @keyframes featureBounce {
-        0% { opacity: 0; transform: translateY(30px) scale(0.9); }
-        100% { opacity: 1; transform: translateY(0) scale(1); }
-    }
-
-    /* CTA Button with Pulse */
-    .cta-section {
-        text-align: center;
-        padding: 4rem 2rem;
-        background: linear-gradient(135deg, rgba(30, 58, 138, 0.05) 0%, rgba(14, 165, 233, 0.05) 100%);
-    }
-
-    .join-button {
-        background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-        color: white;
-        border: none;
-        padding: 1.5rem 3.5rem;
-        font-size: 1.2rem;
-        font-weight: 700;
-        border-radius: 50px;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        box-shadow: 0 15px 40px rgba(13, 110, 253, 0.4);
-        position: relative;
-        overflow: hidden;
-        letter-spacing: 1px;
-        animation: pulse-button 2s ease-in-out infinite;
-    }
-
-    .join-button::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: -100%;
-        width: 100%;
-        height: 100%;
-        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-        transition: left 0.6s ease;
-    }
-
-    .join-button:hover::before {
-        left: 100%;
-    }
-
-    .join-button:hover {
-        transform: translateY(-5px) scale(1.08);
-        box-shadow: 0 25px 60px rgba(13, 110, 253, 0.5);
-    }
-
-    .join-button:active {
-        transform: translateY(-2px);
-    }
-
-    @keyframes pulse-button {
-        0%, 100% {
-            box-shadow: 0 15px 40px rgba(13, 110, 253, 0.4);
-        }
-        50% {
-            box-shadow: 0 15px 60px rgba(13, 110, 253, 0.7);
-        }
-    }
-
-    @media (max-width: 768px) {
-        .page-hero { min-height: 500px; }
-        .page-hero h1 { font-size: 2.5rem; }
-        .section-header h2 { font-size: 2rem; }
-        .services-grid, .premium-grid { grid-template-columns: 1fr; }
-        .marquee { font-size: 0.95rem; }
-        .join-button {
-            padding: 1.2rem 2.5rem;
-            font-size: 1.1rem;
-        }
+    .revealed {
+        opacity: 1 !important;
+        transform: translate(0, 0) scale(1) !important;
+        visibility: visible !important;
     }
 </style>
-
-    <!-- ===== MARQUEE BANNER ===== -->
-    <div class="marquee-container">
-        <div class="marquee">
-            ✨ Empowering Career Growth • Connecting Alumni Worldwide • Building Opportunities • 🌟 Trusted by 1000+ Users • Excellence in Every Service 🚀
-        </div>
-    </div>
-
-    <!-- ===== HERO SECTION ===== -->
-    <section class="page-hero" style="background: linear-gradient(135deg, var(--secondary) 0%, var(--accent) 100%);">
-        <div class="page-hero-content animate-fade-down">
-            <h1>Our Services</h1>
-            <p>Comprehensive Solutions for Alumni and Students</p>
-        </div>
-    </section>
-
-    <!-- ===== SERVICES SHOWCASE ===== -->
-    <section class="services-showcase">
-        <div class="section-header animate-fade-down">
-            <h2>What We Offer</h2>
-            <p>Tailored services designed to meet your needs</p>
-        </div>
-
-        <!-- ===== ALUMNI SERVICES ===== -->
-        <div class="service-category animate-fade-down">
-            <h3 style="text-align: center; color: var(--primary); margin-bottom: 2rem; font-size: 1.8rem;">
-                📊 Alumni Services
-            </h3>
-            <div class="services-grid">
-                <div class="service-card animate-feature">
-                    <div class="service-icon">👤</div>
-                    <h4>Profile Management</h4>
-                    <p>Create and maintain a comprehensive professional profile to showcase your achievements and expertise.</p>
-                    <ul style="margin-top: 1rem; padding-left: 1.5rem;">
-                        <li>Career history tracking</li>
-                        <li>Skills showcase</li>
-                        <li>Achievement highlights</li>
-                    </ul>
-                </div>
-                <div class="service-card animate-feature" style="animation-delay: 0.1s;">
-                    <div class="service-icon">💼</div>
-                    <h4>Job Posting</h4>
-                    <p>Post job openings and reach qualified candidates from our alumni network.</p>
-                    <ul style="margin-top: 1rem; padding-left: 1.5rem;">
-                        <li>Unlimited job postings</li>
-                        <li>Targeted reach</li>
-                        <li>Application tracking</li>
-                    </ul>
-                </div>
-                <div class="service-card animate-feature" style="animation-delay: 0.2s;">
-                    <div class="service-icon">🎓</div>
-                    <h4>Mentorship Program</h4>
-                    <p>Guide the next generation and share your valuable experience and insights.</p>
-                    <ul style="margin-top: 1rem; padding-left: 1.5rem;">
-                        <li>One-on-one sessions</li>
-                        <li>Group workshops</li>
-                        <li>Career guidance</li>
-                    </ul>
-                </div>
-                <div class="service-card animate-feature" style="animation-delay: 0.3s;">
-                    <div class="service-icon">🤝</div>
-                    <h4>Networking Events</h4>
-                    <p>Connect with fellow alumni at exclusive networking events and conferences.</p>
-                    <ul style="margin-top: 1rem; padding-left: 1.5rem;">
-                        <li>Virtual meetups</li>
-                        <li>Industry conferences</li>
-                        <li>Local chapter events</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-
-        <!-- ===== STUDENT SERVICES ===== -->
-        <div class="service-category animate-fade-down" style="margin-top: 4rem;">
-            <h3 style="text-align: center; color: var(--secondary); margin-bottom: 2rem; font-size: 1.8rem;">
-                🎯 Student Services
-            </h3>
-            <div class="services-grid">
-                <div class="service-card animate-feature">
-                    <div class="service-icon">🔍</div>
-                    <h4>Career Exploration</h4>
-                    <p>Discover various career paths through alumni success stories and industry insights.</p>
-                    <ul style="margin-top: 1rem; padding-left: 1.5rem;">
-                        <li>Career guides</li>
-                        <li>Industry insights</li>
-                        <li>Success stories</li>
-                    </ul>
-                </div>
-                <div class="service-card animate-feature" style="animation-delay: 0.1s;">
-                    <div class="service-icon">👨‍🏫</div>
-                    <h4>Mentoring & Guidance</h4>
-                    <p>Get personalized guidance from experienced professionals in your field of interest.</p>
-                    <ul style="margin-top: 1rem; padding-left: 1.5rem;">
-                        <li>Personal mentors</li>
-                        <li>Career coaching</li>
-                        <li>Skill development</li>
-                    </ul>
-                </div>
-                <div class="service-card animate-feature" style="animation-delay: 0.2s;">
-                    <div class="service-icon">💻</div>
-                    <h4>Job & Internship Board</h4>
-                    <p>Access exclusive job and internship opportunities posted by alumni companies.</p>
-                    <ul style="margin-top: 1rem; padding-left: 1.5rem;">
-                        <li>Live job listings</li>
-                        <li>Internship programs</li>
-                        <li>Application assistance</li>
-                    </ul>
-                </div>
-                <div class="service-card animate-feature" style="animation-delay: 0.3s;">
-                    <div class="service-icon">📚</div>
-                    <h4>Learning Resources</h4>
-                    <p>Develop skills through webinars, workshops, and training programs conducted by experts.</p>
-                    <ul style="margin-top: 1rem; padding-left: 1.5rem;">
-                        <li>Live webinars</li>
-                        <li>Skill workshops</li>
-                        <li>Resource library</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-
-        <!-- ===== PREMIUM SERVICES ===== -->
-        <div class="service-category animate-fade-down" style="margin-top: 4rem;">
-            <h3 style="text-align: center; color: var(--accent); margin-bottom: 2rem; font-size: 1.8rem;">
-                ⭐ Premium Services
-            </h3>
-            <div class="premium-grid">
-                <div class="premium-card animate-feature">
-                    <div class="premium-badge">PREMIUM</div>
-                    <div class="service-icon">🎯</div>
-                    <h4>Executive Networking</h4>
-                    <p>Exclusive access to executive-level networking events and private roundtables.</p>
-                </div>
-                <div class="premium-card animate-feature" style="animation-delay: 0.1s;">
-                    <div class="premium-badge">PREMIUM</div>
-                    <div class="service-icon">📊</div>
-                    <h4>Analytics & Insights</h4>
-                    <p>Get detailed analytics about job market trends and career advancement opportunities.</p>
-                </div>
-                <div class="premium-card animate-feature" style="animation-delay: 0.2s;">
-                    <div class="premium-badge">PREMIUM</div>
-                    <div class="service-icon">🏆</div>
-                    <h4>Resume Enhancement</h4>
-                    <p>Professional review and enhancement of your resume by industry experts.</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- ===== CTA SECTION ===== -->
-        <div class="cta-section">
-            <h2 style="color: var(--primary); font-size: 2.2rem; margin-bottom: 1.5rem; font-weight: 800;">
-                Ready to Transform Your Career?
-            </h2>
-            <p style="color: var(--text-light); font-size: 1.1rem; margin-bottom: 2.5rem; max-width: 600px; margin-left: auto; margin-right: auto;">
-                Join thousands of alumni who have already benefited from our comprehensive services and exclusive opportunities.
-            </p>
-            <a href="/register" class="join-button" style="display: inline-block; text-decoration: none; color: white;">
-                <i class="fas fa-arrow-right" style="margin-right: 0.5rem;"></i>
-                Join Alumni Hub Now
-            </a>
-        </div>
-    </section>
-
-
 
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-    const cursor = document.createElement('div'); cursor.className = 'custom-cursor';
-    const cursorDot = document.createElement('div'); cursorDot.className = 'cursor-dot';
-    document.body.appendChild(cursor); document.body.appendChild(cursorDot);
-    let mouseX=0,mouseY=0,cursorX=0,cursorY=0,dotX=0,dotY=0;
-    document.addEventListener('mousemove',(e)=>{mouseX=e.clientX;mouseY=e.clientY;dotX=e.clientX;dotY=e.clientY;});
-    function animateCursor(){const delay=0.15;cursorX+=(mouseX-cursorX)*delay;cursorY+=(mouseY-cursorY)*delay;cursor.style.left=cursorX+'px';cursor.style.top=cursorY+'px';cursorDot.style.left=dotX+'px';cursorDot.style.top=dotY+'px';requestAnimationFrame(animateCursor);}
-    animateCursor();
-    document.querySelectorAll('a,button,.service-card,.feature-card,.process-step').forEach(el=>{el.addEventListener('mouseenter',()=>{cursor.classList.add('cursor-hover');cursorDot.classList.add('cursor-hover');});el.addEventListener('mouseleave',()=>{cursor.classList.remove('cursor-hover');cursorDot.classList.remove('cursor-hover');});});
-    document.addEventListener('mousedown',()=>{cursor.classList.add('cursor-click');cursorDot.classList.add('cursor-click');});
-    document.addEventListener('mouseup',()=>{cursor.classList.remove('cursor-click');cursorDot.classList.remove('cursor-click');});
-    const particlesContainer=document.createElement('div');particlesContainer.className='particles-container';document.body.appendChild(particlesContainer);
-    document.addEventListener('mousemove',(e)=>{if(Math.random()>0.85){const p=document.createElement('div');p.className='cursor-particle';p.style.left=e.clientX+'px';p.style.top=e.clientY+'px';particlesContainer.appendChild(p);setTimeout(()=>p.remove(),1000);}});
-});
-</script>
-<style>
-body,a,button,.service-card,.feature-card,.process-step{cursor:none!important}.custom-cursor{width:40px;height:40px;border:2px solid rgba(102,126,234,.8);border-radius:50%;position:fixed;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:width .3s,height .3s,border-color .3s,background .3s;mix-blend-mode:difference}.cursor-dot{width:8px;height:8px;background:rgba(102,126,234,1);border-radius:50%;position:fixed;pointer-events:none;z-index:10000;transform:translate(-50%,-50%);transition:width .2s,height .2s,background .2s}.custom-cursor.cursor-hover{width:60px;height:60px;border-color:rgba(245,158,11,.9);background:rgba(245,158,11,.1)}.cursor-dot.cursor-hover{width:12px;height:12px;background:rgba(245,158,11,1)}.custom-cursor.cursor-click{width:30px;height:30px;border-color:rgba(16,185,129,1)}.cursor-dot.cursor-click{width:6px;height:6px;background:rgba(16,185,129,1)}.particles-container{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:9998}.cursor-particle{position:absolute;width:4px;height:4px;background:radial-gradient(circle,rgba(102,126,234,.8),transparent);border-radius:50%;pointer-events:none;animation:particleFade 1s ease-out forwards;transform:translate(-50%,-50%)}@keyframes particleFade{0%{opacity:1;transform:translate(-50%,-50%) scale(1)}100%{opacity:0;transform:translate(-50%,-50%) scale(0) translateY(-30px)}}@media (max-width:768px){.custom-cursor,.cursor-dot,.cursor-particle{display:none!important}body,a,button,.service-card,.feature-card,.process-step{cursor:auto!important}}
-</style>
+    document.addEventListener('DOMContentLoaded', () => {
+        // Reveal Animations with stagger
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry, idx) => {
+                if (entry.isIntersecting) {
+                    setTimeout(() => {
+                        entry.target.classList.add('revealed');
+                    }, idx * 120);
+                }
+            });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.reveal-text, .reveal-fade').forEach(el => observer.observe(el));
 
+        // Magnetic Button
+        const magneticBtn = document.querySelector('.magnetic-button');
+        const btnGlow = document.querySelector('.btn-glow');
+        if (magneticBtn) {
+            magneticBtn.addEventListener('mousemove', (e) => {
+                const { left, top, width, height } = magneticBtn.getBoundingClientRect();
+                const x = e.clientX - left; const y = e.clientY - top;
+                if (btnGlow) { btnGlow.style.left = `${x}px`; btnGlow.style.top = `${y}px`; }
+                const moveX = (x - width / 2) * 0.35; const moveY = (y - height / 2) * 0.35;
+                magneticBtn.style.transform = `translate(${moveX}px, ${moveY}px)`;
+            });
+            magneticBtn.addEventListener('mouseleave', () => { magneticBtn.style.transform = `translate(0, 0)`; });
+        }
+
+        // 3D Tilt Effects
+        const tiltElements = document.querySelectorAll('.tilt-element');
+        tiltElements.forEach(el => {
+            el.addEventListener('mousemove', (e) => {
+                const { left, top, width, height } = el.getBoundingClientRect();
+                const x = (e.clientX - left) / width;
+                const y = (e.clientY - top) / height;
+                const rX = (y - 0.5) * 10; const rY = (x - 0.5) * -10;
+                el.style.transform = `perspective(1000px) rotateX(${rX}deg) rotateY(${rY}deg) translateZ(15px)`;
+            });
+            el.addEventListener('mouseleave', () => { el.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) translateZ(0px)`; });
+        });
+
+        // Typing Effect for Holographic Text
+        const holograms = document.querySelectorAll('.text-holographic');
+        holograms.forEach(title => {
+            const txt = title.innerText; title.innerHTML = ''; let i = 0;
+            const type = () => { if (i < txt.length) { title.innerHTML += txt.charAt(i); i++; setTimeout(type, 150); } };
+            setTimeout(type, 800);
+        });
+    });
+</script>
 {% endblock %}
