@@ -97,7 +97,8 @@
 
     <!-- ===== NAVBAR ===== -->
     <!-- ===== ADVANCED FLOATING NAVBAR ===== -->
-    <nav class="navbar navbar-expand-lg navbar-floating fixed-top smart-scroll-nav" id="mainNavbar">
+    <!-- ===== ADVANCED FLOATING NAVBAR ===== -->
+    <nav class="navbar navbar-expand-lg navbar-floating fixed-top smart-scroll-nav nav-dark-mode" id="mainNavbar">
         <div class="container-fluid navbar-container">
             <a class="navbar-brand brand-premium" href="/">
                 <div class="brand-logo-container">
@@ -197,10 +198,16 @@
 
         <!-- Mobile Menu Overlay -->
         <div class="mobile-menu-overlay" id="mobileMenuOverlay">
+            <!-- Close Button -->
+            <button class="btn btn-circle btn-light position-absolute top-0 end-0 m-4 shadow-sm" id="closeMobileMenu"
+                style="width: 45px; height: 45px; z-index: 10;">
+                <i class="fas fa-times text-danger"></i>
+            </button>
+
             <div class="mobile-menu-content">
                 <!-- User Profile Section for Mobile -->
                 {% if current_user.is_authenticated %}
-                <div class="mobile-profile-card" style="--delay: 0.05s">
+                <div class="mobile-profile-card" style="--delay: 0.1s">
                     <div class="mobile-avatar">
                         {{ current_user.name[0] }}
                     </div>
@@ -222,30 +229,40 @@
                         <a href="/profile" class="action-btn"><i class="fas fa-user"></i> Profile</a>
                     </div>
                 </div>
+                <!-- Divider -->
+                <hr class="w-100 border-white opacity-25" style="max-width: 80%;">
                 {% endif %}
 
                 <div class="mobile-links-container">
-                    <a href="/" class="mobile-nav-link" style="--delay: 0.1s"><i class="fas fa-home"></i> Home</a>
-                    <a href="/about" class="mobile-nav-link" style="--delay: 0.2s"><i class="fas fa-info-circle"></i>
-                        About</a>
-                    <a href="/services" class="mobile-nav-link" style="--delay: 0.3s"><i class="fas fa-briefcase"></i>
-                        Services</a>
-                    <a href="/contact" class="mobile-nav-link" style="--delay: 0.4s"><i class="fas fa-envelope"></i>
-                        Contact</a>
+                    <a href="/" class="mobile-nav-link" style="--delay: 0.2s"><i class="fas fa-home me-2"></i> Home</a>
+                    <a href="/about" class="mobile-nav-link" style="--delay: 0.3s"><i
+                            class="fas fa-info-circle me-2"></i> About</a>
+                    <a href="/services" class="mobile-nav-link" style="--delay: 0.4s"><i
+                            class="fas fa-briefcase me-2"></i> Services</a>
+                    <a href="/contact" class="mobile-nav-link" style="--delay: 0.5s"><i
+                            class="fas fa-envelope me-2"></i> Contact</a>
                 </div>
 
                 {% if current_user.is_authenticated %}
-                <div class="mobile-logout-section" style="--delay: 0.5s">
-                    <a href="/logout" class="btn btn-danger-soft btn-lg w-100"><i class="fas fa-sign-out-alt"></i>
-                        Logout</a>
+                <div class="mobile-logout-section w-100 px-4 mt-3" style="--delay: 0.6s">
+                    <a href="/logout" class="btn btn-white text-danger btn-lg w-100 shadow-sm"
+                        style="border-radius: 12px; font-weight: 600;">
+                        <i class="fas fa-sign-out-alt me-2"></i> Logout
+                    </a>
                 </div>
                 {% else %}
-                <div class="mobile-auth-buttons" style="--delay: 0.5s">
-                    <a href="/login" class="btn btn-outline-light btn-lg w-100 mb-3">Login</a>
-                    <a href="/register" class="btn btn-premium-gradient btn-lg w-100">Register</a>
+                <div class="mobile-auth-buttons px-4" style="--delay: 0.6s">
+                    <a href="/login" class="btn btn-light btn-lg w-100 shadow-sm"
+                        style="color: var(--primary); font-weight: 700;">
+                        <i class="fas fa-sign-in-alt me-2"></i> Login
+                    </a>
+                    <a href="/register" class="btn btn-premium-gradient btn-lg w-100 shadow-premium">
+                        Register Now <i class="fas fa-arrow-right ms-2"></i>
+                    </a>
                 </div>
                 {% endif %}
             </div>
+
             <div class="mobile-menu-bg-decoration">
                 <div class="blob blob-1"></div>
                 <div class="blob blob-2"></div>
@@ -453,26 +470,43 @@
         });
 
         // Mobile Menu Toggle Logic
+        // Mobile Menu Toggle Logic
         const toggler = document.getElementById('navbarToggler');
         const overlay = document.getElementById('mobileMenuOverlay');
+        const closeBtn = document.getElementById('closeMobileMenu');
         const mobileLinks = document.querySelectorAll('.mobile-nav-link');
 
-        if (toggler && overlay) {
-            toggler.addEventListener('click', () => {
-                toggler.classList.toggle('active');
-                overlay.classList.toggle('active');
-                document.body.style.overflow = overlay.classList.contains('active') ? 'hidden' : 'auto';
-            });
+        function toggleMenu() {
+            toggler.classList.toggle('active');
+            overlay.classList.toggle('active');
+            // Toggle body scroll
+            if (overlay.classList.contains('active')) {
+                document.body.style.overflow = 'hidden';
+            } else {
+                document.body.style.overflow = '';
+            }
+        }
 
-            // Close menu when a link is clicked
-            mobileLinks.forEach(link => {
-                link.addEventListener('click', () => {
-                    toggler.classList.remove('active');
-                    overlay.classList.remove('active');
-                    document.body.style.overflow = 'auto';
-                });
+        if (toggler && overlay) {
+            toggler.addEventListener('click', toggleMenu);
+        }
+
+        if (closeBtn) {
+            closeBtn.addEventListener('click', () => {
+                if (overlay.classList.contains('active')) {
+                    toggleMenu();
+                }
             });
         }
+
+        // Close menu when a link is clicked
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                if (overlay.classList.contains('active')) {
+                    toggleMenu();
+                }
+            });
+        });
 
         // Magnetic Branding
         const brand = document.querySelector('.navbar-brand');
@@ -500,6 +534,17 @@
             link.addEventListener('mouseleave', () => {
                 link.style.transform = 'translate(0, 0)';
             });
+        });
+
+        // 4. SCROLL PROGRESS BAR
+        window.addEventListener('scroll', () => {
+            const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+            const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrollPercentage = (scrollTop / scrollHeight) * 100;
+            const progressBar = document.getElementById('scrollProgressBar');
+            if (progressBar) {
+                progressBar.style.width = scrollPercentage + '%';
+            }
         });
 
         // 3. GLOBAL PAGE REVEAL

@@ -309,12 +309,13 @@ def contact():
 
             # ===== SEND EMAIL TO ADMIN =====
             try:
-                admin_email = os.getenv('ADMIN_EMAIL', 'rajendramohan7800@gmail.com')
+                admin_email = os.getenv('ADMIN_EMAIL', 'alumnihub26@gmail.com')
                 submission_time = datetime.now().strftime('%d %B %Y at %I:%M %p')
 
                 # Email to admin
                 msg = Message(
                     subject=f'📬 New Contact: {subject} | Alumni Hub',
+                    sender=(f"{name} (via Alumni Hub)", app.config['MAIL_USERNAME']),
                     recipients=[admin_email],
                     html=f'''
                     <div style="font-family: Arial, sans-serif; max-width: 700px; margin: 0 auto; background: linear-gradient(135deg, #f0f4ff 0%, #f8f9ff 100%); padding: 30px; border-radius: 15px;">
