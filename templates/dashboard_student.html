@@ -2,7 +2,19 @@
 {% extends "base.html" %}
 
 {% block content %}
+<!-- Premium Fonts -->
+<link
+    href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet">
+
 <div class="dashboard-wrapper">
+    <!-- Animated Mesh Background -->
+    <div class="mesh-background">
+        <div class="mesh-ball ball-1"></div>
+        <div class="mesh-ball ball-2"></div>
+        <div class="mesh-ball ball-3"></div>
+        <div class="mesh-ball ball-4"></div>
+    </div>
     <!-- Hero Section -->
     <div class="hero-section glass-hero"
         style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 80px 0; position: relative; overflow: hidden; border-bottom: 1px solid rgba(255,255,255,0.1);">
@@ -21,11 +33,12 @@
                             id="timeGreetingBadge">
                             <i class="far fa-clock me-1"></i> <span id="dynamicGreeting">Loading...</span>
                         </div>
-                        <h1 class="text-white display-4 fw-bold mb-3">
-                            <i class="fas fa-user-graduate me-3"></i>Hello, <span class="text-gradient-cyan">{{
+                        <h1 class="text-white display-4 fw-bold mb-3 reveal-text">
+                            <i class="fas fa-user-graduate me-3"></i>Hello, <span
+                                class="text-holographic typing-text">{{
                                 current_user.name }}!</span>
                         </h1>
-                        <p class="text-white-50 lead mb-4" style="font-size: 1.25rem; max-width: 600px;">
+                        <p class="text-white-50 lead mb-4 reveal-fade" style="font-size: 1.25rem; max-width: 600px;">
                             Empower your future. Connect with the elite network of alumni and mentors.
                         </p>
 
@@ -105,7 +118,7 @@
                             <i class="fas fa-users-viewfinder"></i>
                         </div>
                         <div class="stat-content">
-                            <h3 class="stat-number">{{ alumni | length }}</h3>
+                            <h3 class="stat-number counter" data-target="{{ alumni | length }}">0</h3>
                             <p class="stat-label">Alumni</p>
                         </div>
                     </div>
@@ -117,7 +130,7 @@
                             <i class="fas fa-chalkboard-teacher"></i>
                         </div>
                         <div class="stat-content">
-                            <h3 class="stat-number">{{ faculty | length }}</h3>
+                            <h3 class="stat-number counter" data-target="{{ faculty | length }}">0</h3>
                             <p class="stat-label">Mentors</p>
                         </div>
                     </div>
@@ -128,7 +141,8 @@
                             <i class="fas fa-graduation-cap"></i>
                         </div>
                         <div class="stat-content">
-                            <h3 class="stat-number">{{ student['semester'] or 'N/A' }}</h3>
+                            <h3 class="stat-number counter" data-target="{{ student['semester'] or 0 }}">{{
+                                student['semester'] or '0' }}</h3>
                             <p class="stat-label">Semester</p>
                         </div>
                     </div>
@@ -140,7 +154,7 @@
                             <i class="fas fa-star"></i>
                         </div>
                         <div class="stat-content">
-                            <h3 class="stat-number" style="color: #059669;">{{ (student['cgpa'] or 0) }}</h3>
+                            <h3 class="stat-number counter-float" data-target="{{ (student['cgpa'] or 0) }}">0</h3>
                             <p class="stat-label">GPA Score</p>
                         </div>
                     </div>
@@ -213,8 +227,9 @@
     {% endif %}
 
     <!-- Filter & Search Section -->
-    <div class="card border-0 shadow-lg mb-5" style="border-radius: 20px; overflow: hidden; border: 2px solid #e9ecef;">
-        <div class="filter-section p-4 p-md-5" style="background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);">
+    <div class="card border-0 shadow-lg mb-5 reveal-fade"
+        style="border-radius: 30px; overflow: hidden; border: 1px solid rgba(255,255,255,0.2);">
+        <div class="filter-section p-4 p-md-5" style="background: rgba(255,255,255,0.3); backdrop-filter: blur(20px);">
             <div class="row g-4 align-items-end">
                 <div class="col-lg-6">
                     <label class="form-label fw-bold mb-2"><i class="fas fa-search me-2 text-primary"></i> Global
@@ -254,7 +269,7 @@
                 {% for alum in alumni %}
                 <div class="col-lg-4 col-md-6 user-card alum-card" data-name="{{ alum['name'].lower() }}"
                     data-info="{{ (alum['company_name'] or alum['department'] or '').lower() }}">
-                    <div class="premium-card">
+                    <div class="premium-card holographic-border">
                         <div class="card-gradient-top alumni-gradient"></div>
                         <div class="card-avatar-wrapper">
                             <img src="{{ alum['profile_pic'] or 'https://ui-avatars.com/api/?name=' + alum['name'] + '&bg=667eea&color=fff' }}"
@@ -293,7 +308,7 @@
                 {% for s in other_students %}
                 <div class="col-lg-4 col-md-6 user-card student-card" data-name="{{ s['name'].lower() }}"
                     data-info="{{ (s['department'] or s['degree'] or '').lower() }}">
-                    <div class="premium-card">
+                    <div class="premium-card holographic-border">
                         <div class="card-gradient-top student-gradient"></div>
                         <div class="card-avatar-wrapper">
                             <img src="{{ s['profile_pic'] or 'https://ui-avatars.com/api/?name=' + s['name'] + '&bg=4facfe&color=fff' }}"
@@ -340,7 +355,7 @@
                 {% for f in faculty %}
                 <div class="col-lg-4 col-md-6 user-card faculty-card" data-name="{{ f['name'].lower() }}"
                     data-info="{{ (f['department'] or f['designation'] or '').lower() }}">
-                    <div class="premium-card">
+                    <div class="premium-card holographic-border">
                         <div class="card-gradient-top faculty-gradient"></div>
                         <div class="card-avatar-wrapper">
                             <img src="{{ f['profile_pic'] or 'https://ui-avatars.com/api/?name=' + f['name'] + '&bg=f093fb&color=fff' }}"
@@ -374,11 +389,14 @@
     </div>
 
     <!-- Premium Mentorship Section -->
-    <div class="row mt-5 mb-5 g-4 align-items-center" style="animation: slideInUp 0.9s ease;">
-        <div class="col-lg-6">
+    <div class="row mt-5 mb-5 g-4 align-items-center">
+        <div class="col-lg-6 reveal-text">
             <div class="mentorship-hero d-flex align-items-center p-5 text-white shadow-lg"
-                style="background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%); border-radius: 30px; position: relative; overflow: hidden; min-height: 400px;">
+                style="background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%); border-radius: 40px; position: relative; overflow: hidden; min-height: 400px; border: 1px solid rgba(255,255,255,0.1);">
                 <div class="hero-particles"></div>
+                <div class="glow-point"
+                    style="position: absolute; top: -50px; right: -50px; width: 200px; height: 200px; background: rgba(59, 130, 246, 0.2); filter: blur(60px); border-radius: 50%;">
+                </div>
                 <div class="z-index-2 position-relative">
                     <h2 class="display-6 fw-bold mb-3">Accelerate Your <br><span class="text-info">Career Journey</span>
                     </h2>
@@ -485,6 +503,94 @@
 </div>
 
 <style>
+    /* Global Typography & Mesh */
+    body {
+        font-family: 'Outfit', sans-serif;
+        background-color: #f8fafc;
+        overflow-x: hidden;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    .dashboard-wrapper {
+        position: relative;
+        overflow: hidden;
+        min-height: 100vh;
+    }
+
+    .mesh-background {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+        overflow: hidden;
+        background: #f8fafc;
+        pointer-events: none;
+    }
+
+    .mesh-ball {
+        position: absolute;
+        border-radius: 50%;
+        filter: blur(80px);
+        opacity: 0.15;
+        animation: mesh-float 20s infinite alternate cubic-bezier(0.45, 0, 0.55, 1);
+    }
+
+    .ball-1 {
+        width: 600px;
+        height: 600px;
+        background: #6366f1;
+        top: -10%;
+        left: -10%;
+        animation-duration: 25s;
+    }
+
+    .ball-2 {
+        width: 500px;
+        height: 500px;
+        background: #a855f7;
+        bottom: 10%;
+        right: -5%;
+        animation-duration: 30s;
+    }
+
+    .ball-3 {
+        width: 400px;
+        height: 400px;
+        background: #ec4899;
+        top: 40%;
+        left: 30%;
+        animation-duration: 22s;
+    }
+
+    .ball-4 {
+        width: 450px;
+        height: 450px;
+        background: #3b82f6;
+        bottom: -5%;
+        left: 15%;
+        animation-duration: 28s;
+    }
+
+    @keyframes mesh-float {
+        0% {
+            transform: translate(0, 0) rotate(0deg);
+        }
+
+        100% {
+            transform: translate(100px, 100px) rotate(180deg);
+        }
+    }
+
     /* Glassmorphism Classes */
     .glass-card {
         background: rgba(255, 255, 255, 0.1);
@@ -505,6 +611,41 @@
         -webkit-background-clip: text;
         background-clip: text;
         -webkit-text-fill-color: transparent;
+    }
+
+    .text-holographic {
+        background: linear-gradient(90deg, #3b82f6, #8b5cf6, #ec4899, #3b82f6);
+        background-size: 300% 100%;
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+        animation: holographic-move 6s linear infinite;
+    }
+
+    @keyframes holographic-move {
+        0% {
+            background-position: 0% 50%;
+        }
+
+        100% {
+            background-position: 300% 50%;
+        }
+    }
+
+    .reveal-text {
+        opacity: 0;
+        transform: translateY(30px);
+        transition: all 1s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+
+    .reveal-fade {
+        opacity: 0;
+        transition: opacity 1.5s ease;
+    }
+
+    .revealed {
+        opacity: 1 !important;
+        transform: translate(0, 0) !important;
     }
 
     .avatar-glass-card {
@@ -626,6 +767,16 @@
         z-index: 1;
         animation: pulse-aura 4s ease-in-out infinite;
         pointer-events: none;
+    }
+
+    .hero-particles {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 1;
+        background: radial-gradient(circle at center, rgba(102, 126, 234, 0.05), transparent);
     }
 
     @keyframes pulse-aura {
@@ -870,8 +1021,49 @@
         height: 100%;
         display: flex;
         flex-direction: column;
-        border: 1px solid rgba(0, 0, 0, 0.04);
+        border: 1px solid rgba(255, 255, 255, 0.1);
         position: relative;
+    }
+
+    .premium-card::after {
+        content: '';
+        position: absolute;
+        inset: -1px;
+        background: linear-gradient(135deg, rgba(255, 255, 255, 0.4), transparent, rgba(255, 255, 255, 0.2));
+        border-radius: 28px;
+        z-index: -1;
+        transition: opacity 0.4s ease;
+        opacity: 0;
+    }
+
+    .premium-card:hover::after {
+        opacity: 1;
+    }
+
+    .holographic-border {
+        position: relative;
+    }
+
+    .holographic-border:hover {
+        border: 1px solid transparent !important;
+        background-clip: padding-box;
+    }
+
+    .holographic-border::before {
+        content: '';
+        position: absolute;
+        inset: -2px;
+        z-index: -1;
+        background: linear-gradient(90deg, #3b82f6, #8b5cf6, #ec4899, #3b82f6);
+        background-size: 300% 100%;
+        border-radius: 30px;
+        opacity: 0;
+        transition: opacity 0.4s ease;
+        animation: holographic-move 6s linear infinite;
+    }
+
+    .holographic-border:hover::before {
+        opacity: 0.6;
     }
 
     .bg-soft-primary {
@@ -1093,6 +1285,18 @@
         flex-shrink: 0;
         transition: all 0.4s ease;
         box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        position: relative;
+    }
+
+    .stat-icon::after {
+        content: '';
+        position: absolute;
+        inset: -5px;
+        background: inherit;
+        filter: blur(15px);
+        opacity: 0.3;
+        border-radius: inherit;
+        z-index: -1;
     }
 
     .stat-card:hover .stat-icon {
@@ -1157,6 +1361,30 @@
         const greetingEl = document.getElementById('dynamicGreeting');
         if (greetingEl) greetingEl.innerText = greeting;
 
+        // Reveal Animations
+        const revealCallback = (entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('revealed');
+                    if (entry.target.classList.contains('counter')) {
+                        animateCounter(entry.target);
+                    }
+                    if (entry.target.classList.contains('counter-float')) {
+                        animateCounterFloat(entry.target);
+                    }
+                    observer.unobserve(entry.target);
+                }
+            });
+        };
+
+        const observer = new IntersectionObserver(revealCallback, {
+            threshold: 0.1
+        });
+
+        document.querySelectorAll('.reveal-text, .reveal-fade, .stat-card, .premium-card, .counter, .counter-float').forEach(el => {
+            observer.observe(el);
+        });
+
         // Profile Completeness Logic
         const studentData = {
             profile_pic: "{{ current_user.profile_pic }}",
@@ -1187,6 +1415,66 @@
                 else if (completeness < 80) tip.innerText = "Almost there! Add achievements or resume.";
                 else tip.innerText = "Your profile looks professional!";
             }, 500);
+        }
+    });
+
+    function animateCounter(el) {
+        const target = parseInt(el.dataset.target);
+        let current = 0;
+        const duration = 2000;
+        const increment = target / (duration / 16);
+
+        const update = () => {
+            current += increment;
+            if (current < target) {
+                el.innerText = Math.ceil(current);
+                requestAnimationFrame(update);
+            } else {
+                el.innerText = target;
+            }
+        };
+        update();
+    }
+
+    function animateCounterFloat(el) {
+        const target = parseFloat(el.dataset.target);
+        let current = 0;
+        const duration = 2000;
+        const increment = target / (duration / 16);
+
+        const update = () => {
+            current += increment;
+            if (current < target) {
+                el.innerText = current.toFixed(2);
+                requestAnimationFrame(update);
+            } else {
+                el.innerText = target.toFixed(2);
+            }
+        };
+        update();
+    }
+
+    // Typing Effect
+    function typeText(el) {
+        const text = el.innerText;
+        el.innerText = '';
+        let i = 0;
+        const speed = 100;
+
+        function type() {
+            if (i < text.length) {
+                el.innerText += text.charAt(i);
+                i++;
+                setTimeout(type, speed);
+            }
+        }
+        type();
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const typingEl = document.querySelector('.typing-text');
+        if (typingEl) {
+            setTimeout(() => typeText(typingEl), 800);
         }
     });
 
