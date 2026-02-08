@@ -188,46 +188,49 @@
 
                                         <div class="progress"
                                             style="height: 10px; background: rgba(255,255,255,0.1); border-radius: 10px;">
-                                            <div class="progress-bar bg-warning progress-bar-striped progress-bar-animated"
-                                                role="progressbar"
-                                                style="width: {% if profile['experience_years'] %}{{ (profile['experience_years'] | int / 30) * 100 }}%{% else %}0%{% endif %}">
-                                            </div>
+                                            {% set exp_years = profile['experience_years'] | int if
+                                            profile['experience_years'] else 0 %}
+                                            {% set progress_width = (exp_years / 30 * 100) if exp_years < 30 else 100 %}
+                                                <div
+                                                class="progress-bar bg-warning progress-bar-striped progress-bar-animated"
+                                                role="progressbar" style="width: {{ progress_width }}%">
                                         </div>
-                                        <div class="d-flex justify-content-between mt-2">
-                                            <small class="text-white-50">Junior</small>
-                                            <small class="text-white-50">Expert</small>
-                                        </div>
+                                    </div>
+                                    <div class="d-flex justify-content-between mt-2">
+                                        <small class="text-white-50">Junior</small>
+                                        <small class="text-white-50">Expert</small>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-
-                    <!-- Specialization Full Width -->
-                    <div class="col-12">
-                        <div class="glass-panel p-4 h-100 animate__animated animate__fadeInUp animate__delay-2s">
-                            <h5 class="text-white fw-bold mb-3 border-bottom border-white-20 pb-2">
-                                <i class="fas fa-flask me-2 text-warning"></i> Specialization
-                            </h5>
-                            {% if profile['specialization'] %}
-                            <div class="d-flex flex-wrap gap-2">
-                                {% for spec in profile['specialization'].split(',') %}
-                                <span
-                                    class="badge bg-white-10 text-white border border-white-20 rounded-pill px-3 py-2 hover-scale">
-                                    {{ spec.strip() }}
-                                </span>
-                                {% endfor %}
-                            </div>
-                            {% else %}
-                            <p class="text-white-50 fst-italic">No specializations listed.</p>
-                            {% endif %}
-                        </div>
-                    </div>
                 </div>
 
+                <!-- Specialization Full Width -->
+                <div class="col-12">
+                    <div class="glass-panel p-4 h-100 animate__animated animate__fadeInUp animate__delay-2s">
+                        <h5 class="text-white fw-bold mb-3 border-bottom border-white-20 pb-2">
+                            <i class="fas fa-flask me-2 text-warning"></i> Specialization
+                        </h5>
+                        {% if profile['specialization'] %}
+                        <div class="d-flex flex-wrap gap-2">
+                            {% for spec in profile['specialization'].split(',') %}
+                            <span
+                                class="badge bg-white-10 text-white border border-white-20 rounded-pill px-3 py-2 hover-scale">
+                                {{ spec.strip() }}
+                            </span>
+                            {% endfor %}
+                        </div>
+                        {% else %}
+                        <p class="text-white-50 fst-italic">No specializations listed.</p>
+                        {% endif %}
+                    </div>
+                </div>
             </div>
+
         </div>
     </div>
+</div>
 </div>
 
 <style>

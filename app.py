@@ -90,13 +90,16 @@ class User(UserMixin):
 
 @login_manager.user_loader
 def load_user(user_id):
-    conn = get_db_connection()
-    user = conn.execute('SELECT * FROM users WHERE id = ?', (user_id,)).fetchone()
-    conn.close()
-    if user:
-        # Avatar generation logic
-        avatar = user['profile_pic'] if user['profile_pic'] else f"https://ui-avatars.com/api/?name={user['name']}&background=0D6EFD&color=fff"
-        return User(user['id'], user['name'], user['email'], user['role'], avatar)
+    try:
+        conn = get_db_connection()
+        user = conn.execute('SELECT * FROM users WHERE id = ?', (user_id,)).fetchone()
+        conn.close()
+        if user:
+            # Avatar generation logic
+            avatar = user['profile_pic'] if user['profile_pic'] else f"https://ui-avatars.com/api/?name={user['name']}&background=0D6EFD&color=fff"
+            return User(user['id'], user['name'], user['email'], user['role'], avatar)
+    except Exception as e:
+        print(f"Error loading user: {e}")
     return None
 
 # --- DATABASE SETUP ---
@@ -486,6 +489,10 @@ def login():
                 return redirect(url_for('dashboard_student'))
             else:
                 flash('Invalid Email or Password', 'danger')
+        except Exception as e:
+            import traceback
+            traceback.print_exc()
+            flash(f'An error occurred: {str(e)}', 'danger')
         finally:
             if conn:
                 conn.close()
