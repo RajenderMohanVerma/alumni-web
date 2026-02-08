@@ -620,12 +620,23 @@
 }
 
 .form-floating-premium .form-control:focus~label,
-.form-floating-premium .form-control:not(:placeholder-shown)~label {
-    opacity: .85;
-    transform: scale(.85) translateY(-0.75rem) translateX(0.15rem);
+.form-floating-premium .form-control:not(:placeholder-shown)~label,
+.form-floating-premium .form-control.has-content~label,
+.form-floating-premium .form-control:-webkit-autofill~label,
+.form-floating-premium select.form-control~label,
+.form-floating-premium select.form-select~label,
+.form-floating-premium select~label {
+    opacity: 1;
+    transform: scale(0.85) translateY(-2.2rem) translateX(0.1rem) !important;
+    background-color: transparent !important;
+    padding: 0;
+    height: auto;
     color: var(--primary);
     font-weight: 700;
+    z-index: 5;
+    border-radius: 4px;
 }
+
 
 .liquid-focus-border {
     position: absolute;
