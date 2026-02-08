@@ -1,49 +1,69 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="dashboard-wrapper">
-    <!-- Hero Section -->
-    <div class="hero-section glass-hero"
-        style="background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); padding: 80px 0; position: relative; overflow: hidden; border-bottom: 1px solid rgba(255,255,255,0.1);">
-        <!-- Animated Background Blobs -->
-        <div class="hero-bg">
-            <div class="blob blob-1"></div>
-            <div class="blob blob-2"></div>
-            <div class="blob blob-3"></div>
+<!-- Font Awesome & Google Fonts are inherited from base.html -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+
+<div class="dashboard-container">
+    <!-- Animated Hero Section -->
+    <div class="hero-wrap">
+        <div class="animated-bg">
+            <div class="blob-shape blob-1"></div>
+            <div class="blob-shape blob-2"></div>
+            <div class="blob-shape blob-3"></div>
         </div>
 
-        <div class="container" style="position: relative; z-index: 2;">
+        <div class="container position-relative z-index-10 pt-5 pb-5">
             <div class="row align-items-center">
-                <div class="col-lg-7">
-                    <div class="hero-content" style="animation: fadeInLeft 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);">
-                        <div class="badge rounded-pill bg-white text-warning px-3 py-2 mb-3 shadow-sm border-0"
-                            id="timeGreetingBadge">
-                            <i class="far fa-clock me-1"></i> <span id="dynamicGreeting">Loading...</span>
+                <div class="col-lg-7 mb-4 mb-lg-0">
+                    <div class="hero-content" data-aos="fade-right">
+                        <div class="inline-badge mb-3 animate__animated animate__fadeInDown">
+                            <i class="far fa-clock me-2"></i><span id="greetingText">Welcome</span>
                         </div>
-                        <h1 class="text-white display-4 fw-bold mb-3">
-                            <i class="fas fa-chalkboard-user me-3"></i>Welcome, <span class="text-gradient-gold">{{
-                                current_user.name }}!</span>
+                        <h1 class="hero-title text-white fw-bold mb-3">
+                            <span class="d-block animate__animated animate__fadeInLeft animate__delay-1s">Welcome
+                                back,</span>
+                            <span class="typing-text text-warning">{{ current_user.name }}</span><span
+                                class="cursor">|</span>
                         </h1>
-                        <p class="text-white-50 lead mb-4" style="font-size: 1.25rem; max-width: 600px;">
-                            Guide the next generation. Connect with students, alumni, and colleagues.
+                        <p
+                            class="hero-subtitle text-white-50 mb-4 animate__animated animate__fadeInUp animate__delay-2s">
+                            Manage your academic network, connect with alumni, and guide students towards their future.
                         </p>
 
-                        <!-- Actions -->
-                        <div class="d-flex gap-3">
+                        <div class="d-flex flex-wrap gap-3 animate__animated animate__fadeInUp animate__delay-3s">
                             <a href="{{ url_for('edit_faculty_profile', user_id=current_user.id) }}"
-                                class="btn btn-light rounded-pill px-4 py-2 fw-bold shadow-sm">
-                                <i class="fas fa-edit me-2"></i> Edit Profile
+                                class="btn btn-glass-light btn-lg rounded-pill hover-lift">
+                                <i class="fas fa-user-edit me-2"></i> Edit Profile
                             </a>
+                            <button class="btn btn-outline-light btn-lg rounded-pill hover-lift"
+                                onclick="document.getElementById('directorySection').scrollIntoView({behavior: 'smooth'})">
+                                <i class="fas fa-users me-2"></i> Browse Directory
+                            </button>
                         </div>
                     </div>
                 </div>
+
                 <div class="col-lg-5 text-center d-none d-lg-block">
-                    <div class="hero-image-wrapper" style="animation: float 4s ease-in-out infinite;">
-                        <div class="avatar-glass-card shadow-lg">
-                            <img src="{{ current_user.profile_pic or 'https://ui-avatars.com/api/?name=' + current_user.name + '&size=200&background=f59e0b&color=fff' }}"
-                                alt="Profile" class="rounded-pill border border-4 border-white shadow-lg"
-                                style="width: 180px; height: 180px; object-fit: cover;">
-                            <div class="glass-tag">Faculty</div>
+                    <div class="hero-card-3d animate__animated animate__zoomIn animate__delay-1s" data-tilt
+                        data-tilt-max="10" data-tilt-speed="400" data-tilt-glare data-tilt-max-glare="0.2">
+                        <div class="glass-panel text-center p-4">
+                            <div class="profile-img-wrap mb-3">
+                                <img src="{{ current_user.profile_pic or 'https://ui-avatars.com/api/?name=' + current_user.name + '&background=f59e0b&color=fff' }}"
+                                    alt="Profile"
+                                    class="img-fluid rounded-circle shadow-lg main-profile-img animate__animated animate__bounceIn animate__delay-2s">
+                                <div class="status-indicator online"></div>
+                            </div>
+                            <h3 class="text-white mb-1 animate__animated animate__fadeInUp animate__delay-2s">{{
+                                current_user.name }}</h3>
+                            <p class="text-white-50 mb-0 animate__animated animate__fadeInUp animate__delay-3s">{{
+                                profile['designation'] or 'Faculty Member' }}</p>
+                            <div
+                                class="mt-3 d-flex justify-content-center gap-2 animate__animated animate__fadeInUp animate__delay-3s">
+                                <span class="badge bg-white text-dark rounded-pill px-3"><i
+                                        class="fas fa-building me-1"></i> {{ profile['department'] or 'Department N/A'
+                                    }}</span>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -52,54 +72,156 @@
     </div>
 
     <!-- Stats Section -->
-    <div class="stats-container container-fluid px-lg-5">
-        <div class="container">
-            <div class="row g-4">
-                <div class="col-md-3">
-                    <div class="stat-card" style="animation: slideUp 0.6s ease; --card-accent: #667eea;">
-                        <div class="stat-trend"><i class="fas fa-users"></i> Network</div>
-                        <div class="stat-icon" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
-                            <i class="fas fa-users-viewfinder"></i>
+    <div class="container mt-n5 position-relative z-index-20">
+        <div class="row g-4">
+            <!-- Alumni Card -->
+            <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="100">
+                <div class="stat-card-modern card-1 h-100">
+                    <div class="card-body p-4 position-relative overflow-hidden">
+                        <div class="d-flex justify-content-between align-items-start z-index-1 position-relative">
+                            <div>
+                                <p class="text-uppercase fw-bold text-white-50 small mb-1 ls-1">Alumni Network</p>
+                                <h2 class="display-5 fw-bold text-white mb-0 counter-value"
+                                    data-target="{{ alumni | length }}">0</h2>
+                            </div>
+                            <div class="icon-box bg-white-20 text-white rounded-circle">
+                                <i class="fas fa-user-graduate fa-lg"></i>
+                            </div>
                         </div>
-                        <div class="stat-content">
-                            <h3 class="stat-number">{{ alumni | length }}</h3>
-                            <p class="stat-label">Alumni</p>
+                        <div class="mt-4 pt-2 position-relative z-index-1">
+                            <a href="#"
+                                onclick="document.getElementById('directorySection').scrollIntoView({behavior: 'smooth'}); setTimeout(() => document.getElementById('tab-alumni').click(), 200); return false;"
+                                class="text-white text-decoration-none small opacity-75 hover-opacity-100 d-flex align-items-center">
+                                View Directory <i class="fas fa-arrow-right ms-2 transition-x"></i>
+                            </a>
                         </div>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="stat-card" style="animation: slideUp 0.7s ease; --card-accent: #f5576c;">
-                        <div class="stat-trend"><i class="fas fa-user-graduate"></i> Active</div>
-                        <div class="stat-icon" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
-                            <i class="fas fa-graduation-cap"></i>
-                        </div>
-                        <div class="stat-content">
-                            <h3 class="stat-number">{{ students | length }}</h3>
-                            <p class="stat-label">Students</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="stat-card" style="animation: slideUp 0.8s ease; --card-accent: #00d4ff;">
-                        <div class="stat-icon" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
-                            <i class="fas fa-building"></i>
-                        </div>
-                        <div class="stat-content">
-                            <h3 class="stat-number" style="font-size: 1.5rem;">{{ profile['department'] or 'N/A' }}</h3>
-                            <p class="stat-label">Department</p>
+                        <!-- Decorative Big Icon -->
+                        <div class="position-absolute bottom-0 end-0 opacity-10 me-n3 mb-n3 z-index-0">
+                            <i class="fas fa-user-graduate fa-6x text-white"></i>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-3">
-                    <div class="stat-card" style="animation: slideUp 0.9s ease; --card-accent: #10b981;">
-                        <div class="stat-trend bg-success text-white" style="padding: 2px 6px;">Seniority</div>
-                        <div class="stat-icon" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);">
-                            <i class="fas fa-briefcase"></i>
+            </div>
+
+            <!-- Students Card -->
+            <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="200">
+                <div class="stat-card-modern card-2 h-100">
+                    <div class="card-body p-4 position-relative overflow-hidden">
+                        <div class="d-flex justify-content-between align-items-start z-index-1 position-relative">
+                            <div>
+                                <p class="text-uppercase fw-bold text-white-50 small mb-1 ls-1">Active Students</p>
+                                <h2 class="display-5 fw-bold text-white mb-0 counter-value"
+                                    data-target="{{ students | length }}">0</h2>
+                            </div>
+                            <div class="icon-box bg-white-20 text-white rounded-circle">
+                                <i class="fas fa-users fa-lg"></i>
+                            </div>
                         </div>
-                        <div class="stat-content">
-                            <h3 class="stat-number" style="color: #059669;">{{ (profile['experience_years'] or 0) }} Yrs
-                            </h3>
-                            <p class="stat-label">Experience</p>
+                        <div class="mt-4 pt-2 position-relative z-index-1">
+                            <a href="#"
+                                onclick="document.getElementById('directorySection').scrollIntoView({behavior: 'smooth'}); setTimeout(() => document.getElementById('tab-student').click(), 200); return false;"
+                                class="text-white text-decoration-none small opacity-75 hover-opacity-100 d-flex align-items-center">
+                                View Directory <i class="fas fa-arrow-right ms-2 transition-x"></i>
+                            </a>
+                        </div>
+                        <div class="position-absolute bottom-0 end-0 opacity-10 me-n3 mb-n3 z-index-0">
+                            <i class="fas fa-users fa-6x text-white"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Faculty Card -->
+            <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="350">
+                <div class="stat-card-modern card-5 h-100">
+                    <div class="card-body p-4 position-relative overflow-hidden">
+                        <div class="d-flex justify-content-between align-items-start z-index-1 position-relative">
+                            <div>
+                                <p class="text-uppercase fw-bold text-white-50 small mb-1 ls-1">Faculty Members</p>
+                                <h2 class="display-5 fw-bold text-white mb-0 counter-value"
+                                    data-target="{{ faculty | length }}">0</h2>
+                            </div>
+                            <div class="icon-box bg-white-20 text-white rounded-circle">
+                                <i class="fas fa-chalkboard-teacher fa-lg"></i>
+                            </div>
+                        </div>
+                        <div class="mt-4 pt-2 position-relative z-index-1">
+                            <a href="#"
+                                onclick="document.getElementById('directorySection').scrollIntoView({behavior: 'smooth'}); setTimeout(() => document.getElementById('tab-faculty').click(), 200); return false;"
+                                class="text-white text-decoration-none small opacity-75 hover-opacity-100 d-flex align-items-center">
+                                View Directory <i class="fas fa-arrow-right ms-2 transition-x"></i>
+                            </a>
+                        </div>
+                        <div class="position-absolute bottom-0 end-0 opacity-10 me-n3 mb-n3 z-index-0">
+                            <i class="fas fa-chalkboard-teacher fa-6x text-white"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- Pending Requests Card -->
+            <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="300">
+                <div class="stat-card-modern card-3 h-100">
+                    <div class="card-body p-4 position-relative overflow-hidden">
+                        <div class="d-flex justify-content-between align-items-start z-index-1 position-relative">
+                            <div>
+                                <p class="text-uppercase fw-bold text-white-50 small mb-1 ls-1">Pending Requests</p>
+                                <h2 class="display-5 fw-bold text-white mb-0 counter-value"
+                                    data-target="{{ pending_count }}">0</h2>
+                            </div>
+                            <div class="icon-box bg-white-20 text-white rounded-circle position-relative">
+                                <i class="fas fa-bell fa-lg"></i>
+                                {% if pending_count > 0 %}
+                                <span
+                                    class="position-absolute top-0 start-100 translate-middle p-1 bg-danger border border-light rounded-circle">
+                                    <span class="visually-hidden">New alerts</span>
+                                </span>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="mt-4 pt-2 position-relative z-index-1">
+                            <span class="text-white small opacity-75">
+                                {% if pending_count > 0 %}
+                                <i class="fas fa-exclamation-circle me-1 text-warning"></i> Action Required
+                                {% else %}
+                                <i class="fas fa-check-circle me-1"></i> All caught up
+                                {% endif %}
+                            </span>
+                        </div>
+                        <div class="position-absolute bottom-0 end-0 opacity-10 me-n3 mb-n3 z-index-0">
+                            <i class="fas fa-bell fa-6x text-white"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <!-- Experience Card -->
+            <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="400">
+                <div class="stat-card-modern card-4 h-100">
+                    <div class="card-body p-4 position-relative overflow-hidden">
+                        <div class="d-flex justify-content-between align-items-start z-index-1 position-relative">
+                            <div>
+                                <p class="text-uppercase fw-bold text-white-50 small mb-1 ls-1">Experience</p>
+                                <div class="d-flex align-items-baseline text-white">
+                                    <h2 class="display-5 fw-bold mb-0">{{ profile['experience_years'] or 0 }}</h2>
+                                    <span class="fs-6 opacity-75 ms-1">Years</span>
+                                </div>
+                            </div>
+                            <div class="icon-box bg-white-20 text-white rounded-circle">
+                                <i class="fas fa-briefcase fa-lg"></i>
+                            </div>
+                        </div>
+                        <div class="mt-4 pt-2 position-relative z-index-1">
+                            <a href="{{ url_for('edit_faculty_profile', user_id=current_user.id) }}"
+                                class="text-white text-decoration-none small opacity-75 hover-opacity-100 d-flex align-items-center">
+                                Update Profile <i class="fas fa-arrow-right ms-2 transition-x"></i>
+                            </a>
+                        </div>
+                        <div class="position-absolute bottom-0 end-0 opacity-10 me-n3 mb-n3 z-index-0">
+                            <i class="fas fa-briefcase fa-6x text-white"></i>
                         </div>
                     </div>
                 </div>
@@ -107,60 +229,44 @@
         </div>
     </div>
 
-    <!-- Main Content -->
-    <!-- Category Navigation Tabs -->
-    <div class="category-tabs mb-5" style="animation: slideUp 0.6s ease;">
-        <ul class="nav nav-pills nav-fill gradient-pills p-2 shadow-sm"
-            style="background: rgba(255,255,255,0.8); backdrop-filter: blur(10px); border-radius: 18px; border: 1px solid #e0e7ff;">
-            <li class="nav-item">
-                <button class="nav-link category-btn active" data-category="student"
-                    onclick="switchCategory('student')">
-                    <i class="fas fa-user-graduate me-2"></i> Students
-                </button>
-            </li>
-            <li class="nav-item">
-                <button class="nav-link category-btn" data-category="alumni" onclick="switchCategory('alumni')">
-                    <i class="fas fa-graduation-cap me-2"></i> Alumni
-                </button>
-            </li>
-            <li class="nav-item">
-                <button class="nav-link category-btn" data-category="faculty" onclick="switchCategory('faculty')">
-                    <i class="fas fa-chalkboard-teacher me-2"></i> Colleagues
-                </button>
-            </li>
-        </ul>
-    </div>
+    <!-- Main Content Area -->
+    <div class="container my-5" id="directorySection">
 
-    <!-- Connection Requests (Collapsible) -->
-    {% if pending_requests %}
-    <div class="mb-5" id="pendingRequestsSection">
-        <div class="section-header mb-4" style="animation: slideInLeft 0.6s ease;">
-            <h2 class="section-title">
-                <i class="fas fa-bell me-2" style="color: #f59e0b;"></i> Pending Requests
-                <span class="badge bg-danger ms-2" id="requestCountBadge">{{ pending_count }}</span>
-            </h2>
-        </div>
-        <div class="card border-0 shadow-lg mb-4" style="border-radius: 20px; border-left: 5px solid #ef4444;">
-            <div class="card-body p-4">
-                <div id="pendingRequestsList" class="row g-3">
+        <!-- Connection Requests (Collapsible) -->
+        {% if pending_requests %}
+        <div class="mb-5" data-aos="fade-up">
+            <div class="d-flex align-items-center justify-content-between mb-4">
+                <h3 class="section-heading"><i class="fas fa-user-clock text-warning me-2"></i> Pending Connections</h3>
+                <span class="badge bg-warning text-dark rounded-pill">{{ pending_count }} Waiting</span>
+            </div>
+
+            <div class="request-slider-wrap">
+                <div class="row g-3 flex-nowrap overflow-auto py-2 custom-scrollbar">
                     {% for req in pending_requests %}
-                    <div class="col-md-6 col-lg-4">
-                        <div class="d-flex align-items-center p-3 border rounded-3 bg-light">
-                            <div class="avatar-sm me-3">
+                    <div class="col-10 col-md-5 col-lg-4">
+                        <div
+                            class="request-card p-3 bg-white rounded-4 shadow-sm border-start border-4 border-warning h-100">
+                            <div class="d-flex align-items-center">
                                 <img src="{{ req['profile_pic'] or 'https://ui-avatars.com/api/?name=' + req['name'] }}"
-                                    class="rounded-circle" style="width: 45px; height: 45px; object-fit: cover;">
+                                    class="rounded-circle me-3" width="50" height="50">
+                                <div class="flex-grow-1">
+                                    <h6 class="mb-1 fw-bold">{{ req['name'] }}</h6>
+                                    <p class="mb-0 small text-muted">{{ req['role'] | capitalize }}</p>
+                                </div>
+                                <div class="action-buttons d-flex gap-2">
+                                    <button class="btn btn-sm btn-success rounded-circle"
+                                        onclick="handleRequest('{{ req.id }}', 'accept')" title="Accept">
+                                        <i class="fas fa-check"></i>
+                                    </button>
+                                    <button class="btn btn-sm btn-outline-danger rounded-circle"
+                                        onclick="handleRequest('{{ req.id }}', 'reject')" title="Reject">
+                                        <i class="fas fa-times"></i>
+                                    </button>
+                                </div>
                             </div>
-                            <div class="flex-grow-1">
-                                <h6 class="mb-0 fw-bold">{{ req['name'] }}</h6>
-                                <small class="text-muted">{{ req['role'] | capitalize }}</small>
-                            </div>
-                            <div class="d-flex gap-2">
-                                <button class="btn btn-sm btn-success rounded-circle shadow-sm"
-                                    onclick="handleRequest('{{ req.sender_id }}', 'accept')"><i
-                                        class="fas fa-check"></i></button>
-                                <button class="btn btn-sm btn-outline-danger rounded-circle shadow-sm"
-                                    onclick="handleRequest('{{ req.sender_id }}', 'reject')"><i
-                                        class="fas fa-times"></i></button>
+                            <div class="mt-2 text-end">
+                                <small class="text-muted fst-italic" style="font-size: 0.75rem;">Received {{
+                                    req['created_at'].split()[0] }}</small>
                             </div>
                         </div>
                     </div>
@@ -168,222 +274,231 @@
                 </div>
             </div>
         </div>
-    </div>
-    {% endif %}
+        {% endif %}
 
-    <!-- Filter & Search Section -->
-    <div class="card border-0 shadow-lg mb-5" style="border-radius: 20px; overflow: hidden; border: 2px solid #e9ecef;">
-        <div class="filter-section p-4 p-md-5" style="background: linear-gradient(135deg, #fffbeb 0%, #fff1f2 100%);">
-            <div class="row g-4 align-items-end">
+        <!-- Directory Controls -->
+        <div class="directory-header mb-4 p-4 rounded-4 bg-white shadow-sm" data-aos="fade-up">
+            <div class="row g-4 align-items-center">
                 <div class="col-lg-6">
-                    <label class="form-label fw-bold mb-2"><i class="fas fa-search me-2 text-warning"></i> Global
-                        Search</label>
-                    <div class="search-input-group">
-                        <input type="text" class="form-control form-control-lg" id="globalSearch"
-                            placeholder="Search by name, department, expertise..."
-                            style="border-radius: 12px; border: 2px solid #fcd34d; padding-right: 45px;">
-                        <i class="fas fa-search search-icon text-muted"></i>
+                    <h3 class="mb-1 fw-bold">Academic Directory</h3>
+                    <p class="text-muted mb-0">Connect with students, alumni, and faculty members.</p>
+                </div>
+                <div class="col-lg-6">
+                    <div class="search-box position-relative">
+                        <input type="text" id="globalSearch"
+                            class="form-control form-control-lg rounded-pill ps-5 border-0 bg-light"
+                            placeholder="Search people, departments, skills...">
+                        <i
+                            class="fas fa-search position-absolute top-50 start-0 translate-middle-y ms-3 text-muted"></i>
                     </div>
-                </div>
-                <div class="col-lg-3">
-                    <label class="form-label fw-bold mb-2"><i class="fas fa-filter me-2 text-warning"></i> Category
-                        View</label>
-                    <select class="form-select form-select-lg" id="activeCategorySelect"
-                        onchange="switchCategory(this.value)" style="border-radius: 12px; border: 2px solid #fcd34d;">
-                        <option value="student">Students</option>
-                        <option value="alumni">Alumni</option>
-                        <option value="faculty">Faculty</option>
-                    </select>
-                </div>
-                <div class="col-lg-3">
-                    <button class="btn btn-warning text-white btn-lg w-100 py-3 fw-bold shadow-sm"
-                        onclick="resetAllFilters()" style="border-radius: 12px;">
-                        <i class="fas fa-redo-alt me-2"></i> Reset Filters
-                    </button>
                 </div>
             </div>
-        </div>
-    </div>
 
-    <!-- Directory Content -->
-    <div class="directory-container">
-        <!-- Students Tab (Active by default) -->
-        <div id="studentContent" class="category-panel active-panel">
-            <div class="row g-4" id="studentGrid">
-                {% for s in students %}
-                <div class="col-lg-4 col-md-6 user-card student-card" data-name="{{ s['name'].lower() }}"
-                    data-info="{{ (s['department'] or s['degree'] or '').lower() }}">
-                    <div class="premium-card">
-                        <div class="card-gradient-top student-gradient"></div>
-                        <div class="card-avatar-wrapper">
-                            <img src="{{ s['profile_pic'] or 'https://ui-avatars.com/api/?name=' + s['name'] + '&bg=4facfe&color=fff' }}"
-                                class="card-avatar">
-                        </div>
-                        <div class="card-body-content text-center pt-2">
-                            <h5 class="fw-bold mb-1 text-dark">{{ s['name'] }}</h5>
-                            <div class="badge bg-soft-info text-info mb-3 px-3 py-2 rounded-pill small">
-                                <i class="fas fa-university me-1"></i> {{ s['department'] }}
-                            </div>
-                            <p class="text-muted small fw-600 mb-3">{{ s['degree'] }} | Semester {{ s['semester'] }}</p>
-
-                            <!-- Skills Preview -->
-                            <div class="skills-preview mb-4 d-flex flex-wrap justify-content-center gap-1">
-                                {% if s['skills'] %}
-                                {% for skill in s['skills'].split(',')[:3] %}
-                                <span class="skill-tag">{{ skill.strip() }}</span>
-                                {% endfor %}
-                                {% else %}
-                                <span class="text-muted small italic">No skills listed</span>
-                                {% endif %}
-                            </div>
-
-                            <div class="card-footer-actions d-grid gap-2 mt-auto">
-                                <a href="{{ url_for('student_profile', user_id=s['id']) }}"
-                                    class="btn btn-info text-white rounded-pill py-2 shadow-sm fw-bold">
-                                    <i class="fas fa-user me-2"></i>Profile
-                                </a>
-                                <button class="btn btn-outline-info rounded-pill btn-sm py-2 fw-600"
-                                    data-user-id="{{ s['id'] }}"
-                                    onclick="connectUser(this.getAttribute('data-user-id'), 'student')">
-                                    <i class="fas fa-plus me-2"></i>Connect
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                {% endfor %}
+            <div class="nav nav-pills custom-pills mt-4 justify-content-center justify-content-lg-start"
+                id="directoryTabs" role="tablist">
+                <button class="nav-link active rounded-pill px-4" id="tab-student" data-bs-toggle="pill"
+                    data-bs-target="#content-student" type="button" role="tab">
+                    <i class="fas fa-user-graduate me-2"></i>Students
+                </button>
+                <button class="nav-link rounded-pill px-4" id="tab-alumni" data-bs-toggle="pill"
+                    data-bs-target="#content-alumni" type="button" role="tab">
+                    <i class="fas fa-graduation-cap me-2"></i>Alumni
+                </button>
+                <button class="nav-link rounded-pill px-4" id="tab-faculty" data-bs-toggle="pill"
+                    data-bs-target="#content-faculty" type="button" role="tab">
+                    <i class="fas fa-chalkboard-teacher me-2"></i>Faculty
+                </button>
             </div>
         </div>
 
-        <!-- Alumni Tab -->
-        <div id="alumniContent" class="category-panel">
-            <div class="row g-4" id="alumniGrid">
-                {% for alum in alumni %}
-                <div class="col-lg-4 col-md-6 user-card alum-card" data-name="{{ alum['name'].lower() }}"
-                    data-info="{{ (alum['company_name'] or alum['department'] or '').lower() }}">
-                    <div class="premium-card">
-                        <div class="card-gradient-top alumni-gradient"></div>
-                        <div class="card-avatar-wrapper">
-                            <img src="{{ alum['profile_pic'] or 'https://ui-avatars.com/api/?name=' + alum['name'] + '&bg=667eea&color=fff' }}"
-                                class="card-avatar">
-                        </div>
-                        <div class="card-body-content text-center pt-2">
-                            <h5 class="fw-bold mb-1 text-dark">{{ alum['name'] }}</h5>
-                            <div class="badge bg-soft-primary text-primary mb-3 px-3 py-2 rounded-pill small">
-                                <i class="fas fa-graduation-cap me-1"></i> Batch {{ alum['pass_year'] }}
-                            </div>
-                            <div class="info-badges mb-4 d-flex flex-wrap justify-content-center gap-1">
-                                <span class="badge rounded-pill bg-light text-muted border py-2 px-3"><i
-                                        class="fas fa-briefcase me-1"></i> {{ alum['company_name'] or 'N/A' }}</span>
-                                <span class="badge rounded-pill bg-light text-muted border py-2 px-3"><i
-                                        class="fas fa-location-dot me-1 text-danger"></i> {{ alum['work_location'] or
-                                    'Remote' }}</span>
-                            </div>
-                            <div class="card-footer-actions d-grid gap-2 mt-auto">
-                                <a href="{{ url_for('alumni_profile', user_id=alum['id']) }}"
-                                    class="btn btn-primary rounded-pill py-2 shadow-sm fw-bold"><i
-                                        class="fas fa-user-circle me-2"></i>Profile</a>
-                                <button class="btn btn-outline-primary rounded-pill btn-sm py-2 fw-600"
-                                    data-user-id="{{ alum['id'] }}"
-                                    onclick="connectUser(this.getAttribute('data-user-id'), 'alumni')"><i
-                                        class="fas fa-plus me-2"></i>Connect</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                {% endfor %}
-            </div>
-        </div>
+        <!-- Directory Content -->
+        <div class="tab-content" id="directoryTabContent">
 
-        <!-- Faculty Tab -->
-        <div id="facultyContent" class="category-panel">
-            <div class="row g-4" id="facultyGrid">
-                {% for fac in faculty %}
-                <div class="col-lg-4 col-md-6 user-card faculty-card" data-name="{{ fac['name'].lower() }}"
-                    data-info="{{ (fac['department'] or '').lower() }}">
-                    <div class="premium-card">
-                        <div class="card-gradient-top faculty-gradient"></div>
-                        <div class="card-avatar-wrapper">
-                            <img src="{{ fac['profile_pic'] or 'https://ui-avatars.com/api/?name=' + fac['name'] + '&bg=f59e0b&color=fff' }}"
-                                class="card-avatar">
-                        </div>
-                        <div class="card-body-content text-center pt-2">
-                            <h5 class="fw-bold mb-1 text-dark">{{ fac['name'] }}</h5>
-                            <div class="badge bg-soft-warning text-warning mb-3 px-3 py-2 rounded-pill small">
-                                <i class="fas fa-chalkboard-teacher me-1"></i> {{ fac['designation'] or 'Faculty' }}
-                            </div>
-                            <div class="info-badges mb-4 d-flex flex-wrap justify-content-center gap-1">
-                                <span class="badge rounded-pill bg-light text-muted border py-2 px-3">
-                                    <i class="fas fa-building me-1"></i> {{ fac['department'] }}
-                                </span>
-                                <span class="badge rounded-pill bg-light text-muted border py-2 px-3">
-                                    <i class="fas fa-door-open me-1 text-secondary"></i> {{ fac['office_location'] or
-                                    'N/A' }}
-                                </span>
-                            </div>
-                            <div class="card-footer-actions d-grid gap-2 mt-auto">
-                                <a href="{{ url_for('faculty_profile', user_id=fac['id']) }}"
-                                    class="btn btn-warning text-white rounded-pill py-2 shadow-sm fw-bold">
-                                    <i class="fas fa-user-tie me-2"></i>Profile
-                                </a>
-                                <button class="btn btn-outline-warning rounded-pill btn-sm py-2 fw-600"
-                                    data-user-id="{{ fac['id'] }}"
-                                    onclick="connectUser(this.getAttribute('data-user-id'), 'faculty')">
-                                    <i class="fas fa-plus me-2"></i>Connect
-                                </button>
+            <!-- Students Tab -->
+            <div class="tab-pane fade show active" id="content-student" role="tabpanel">
+                <div class="row g-4" id="studentGrid">
+                    {% for s in students %}
+                    <div class="col-md-6 col-lg-4 user-item"
+                        data-search="{{ s['name'] }} {{ s['department'] }} {{ s['skills'] }}">
+                        <div class="profile-card-modern">
+                            <div class="card-cover bg-gradient-info"></div>
+                            <div class="card-content text-center">
+                                <div class="avatar-holder">
+                                    <img src="{{ s['profile_pic'] or 'https://ui-avatars.com/api/?name=' + s['name'] }}"
+                                        alt="{{ s['name'] }}">
+                                </div>
+                                <h5 class="fw-bold mt-3 mb-1">{{ s['name'] }}</h5>
+                                <div class="badge bg-light text-dark mb-2 border">{{ s['department'] }}</div>
+                                <p class="small text-muted mb-3">{{ s['degree'] }} • Sem {{ s['semester'] }}</p>
+
+                                <div class="skills-container mb-3 text-truncate">
+                                    {% if s['skills'] %}
+                                    {% for skill in s['skills'].split(',')[:3] %}
+                                    <span class="skill-pill">{{ skill.strip() }}</span>
+                                    {% endfor %}
+                                    {% else %}
+                                    <span class="text-muted small">No skills listed</span>
+                                    {% endif %}
+                                </div>
+
+                                <div class="action-buttons-grid">
+                                    <a href="{{ url_for('student_profile', user_id=s['id']) }}"
+                                        class="btn btn-sm btn-light rounded-pill"><i class="fas fa-user me-1"></i>
+                                        Profile</a>
+                                    <button class="btn btn-sm btn-primary rounded-pill" data-user-id="{{ s['id'] }}"
+                                        onclick="connectUser(this.getAttribute('data-user-id'), 'student', this)"><i
+                                            class="fas fa-user-plus me-1"></i> Connect</button>
+                                </div>
                             </div>
                         </div>
                     </div>
+                    {% endfor %}
                 </div>
-                {% endfor %}
             </div>
+
+            <!-- Alumni Tab -->
+            <div class="tab-pane fade" id="content-alumni" role="tabpanel">
+                <div class="row g-4" id="alumniGrid">
+                    {% for alum in alumni %}
+                    <div class="col-md-6 col-lg-4 user-item"
+                        data-search="{{ alum['name'] }} {{ alum['company_name'] }} {{ alum['department'] }}">
+                        <div class="profile-card-modern">
+                            <div class="card-cover bg-gradient-primary"></div>
+                            <div class="card-content text-center">
+                                <div class="avatar-holder">
+                                    <img src="{{ alum['profile_pic'] or 'https://ui-avatars.com/api/?name=' + alum['name'] }}"
+                                        alt="{{ alum['name'] }}">
+                                </div>
+                                <h5 class="fw-bold mt-3 mb-1">{{ alum['name'] }}</h5>
+                                <div class="badge bg-light text-primary mb-2 border">{{ alum['company_name'] or 'Working
+                                    Professional' }}</div>
+                                <p class="small text-muted mb-3">{{ alum['designation'] or 'Alumni' }}</p>
+
+                                <div class="info-row mb-3 d-flex justify-content-center gap-2 small text-muted">
+                                    <span><i class="fas fa-calendar-alt me-1"></i> {{ alum['pass_year'] }}</span>
+                                    <span><i class="fas fa-map-marker-alt me-1"></i> {{ alum['work_location'] or
+                                        'Remote' }}</span>
+                                </div>
+
+                                <div class="action-buttons-grid">
+                                    <a href="{{ url_for('alumni_profile', user_id=alum['id']) }}"
+                                        class="btn btn-sm btn-light rounded-pill"><i class="fas fa-user me-1"></i>
+                                        Profile</a>
+                                    <button class="btn btn-sm btn-primary rounded-pill" data-user-id="{{ alum['id'] }}"
+                                        onclick="connectUser(this.getAttribute('data-user-id'), 'alumni', this)"><i
+                                            class="fas fa-user-plus me-1"></i> Connect</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <!-- Faculty Tab -->
+            <div class="tab-pane fade" id="content-faculty" role="tabpanel">
+                <div class="row g-4" id="facultyGrid">
+                    {% for fac in faculty %}
+                    <div class="col-md-6 col-lg-4 user-item" data-search="{{ fac['name'] }} {{ fac['department'] }}">
+                        <div class="profile-card-modern">
+                            <div class="card-cover bg-gradient-warning"></div>
+                            <div class="card-content text-center">
+                                <div class="avatar-holder">
+                                    <img src="{{ fac['profile_pic'] or 'https://ui-avatars.com/api/?name=' + fac['name'] }}"
+                                        alt="{{ fac['name'] }}">
+                                </div>
+                                <h5 class="fw-bold mt-3 mb-1">{{ fac['name'] }}</h5>
+                                <div class="badge bg-light text-warning mb-2 border">{{ fac['designation'] or 'Faculty'
+                                    }}</div>
+                                <p class="small text-muted mb-3">{{ fac['department'] }}</p>
+
+                                <div class="info-row mb-3 d-flex justify-content-center gap-2 small text-muted">
+                                    <span><i class="fas fa-door-open me-1"></i> {{ fac['office_location'] or 'Office
+                                        N/A' }}</span>
+                                </div>
+
+                                <div class="action-buttons-grid">
+                                    <a href="{{ url_for('faculty_profile', user_id=fac['id']) }}"
+                                        class="btn btn-sm btn-light rounded-pill"><i class="fas fa-user me-1"></i>
+                                        Profile</a>
+                                    <button class="btn btn-sm btn-warning text-white rounded-pill"
+                                        data-user-id="{{ fac['id'] }}"
+                                        onclick="connectUser(this.getAttribute('data-user-id'), 'faculty', this)"><i
+                                            class="fas fa-user-plus me-1"></i> Connect</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+
         </div>
     </div>
 </div>
 
-<!-- Styles and Scripts -->
 <style>
-    /* Premium Dashboard Styles from Student Dashboard */
-    .dashboard-wrapper {
-        background-color: #f8f9fa;
+    /* VARIABLES */
+    :root {
+        --primary-gradient: linear-gradient(135deg, #4f46e5 0%, #3b82f6 100%);
+        --warning-gradient: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+        --info-gradient: linear-gradient(135deg, #0ea5e9 0%, #06b6d4 100%);
+        --glass-bg: rgba(255, 255, 255, 0.9);
+        --glass-border: rgba(255, 255, 255, 0.4);
+        --card-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.08);
+        --hover-shadow: 0 20px 40px -5px rgba(0, 0, 0, 0.12);
+        --animate-duration: 0.8s;
+        /* Global animation speed */
+    }
+
+    /* GENERAL */
+    .dashboard-container {
+        background-color: #f8fafc;
         min-height: 100vh;
+        overflow-x: hidden;
     }
 
-    .glass-hero {
+    /* HERO SECTION */
+    .hero-wrap {
         position: relative;
+        background: var(--warning-gradient);
+        color: white;
+        overflow: hidden;
+        padding-bottom: 80px;
+        clip-path: polygon(0 0, 100% 0, 100% 90%, 0 100%);
     }
 
-    .hero-bg {
+    .animated-bg {
         position: absolute;
         top: 0;
         left: 0;
         width: 100%;
         height: 100%;
-        overflow: hidden;
+        z-index: 1;
     }
 
-    .blob {
+    .blob-shape {
         position: absolute;
         border-radius: 50%;
-        filter: blur(50px);
+        filter: blur(60px);
         opacity: 0.4;
-        animation: floatBlob 10s infinite alternate;
+        animation: float 20s infinite alternate;
     }
 
     .blob-1 {
         top: -10%;
         left: -10%;
-        width: 300px;
-        height: 300px;
-        background: rgba(255, 255, 255, 0.3);
+        width: 400px;
+        height: 400px;
+        background: #fff;
     }
 
     .blob-2 {
-        bottom: -10%;
-        right: -10%;
-        width: 400px;
-        height: 400px;
-        background: rgba(255, 255, 255, 0.2);
+        bottom: 10%;
+        right: -5%;
+        width: 300px;
+        height: 300px;
+        background: #ffd700;
         animation-delay: -5s;
     }
 
@@ -392,228 +507,189 @@
         left: 40%;
         width: 200px;
         height: 200px;
-        background: rgba(255, 255, 255, 0.1);
-        animation-delay: -2s;
+        background: #ffffff;
+        animation-delay: -10s;
     }
 
-    @keyframes floatBlob {
-        0% {
+    @keyframes float {
+        from {
             transform: translate(0, 0) scale(1);
         }
 
-        100% {
-            transform: translate(30px, 50px) scale(1.1);
+        to {
+            transform: translate(40px, -40px) scale(1.1);
         }
     }
 
-    .text-gradient-gold {
-        background: linear-gradient(to right, #fff, #ffeaa7);
-        -webkit-background-clip: text;
-        background-clip: text;
-        -webkit-text-fill-color: transparent;
+    .inline-badge {
+        display: inline-block;
+        background: rgba(255, 255, 255, 0.2);
+        backdrop-filter: blur(10px);
+        padding: 6px 16px;
+        border-radius: 30px;
+        font-size: 0.9rem;
+        font-weight: 500;
+        border: 1px solid rgba(255, 255, 255, 0.3);
     }
 
-    /* Stats Cards */
-    .stats-container {
-        margin-top: -60px;
-        position: relative;
-        z-index: 10;
-        margin-bottom: 40px;
+    .btn-glass-light {
+        background: rgba(255, 255, 255, 0.9);
+        color: #d97706;
+        border: none;
+        font-weight: 600;
+        transition: all 0.3s ease;
     }
 
+    .btn-glass-light:hover {
+        background: white;
+        transform: translateY(-3px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        color: #b45309;
+    }
+
+    .typing-text {
+        border-right: 2px solid white;
+        white-space: nowrap;
+        overflow: hidden;
+        animation: typing 3.5s steps(30, end), blink-caret 0.75s step-end infinite;
+        display: inline-block;
+        max-width: 100%;
+    }
+
+    @keyframes typing {
+        from {
+            width: 0
+        }
+
+        to {
+            width: 100%
+        }
+    }
+
+    @keyframes blink-caret {
+
+        from,
+        to {
+            border-color: transparent
+        }
+
+        50% {
+            border-color: orange;
+        }
+    }
+
+    /* 3D CARD */
+    .hero-card-3d {
+        transform-style: preserve-3d;
+        transform: perspective(1000px);
+    }
+
+    .glass-panel {
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(15px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 24px;
+        box-shadow: 0 25px 45px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease;
+    }
+
+    .main-profile-img {
+        width: 140px;
+        height: 140px;
+        object-fit: cover;
+        border: 4px solid rgba(255, 255, 255, 0.8);
+    }
+
+    /* STATS CARDS */
     .stat-card {
         background: white;
         border-radius: 20px;
-        padding: 25px;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+        padding: 24px;
         display: flex;
-        flex-direction: column;
         align-items: center;
-        text-align: center;
-        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        border: 1px solid rgba(0, 0, 0, 0.03);
-        height: 100%;
+        gap: 20px;
+        box-shadow: var(--card-shadow);
+        transition: all 0.3s ease;
         position: relative;
         overflow: hidden;
     }
 
-    .stat-card:hover {
-        transform: translateY(-10px);
-        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    .hover-float:hover {
+        transform: translateY(-8px);
+        box-shadow: var(--hover-shadow);
     }
 
-    .stat-card::after {
-        content: '';
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        width: 100%;
-        height: 4px;
-        background: var(--card-accent, #667eea);
-    }
-
-    .stat-icon {
-        width: 60px;
-        height: 60px;
-        border-radius: 50%;
+    .stat-icon-wrap {
+        width: 64px;
+        height: 64px;
+        border-radius: 18px;
         display: flex;
         align-items: center;
         justify-content: center;
-        color: white;
-        font-size: 1.5rem;
-        margin-bottom: 15px;
-        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        font-size: 1.75rem;
+        flex-shrink: 0;
     }
 
-    .stat-number {
-        font-size: 2.2rem;
+    .bg-soft-primary {
+        background: rgba(59, 130, 246, 0.1);
+        color: #3b82f6;
+    }
+
+    .bg-soft-success {
+        background: rgba(16, 185, 129, 0.1);
+        color: #10b981;
+    }
+
+    .bg-soft-warning {
+        background: rgba(245, 158, 11, 0.1);
+        color: #f59e0b;
+    }
+
+    .bg-soft-info {
+        background: rgba(6, 182, 212, 0.1);
+        color: #06b6d4;
+    }
+
+    .counter-value {
         font-weight: 800;
-        margin-bottom: 5px;
-        color: #2d3748;
+        margin-bottom: 0;
+        color: #1e293b;
     }
 
-    .stat-label {
-        color: #718096;
+    /* TABS & SEARCH */
+    .custom-pills .nav-link {
+        color: #64748b;
         font-weight: 600;
-        text-transform: uppercase;
-        font-size: 0.8rem;
-        letter-spacing: 0.5px;
-    }
-
-    .stat-trend {
-        position: absolute;
-        top: 15px;
-        right: 15px;
-        font-size: 0.75rem;
-        font-weight: bold;
-        color: #a0aec0;
-        display: flex;
-        align-items: center;
-        gap: 4px;
-        background: #f7fafc;
-        padding: 4px 8px;
-        border-radius: 12px;
-    }
-
-    /* Category Tabs */
-    .category-tabs {
-        display: flex;
-        justify-content: center;
-    }
-
-    .gradient-pills .nav-link {
-        color: #4a5568;
-        font-weight: 600;
-        border-radius: 12px;
-        padding: 12px 20px;
+        border: 1px solid transparent;
         transition: all 0.3s ease;
     }
 
-    .gradient-pills .nav-link.active {
-        background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+    .custom-pills .nav-link.active {
+        background-color: #f59e0b;
         color: white;
-        box-shadow: 0 4px 15px rgba(245, 158, 11, 0.3);
+        box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
     }
 
-    /* Premium User Cards */
-    .user-card {
-        transition: transform 0.4s ease;
-    }
-
-    .premium-card {
+    /* PROFILE CARDS MODERN */
+    .profile-card-modern {
         background: white;
         border-radius: 20px;
         overflow: hidden;
-        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+        box-shadow: var(--card-shadow);
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         height: 100%;
-        display: flex;
-        flex-direction: column;
-        border: 1px solid rgba(0, 0, 0, 0.02);
-        transition: all 0.3s ease;
-    }
-
-    .premium-card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-    }
-
-    .card-gradient-top {
-        height: 80px;
-        width: 100%;
-    }
-
-    .alumni-gradient {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    }
-
-    .student-gradient {
-        background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-    }
-
-    .faculty-gradient {
-        background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
-    }
-
-    .card-avatar-wrapper {
-        margin-top: -50px;
-        display: flex;
-        justify-content: center;
-    }
-
-    .card-avatar {
-        width: 100px;
-        height: 100px;
-        border-radius: 50%;
-        border: 5px solid white;
-        object-fit: cover;
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-        background: white;
-    }
-
-    .card-body-content {
-        padding: 15px 25px 25px;
-        flex-grow: 1;
-        display: flex;
-        flex-direction: column;
-    }
-
-    .skill-tag {
-        background: #f1f5f9;
-        color: #64748b;
-        padding: 4px 10px;
-        border-radius: 6px;
-        font-size: 0.75rem;
-        font-weight: 600;
-        border: 1px solid #e2e8f0;
-    }
-
-    /* Filters */
-    .search-input-group {
         position: relative;
+        border: 1px solid #f1f5f9;
+        opacity: 0;
+        /* Initially hidden for animation */
+        animation: fadeUpCard 0.6s ease forwards;
+        animation-delay: 0.3s;
     }
 
-    .search-icon {
-        position: absolute;
-        right: 15px;
-        top: 50%;
-        transform: translateY(-50%);
-        color: #a0aec0;
-    }
-
-    /* Visibility Logic */
-    .category-panel {
-        display: none;
-        animation: fadeIn 0.5s ease;
-    }
-
-    .active-panel {
-        display: block;
-    }
-
-    @keyframes fadeIn {
+    @keyframes fadeUpCard {
         from {
             opacity: 0;
-            transform: translateY(10px);
+            transform: translateY(20px);
         }
 
         to {
@@ -621,135 +697,312 @@
             transform: translateY(0);
         }
     }
-</style>
 
-<script>
-    // Tab Switching Logic
-    function switchCategory(category) {
-        // Update Buttons
-        document.querySelectorAll('.category-btn').forEach(btn => {
-            btn.classList.remove('active');
-            if (btn.dataset.category === category) {
-                btn.classList.add('active');
-            }
-        });
-
-        // Update Select (if used)
-        const select = document.getElementById('activeCategorySelect');
-        if (select) select.value = category;
-
-        // Update Panels
-        document.querySelectorAll('.category-panel').forEach(panel => {
-            panel.classList.remove('active-panel');
-        });
-        document.getElementById(category + 'Content').classList.add('active-panel');
+    .profile-card-modern:hover {
+        transform: translateY(-8px);
+        box-shadow: var(--hover-shadow);
     }
 
-    // Filter Logic
-    document.getElementById('globalSearch').addEventListener('keyup', function () {
-        const term = this.value.toLowerCase();
+    .card-cover {
+        height: 80px;
+        width: 100%;
+    }
 
-        // Filter current active grid
-        const cards = document.querySelectorAll('.user-card');
+    .bg-gradient-info {
+        background: var(--info-gradient);
+    }
 
-        cards.forEach(card => {
-            const name = card.dataset.name;
-            const info = card.dataset.info;
+    .bg-gradient-primary {
+        background: var(--primary-gradient);
+    }
 
-            if (name.includes(term) || info.includes(term)) {
-                card.style.display = 'block';
-            } else {
-                card.style.display = 'none';
-            }
+    .bg-gradient-warning {
+        background: var(--warning-gradient);
+    }
+
+    .avatar-holder {
+        margin-top: -45px;
+        display: flex;
+        justify-content: center;
+    }
+
+    .avatar-holder img {
+        width: 90px;
+        height: 90px;
+        border-radius: 50%;
+        border: 4px solid white;
+        object-fit: cover;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        background: white;
+        transition: transform 0.3s ease;
+    }
+
+    .profile-card-modern:hover .avatar-holder img {
+        transform: scale(1.1);
+    }
+
+    .card-content {
+        padding: 15px 20px 25px;
+    }
+
+    .skill-pill {
+        display: inline-block;
+        background: #f1f5f9;
+        color: #475569;
+        font-size: 0.75rem;
+        padding: 4px 10px;
+        border-radius: 4px;
+        margin: 2px;
+        font-weight: 600;
+    }
+
+    .action-buttons-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+        margin-top: 15px;
+    }
+
+    /* SCROLLBAR */
+    .custom-scrollbar::-webkit-scrollbar {
+        height: 8px;
+    }
+
+    .custom-scrollbar::-webkit-scrollbar-track {
+        background: #f1f5f9;
+        border-radius: 4px;
+    }
+
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+        background: #cbd5e1;
+        border-radius: 4px;
+    }
+
+    .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+        background: #94a3b8;
+    }
+
+    /* MEDIA QUERIES */
+    @media (max-width: 992px) {
+        .hero-wrap {
+            clip-path: none;
+            padding-bottom: 40px;
+            text-align: center;
+        }
+
+        .hero-content {
+            align-items: center;
+            display: flex;
+            flex-direction: column;
+        }
+    }
+
+    /* MODERN STATS CARDS */
+    .stat-card-modern {
+        border-radius: 20px;
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.2);
+        border: none;
+        background: white;
+    }
+
+    .stat-card-modern:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.3);
+    }
+
+    .card-1 {
+        background: linear-gradient(135deg, #4f46e5 0%, #3b82f6 100%);
+    }
+
+    .card-2 {
+        background: linear-gradient(135deg, #0ea5e9 0%, #06b6d4 100%);
+    }
+
+    .card-3 {
+        background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+    }
+
+    .card-4 {
+        background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    }
+
+    .card-5 {
+        background: linear-gradient(135deg, #8b5cf6 0%, #6d28d9 100%);
+    }
+
+    .bg-white-20 {
+        background: rgba(255, 255, 255, 0.2);
+        backdrop-filter: blur(5px);
+    }
+
+    .opacity-10 {
+        opacity: 0.1;
+    }
+
+    .opacity-75 {
+        opacity: 0.75;
+    }
+
+    .ls-1 {
+        letter-spacing: 1px;
+    }
+
+    .icon-box {
+        width: 50px;
+        height: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .hover-opacity-100:hover {
+        opacity: 1 !important;
+    }
+
+    .transition-x {
+        transition: transform 0.3s ease;
+    }
+
+    .stat-card-modern:hover .transition-x {
+        transform: translateX(5px);
+    }
+
+    /* Animation Delays Custom */
+    .animate__delay-1s {
+        animation-delay: 0.3s;
+    }
+
+    .animate__delay-2s {
+        animation-delay: 0.6s;
+    }
+
+    .animate__delay-3s {
+        animation-delay: 0.9s;
+    }
+
+    .animate__delay-4s {
+        animation-delay: 1.2s;
+    }
+</style>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.7.0/vanilla-tilt.min.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // Greeting Time Logic
+        const hour = new Date().getHours();
+        const greetingSpan = document.getElementById('greetingText');
+        if (hour < 12) greetingSpan.textContent = "Good Morning";
+        else if (hour < 18) greetingSpan.textContent = "Good Afternoon";
+        else greetingSpan.textContent = "Good Evening";
+
+        // Counter Animation
+        const counters = document.querySelectorAll('.counter-value');
+        counters.forEach(counter => {
+            const target = +counter.getAttribute('data-target');
+            const duration = 2000; // 2 seconds
+            const increment = target / (duration / 16); // 60fps
+
+            let current = 0;
+            const updateCounter = () => {
+                current += increment;
+                if (current < target) {
+                    counter.innerText = Math.ceil(current);
+                    requestAnimationFrame(updateCounter);
+                } else {
+                    counter.innerText = target;
+                }
+            };
+            updateCounter();
+        });
+
+        // Search Filter
+        const searchInput = document.getElementById('globalSearch');
+        searchInput.addEventListener('input', function (e) {
+            const term = e.target.value.toLowerCase();
+            const activeTab = document.querySelector('.tab-pane.active');
+            const items = activeTab.querySelectorAll('.user-item');
+
+            items.forEach(item => {
+                const searchData = item.getAttribute('data-search').toLowerCase();
+                if (searchData.includes(term)) {
+                    item.style.display = 'block';
+                    // Re-trigger animation if hidden previously
+                    item.classList.add('animate__animated', 'animate__fadeIn');
+                } else {
+                    item.style.display = 'none';
+                    item.classList.remove('animate__animated', 'animate__fadeIn');
+                }
+            });
+        });
+
+        // Re-apply search when tab changes
+        const tabTriggerList = [].slice.call(document.querySelectorAll('button[data-bs-toggle="pill"]'));
+        tabTriggerList.forEach(function (triggerEl) {
+            triggerEl.addEventListener('shown.bs.tab', function (event) {
+                // Trigger input event to filter new tab content
+                searchInput.dispatchEvent(new Event('input'));
+            });
+        });
+
+        // Initialize Tilt
+        VanillaTilt.init(document.querySelectorAll(".hero-card-3d"), {
+            max: 15,
+            speed: 400,
+            glare: true,
+            "max-glare": 0.2,
         });
     });
 
-    function resetAllFilters() {
-        document.getElementById('globalSearch').value = '';
-        document.querySelectorAll('.user-card').forEach(card => card.style.display = 'block');
-        switchCategory('student');
-    }
+    // Connection Request Logic
+    function handleRequest(requestId, action) {
+        if (!confirm(`Are you sure you want to ${action} this request?`)) return;
 
-    // Dynamic Greeting
-    const hour = new Date().getHours();
-    const greeting = hour < 12 ? 'Good Morning' : hour < 18 ? 'Good Afternoon' : 'Good Evening';
-    document.getElementById('dynamicGreeting').textContent = greeting;
-
-    // Handle Requests
-    function handleRequest(senderId, action) {
-        if (!confirm('Are you sure you want to ' + action + ' this request?')) return;
-
-        fetch('/api/connection-request/' + action + '/' + senderId, {
+        fetch(`/api/connection-request/${action}/${requestId}`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' }
         })
-            .then(response => response.json())
+            .then(res => res.json())
             .then(data => {
                 if (data.success) {
-                    alert('Request ' + action + 'ed successfully!');
-                    location.reload();
+                    // Animate removal
+                    const card = document.querySelector(`button[onclick*="'${requestId}'"]`).closest('.col-10');
+                    card.style.transition = 'all 0.5s ease';
+                    card.style.opacity = '0';
+                    card.style.transform = 'scale(0.8)';
+                    setTimeout(() => location.reload(), 500);
                 } else {
                     alert('Error: ' + data.error);
                 }
-            })
-            .catch(err => console.error(err));
+            });
     }
 
-    // Note: Previous logic review for handleRequest
-    // Ensure we use the correct ID for the API call.
-
-
-    // I will use `connectUser` logic for the cards.
-    function connectUser(userId, role) {
-        // Find button
-        const btn = event.currentTarget;
-        const originalText = btn.innerHTML;
+    function connectUser(userId, role, btn) {
+        const originalContent = btn.innerHTML;
         btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
         btn.disabled = true;
 
         fetch('/api/connection-request/send', {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ receiver_id: userId })
         })
-            .then(response => response.json())
+            .then(res => res.json())
             .then(data => {
                 if (data.success) {
                     btn.innerHTML = '<i class="fas fa-check"></i> Sent';
-                    btn.classList.remove('btn-outline-primary', 'btn-outline-info', 'btn-outline-warning');
-                    btn.classList.add('btn-success', 'text-white');
+                    btn.classList.add('btn-success');
+                    btn.classList.remove('btn-primary', 'btn-warning');
                 } else {
-                    btn.innerHTML = originalText;
+                    btn.innerHTML = originalContent;
                     btn.disabled = false;
-                    alert(data.error || 'eRROR');
+                    alert(data.error);
                 }
             })
-            .catch(error => {
-                console.error('Error:', error);
-                btn.innerHTML = originalText;
+            .catch(err => {
+                console.error(err);
+                btn.innerHTML = originalContent;
                 btn.disabled = false;
-            });
-    }
-
-
-</script>
-
-<script>
-    // Overwriting handleRequest to use req.id properly
-    function handleRequest(requestId, action) {
-        fetch('/api/connection-request/' + action + '/' + requestId, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' }
-        })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    location.reload();
-                } else {
-                    alert('Error: ' + data.error);
-                }
             });
     }
 </script>

@@ -481,6 +481,8 @@ def login():
                     return redirect(url_for('dashboard_admin'))
                 if user['role'] == 'alumni':
                     return redirect(url_for('dashboard_alumni'))
+                if user['role'] == 'faculty':
+                    return redirect(url_for('dashboard_faculty'))
                 return redirect(url_for('dashboard_student'))
             else:
                 flash('Invalid Email or Password', 'danger')
