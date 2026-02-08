@@ -35,31 +35,42 @@
                                 style="background: linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(236, 72, 153, 0.1) 100%); z-index: 0;">
                             </div>
 
-                            <!-- Decorative Elements -->
-                            <div class="position-absolute"
-                                style="width: 400px; height: 400px; background: radial-gradient(circle, rgba(99,102,241,0.15) 0%, transparent 70%); top: -100px; right: -100px; filter: blur(50px);">
-                            </div>
+                            <!-- 3D Floating Icons (Parallax) -->
+                            <div class="floating-icon icon-1 position-absolute"
+                                style="top: 15%; left: 10%; font-size: 2rem; color: rgba(99, 102, 241, 0.2);"><i
+                                    class="fas fa-graduation-cap"></i></div>
+                            <div class="floating-icon icon-2 position-absolute"
+                                style="top: 70%; right: 15%; font-size: 2.5rem; color: rgba(236, 72, 153, 0.2);"><i
+                                    class="fas fa-rocket"></i></div>
+                            <div class="floating-icon icon-3 position-absolute"
+                                style="bottom: 20%; left: 20%; font-size: 1.5rem; color: rgba(245, 158, 11, 0.2);"><i
+                                    class="fas fa-certificate"></i></div>
 
                             <div class="position-relative z-1 reveal-fade" style="transition-delay: 0.2s;">
                                 <div class="mb-5">
                                     <div class="icon-circle bg-white text-primary rounded-circle d-flex align-items-center justify-content-center mx-auto shadow-lg"
                                         style="width: 120px; height: 120px; font-size: 3rem;">
-                                        <i class="fas fa-rocket"></i>
+                                        <i class="fas fa-user-plus"></i>
                                     </div>
                                 </div>
-                                <h1 class="fw-bold display-5 mb-3 text-dark">Join <span class="text-primary">Us</span>
+                                <h1 class="fw-bold display-5 mb-3 text-dark">
+                                    <span id="typing-text" class="text-primary"></span><span
+                                        class="cursor-blink">|</span>
                                 </h1>
-                                <p class="lead text-muted mb-5">Start your journey with Alumni Hub today.</p>
+                                <p class="lead text-muted mb-5">Be part of a thriving network.</p>
 
                                 <div class="d-flex flex-column gap-3 align-items-center w-75 mx-auto">
-                                    <div class="d-flex align-items-center gap-3 text-muted">
-                                        <i class="fas fa-check-circle text-success"></i> <span>Expand Network</span>
+                                    <div class="d-flex align-items-center gap-3 text-muted scale-hover">
+                                        <div class="icon-box-sm bg-success-subtle text-success rounded-circle p-1"><i
+                                                class="fas fa-check"></i></div> <span>Expand Network</span>
                                     </div>
-                                    <div class="d-flex align-items-center gap-3 text-muted">
-                                        <i class="fas fa-check-circle text-success"></i> <span>Mentorship</span>
+                                    <div class="d-flex align-items-center gap-3 text-muted scale-hover">
+                                        <div class="icon-box-sm bg-success-subtle text-success rounded-circle p-1"><i
+                                                class="fas fa-check"></i></div> <span>Mentorship</span>
                                     </div>
-                                    <div class="d-flex align-items-center gap-3 text-muted">
-                                        <i class="fas fa-check-circle text-success"></i> <span>Job Opportunities</span>
+                                    <div class="d-flex align-items-center gap-3 text-muted scale-hover">
+                                        <div class="icon-box-sm bg-success-subtle text-success rounded-circle p-1"><i
+                                                class="fas fa-check"></i></div> <span>Job Opportunities</span>
                                     </div>
                                 </div>
                             </div>
@@ -73,7 +84,16 @@
                         </div>
 
                         <!-- RIGHT SIDE: Scrollable Form -->
-                        <div class="col-lg-8 h-100 bg-white bg-opacity-10">
+                        <div class="col-lg-8 h-100 bg-white bg-opacity-10 position-relative">
+
+                            <!-- Live Completion Progress Bar (Sticky Top) -->
+                            <div class="progress-wrapper position-absolute top-0 start-0 w-100 z-3"
+                                style="height: 4px; background: rgba(0,0,0,0.05);">
+                                <div id="form-progress" class="progress-bar-premium"
+                                    style="width: 0%; height: 100%; background: linear-gradient(90deg, #6366f1, #ec4899); transition: width 0.4s ease;">
+                                </div>
+                            </div>
+
                             <div class="h-100 overflow-y-auto custom-scrollbar p-4 p-md-5">
 
                                 <!-- Mobile Header -->
@@ -82,9 +102,16 @@
                                 </div>
 
                                 <!-- Desktop Header (Form Side) -->
-                                <div class="mb-4 reveal-fade" style="transition-delay: 0.1s;">
-                                    <h3 class="fw-bold mb-1">Create Account</h3>
-                                    <p class="text-muted text-sm">Fill in your details to register</p>
+                                <div class="mb-4 reveal-fade d-flex justify-content-between align-items-center"
+                                    style="transition-delay: 0.1s;">
+                                    <div>
+                                        <h3 class="fw-bold mb-1">Create Account</h3>
+                                        <p class="text-muted text-sm">Fill in your details to register</p>
+                                    </div>
+                                    <div class="text-end">
+                                        <span class="badge bg-primary-subtle text-primary rounded-pill px-3 py-2"
+                                            id="completion-badge">0% Complete</span>
+                                    </div>
                                 </div>
 
                                 <!-- Flash Messages -->
@@ -512,7 +539,6 @@
         background: rgba(255, 255, 255, 0.5);
         border: 2px solid transparent;
         border-radius: 12px;
-        /* Slightly smaller radius for tighter form */
         transition: all 0.3s ease;
         position: relative;
         overflow: hidden;
@@ -585,6 +611,71 @@
     .custom-scrollbar::-webkit-scrollbar-thumb:hover {
         background: rgba(99, 102, 241, 0.4);
     }
+
+    /* Reveal Animation for Progress Bar */
+    @keyframes progressGlow {
+        0% {
+            box-shadow: 0 0 5px rgba(99, 102, 241, 0.5);
+        }
+
+        50% {
+            box-shadow: 0 0 15px rgba(236, 72, 153, 0.7);
+        }
+
+        100% {
+            box-shadow: 0 0 5px rgba(99, 102, 241, 0.5);
+        }
+    }
+
+    .progress-bar-premium {
+        animation: progressGlow 2s infinite;
+    }
+
+    /* Floating Icons Animation */
+    @keyframes floatIcon {
+
+        0%,
+        100% {
+            transform: translateY(0);
+        }
+
+        50% {
+            transform: translateY(-15px);
+        }
+    }
+
+    .floating-icon {
+        animation: floatIcon 4s ease-in-out infinite;
+        pointer-events: none;
+    }
+
+    .icon-1 {
+        animation-delay: 0s;
+    }
+
+    .icon-2 {
+        animation-delay: 1.5s;
+    }
+
+    .icon-3 {
+        animation-delay: 2.5s;
+    }
+
+    .cursor-blink {
+        animation: blink 0.7s infinite;
+    }
+
+    @keyframes blink {
+
+        0%,
+        100% {
+            opacity: 1;
+        }
+
+        50% {
+            opacity: 0;
+        }
+    }
 </style>
 
 <script>
@@ -640,6 +731,9 @@
                 }
             }
         });
+
+        // Trigger progress calculation update on role change
+        setTimeout(calculateProgress, 100);
     }
 
     function updateCourseDropdown() {
@@ -657,6 +751,7 @@
                 degreeSelect.appendChild(option);
             });
         }
+        calculateProgress();
     }
 
     function updateAlumniCourseDropdown() {
@@ -674,9 +769,87 @@
                 degreeSelect.appendChild(option);
             });
         }
+        calculateProgress();
     }
 
+    // Progress Bar Calculation
+    function calculateProgress() {
+        let totalFields = 0;
+        let filledFields = 0;
+
+        // Common fields
+        const commonInputs = document.querySelectorAll('#name, #email, #phone, #password');
+        totalFields += commonInputs.length;
+        commonInputs.forEach(input => {
+            if (input.value.trim() !== '') filledFields++;
+        });
+
+        // Role specific fields
+        const roleSelector = document.querySelector('input[name="role"]:checked');
+        if (roleSelector) {
+            const role = roleSelector.value;
+            const roleContainer = document.getElementById(role + 'Fields');
+            if (roleContainer) {
+                const roleInputs = roleContainer.querySelectorAll('input, select');
+                roleInputs.forEach(input => {
+                    totalFields++;
+                    if (input.value.trim() !== '') filledFields++;
+                });
+            }
+        }
+
+        const percentage = totalFields === 0 ? 0 : Math.round((filledFields / totalFields) * 100);
+        const progressBar = document.getElementById('form-progress');
+        const badge = document.getElementById('completion-badge');
+
+        if (progressBar) progressBar.style.width = `${percentage}%`;
+        if (badge) badge.textContent = `${percentage}% Complete`;
+
+        // Color change based on progress
+        if (percentage < 50) {
+            if (progressBar) progressBar.style.background = 'linear-gradient(90deg, #ef4444, #f59e0b)';
+        } else {
+            if (progressBar) progressBar.style.background = 'linear-gradient(90deg, #6366f1, #10b981)';
+        }
+    }
+
+    // Typing Effect
+    const textArray = ["Join Us", "Join the Future", "Join the Community", "Connect Now"];
+    let textIndex = 0;
+    let charIndex = 0;
+    let isDeleting = false;
+
+    function typeEffect() {
+        const currentText = textArray[textIndex];
+        const typingElement = document.getElementById('typing-text');
+
+        if (isDeleting) {
+            typingElement.textContent = currentText.substring(0, charIndex - 1);
+            charIndex--;
+        } else {
+            typingElement.textContent = currentText.substring(0, charIndex + 1);
+            charIndex++;
+        }
+
+        let typeSpeed = isDeleting ? 100 : 200;
+
+        if (!isDeleting && charIndex === currentText.length) {
+            isDeleting = true;
+            typeSpeed = 2000; // Pause at end
+        } else if (isDeleting && charIndex === 0) {
+            isDeleting = false;
+            textIndex = (textIndex + 1) % textArray.length;
+            typeSpeed = 500;
+        }
+
+        setTimeout(typeEffect, typeSpeed);
+    }
+
+
     document.addEventListener('DOMContentLoaded', () => {
+        // Start Typing Effect
+        typeEffect();
+
         // Trigger Initial Reveals
         setTimeout(() => {
             document.querySelectorAll('.reveal-fade').forEach(el => {
@@ -722,7 +895,7 @@
                 const centerY = rect.height / 2;
 
                 // Subtle tilt
-                const rotateX = (y - centerY) / 50; // Very subtle tilt for large card
+                const rotateX = (y - centerY) / 50;
                 const rotateY = (centerX - x) / 50;
 
                 registerCard.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
@@ -733,8 +906,8 @@
             });
         }
 
-        // --- Floating Label Fix for Overlap ---
-        const formInputs = document.querySelectorAll('.form-control-modern');
+        // --- Floating Label Fix for Overlap (Always-Up Persistence) ---
+        const formInputs = document.querySelectorAll('.form-control-modern, .form-select');
 
         function updateLabel(input) {
             if (input.value && input.value.trim() !== '') {
@@ -742,26 +915,24 @@
             } else {
                 input.classList.remove('has-content');
             }
+            calculateProgress(); // Also update progress on input change
         }
 
         formInputs.forEach(input => {
-            // Check usage on load (for autofill/prefill)
             updateLabel(input);
 
-            // Check on input/change
             input.addEventListener('input', () => updateLabel(input));
             input.addEventListener('change', () => updateLabel(input));
             input.addEventListener('blur', () => updateLabel(input));
 
-            // Handle Autofill specifically
             input.addEventListener('animationstart', (e) => {
                 if (e.animationName === 'onAutoFillStart') {
                     input.classList.add('has-content');
+                    calculateProgress();
                 }
             });
         });
 
-        // Periodic check for autofill (fallback)
         setTimeout(() => {
             formInputs.forEach(updateLabel);
         }, 500);
