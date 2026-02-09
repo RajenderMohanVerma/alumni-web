@@ -52,6 +52,17 @@ def get_db_connection():
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
+def normalize_profile_pic(profile_pic, name='User'):
+    """
+    Normalize profile picture path. If empty or invalid, return None
+    to trigger fallback to ui-avatars in frontend
+    """
+    if not profile_pic or profile_pic == 'default.jpg' or profile_pic == '':
+        return None
+    if profile_pic.startswith('/'):
+        return profile_pic
+    return None
+
 def log_registration(conn, user_id, name, email, phone, role, enrollment_no=None,
                     employee_id=None, department=None, degree=None, pass_year=None,
                     company_name=None, designation=None, experience_years=None):
@@ -2268,8 +2279,11 @@ def get_alumni_details(user_id):
         if not user or not profile:
             return jsonify({'error': 'Alumni not found'}), 404
 
+        user_dict = dict(user)
+        user_dict['profile_pic'] = normalize_profile_pic(user_dict['profile_pic'], user_dict['name'])
+
         return jsonify({
-            'user': dict(user),
+            'user': user_dict,
             'profile': dict(profile)
         })
     finally:
@@ -2289,8 +2303,11 @@ def get_student_details(user_id):
         if not user or not profile:
             return jsonify({'error': 'Student not found'}), 404
 
+        user_dict = dict(user)
+        user_dict['profile_pic'] = normalize_profile_pic(user_dict['profile_pic'], user_dict['name'])
+
         return jsonify({
-            'user': dict(user),
+            'user': user_dict,
             'profile': dict(profile)
         })
     finally:
