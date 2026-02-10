@@ -382,6 +382,11 @@
         {% endwith %}
     </div>
 
+    <!-- ===== SCROLL TO TOP BUTTON ===== -->
+    <button id="scrollToTopBtn" class="scroll-to-top-btn" aria-label="Scroll to top">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
     <!-- ===== MAIN CONTENT ===== -->
     <main class="main-wrapper">
         {% block content %}{% endblock %}
@@ -487,7 +492,6 @@
                 </div>
             </div>
         </div>
-        \]\ \
         <!-- Footer Bottom -->
         <div class="footer-bottom">
             <div class="container">
@@ -646,6 +650,26 @@
         window.addEventListener('load', () => {
             const wrapper = document.querySelector('.main-wrapper');
             if (wrapper) wrapper.classList.add('page-revealed');
+        });
+
+        // 5. SCROLL TO TOP BUTTON
+        const scrollToTopBtn = document.getElementById('scrollToTopBtn');
+
+        // Show/hide button based on scroll position
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                scrollToTopBtn.classList.add('show');
+            } else {
+                scrollToTopBtn.classList.remove('show');
+            }
+        });
+
+        // Smooth scroll to top on click
+        scrollToTopBtn.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
         });
     </script>
 

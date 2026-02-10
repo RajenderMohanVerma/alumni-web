@@ -126,52 +126,491 @@
             </div>
         </div>
 
-        <!-- Leadership Team Section -->
+        <!-- Leadership Team Section - Enhanced Individual Cards -->
         <div class="team-wrapper mb-5 py-5">
             <div class="section-tag text-center mb-5 reveal-text">
                 <span class="tag-label">LEADERSHIP</span>
-                <h2 class="fw-bold display-5 mt-2 text-white">The <span class="text-holographic">A-Team</span>
+                <h2 class="fw-bold display-4 mt-2 text-white">Meet Our <span class="text-holographic">Dream Team</span>
                 </h2>
+                <p class="text-slate-300 mt-3 lead text-white">Passionate individuals driving our mission forward</p>
             </div>
 
-            <div class="row g-4 justify-content-center">
-                {% set team = [
-                {'name': 'Rajender Mohan Verma', 'role': 'Founder & CEO', 'bio': '2+ years building successful tech
-                communities', 'icon': '👨‍💼', 'delay': '0s'},
-                {'name': 'Shekhar Maurya', 'role': 'Head of Operations', 'bio': 'Expert in program management', 'icon':
-                '👨‍💼', 'delay': '0.1s'},
-                {'name': 'Rajender Mohan Verma', 'role': 'Technical Lead', 'bio': 'Full-stack developer with passion',
-                'icon': '👨‍💻', 'delay': '0.2s'},
-                {'name': 'Anushka Singh', 'role': 'Community Manager', 'bio': 'Creating meaningful connections', 'icon':
-                '👩‍🎓', 'delay': '0.3s'},
-                {'name': 'Karuna Singh', 'role': 'Marketing Lead', 'bio': 'Strategic marketing expert', 'icon': '👩‍💼',
-                'delay': '0.4s'},
-                {'name': 'Sazida Sahin', 'role': 'Frontend Developer', 'bio': 'Beautiful UI/UX creator', 'icon':
-                '👩‍💻', 'delay': '0.5s'},
-                {'name': 'Harsh Verma', 'role': 'Backend Developer', 'bio': 'Scalable architecture expert', 'icon':
-                '👨‍💻', 'delay': '0.6s'}
-                ] %}
-                {% for member in team %}
-                <div class="col-xl-3 col-lg-4 col-md-6 reveal-fade" style="animation-delay: {{ member.delay }};">
-                    <div class="card border-0 glass-card team-card tilt-element text-center">
-                        <div class="card-body p-4">
-                            <div class="team-avatar-box mb-3">
-                                <span class="display-3">{{ member.icon }}</span>
+            <div class="container-fluid px-lg-5">
+                <!-- Row 1: Founder & CEO (Full Width Spotlight) -->
+                <div class="row mb-4 justify-content-center reveal-fade" style="animation-delay: 0s;">
+                    <div class="col-lg-8 col-md-10">
+                        {% set founder_image = "rajender.jpg" %}
+                        <!-- Add image filename here, e.g., 'rajender_verma.jpg' -->
+                        <div class="team-card-spotlight glass-card border-0 position-relative overflow-hidden">
+                            <div class="spotlight-badge">
+                                <i class="fas fa-crown me-2"></i>Founder
                             </div>
-                            <h5 class="fw-bold mb-1 text-slate-800">{{ member.name }}</h5>
-                            <p class="text-primary small fw-extrabold mb-2">{{ member.role }}</p>
-                            <p class="text-slate-500 x-small mb-3 fw-medium">{{ member.bio }}</p>
-                            <div class="social-links d-flex justify-content-center gap-2">
-                                <a href="#" class="social-btn magnetic-button"><i class="fab fa-linkedin-in"></i></a>
-                                <a href="#" class="social-btn magnetic-button"><i class="fab fa-github"></i></a>
-                                <a href="#" class="social-btn magnetic-button"><i class="fab fa-instagram"></i></a>
+                            <div class="row g-0 align-items-center">
+                                <div class="col-md-4">
+                                    <div class="team-image-container-spotlight">
+                                        {% if founder_image %}
+                                        <!-- Real Image -->
+                                        <img src="{{ url_for('static', filename='images/team/' + founder_image) }}"
+                                            alt="Rajender Mohan Verma" class="team-member-image w-100 h-100"
+                                            style="object-fit: cover;">
+                                        {% else %}
+                                        <!-- Placeholder -->
+                                        <div class="team-placeholder-image">
+                                            <div class="placeholder-gradient"></div>
+                                            <div class="placeholder-initials">RM</div>
+                                        </div>
+                                        {% endif %}
+                                        <div class="team-image-overlay">
+                                            <div class="overlay-content">
+                                                <i class="fas fa-user-tie fa-4x text-white mb-2"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="p-5">
+                                        <div class="floating-badge mb-3">
+                                            <i class="fas fa-star"></i> Founder & CEO
+                                        </div>
+                                        <h3 class="fw-bold mb-2 text-slate-800">Rajender Mohan Verma</h3>
+                                        <p class="text-slate-600 mb-3">2+ years building successful tech communities and
+                                            leading innovative projects. Passionate about creating meaningful
+                                            connections and driving technological advancement.</p>
+                                        <div class="d-flex gap-3 align-items-center">
+                                            <a href="https://www.linkedin.com/in/rajender-mohan-verma-0b1b8b1b1/"
+                                                class="social-btn-premium" title="LinkedIn">
+                                                <i class="fab fa-linkedin-in"></i>
+                                            </a>
+                                            <a href="https://github.com/RajenderMohanVerma" class="social-btn-premium"
+                                                title="GitHub">
+                                                <i class="fab fa-github"></i>
+                                            </a>
+                                            <a href="#" class="social-btn-premium" title="Twitter">
+                                                <i class="fab fa-twitter"></i>
+                                            </a>
+                                            <div class="ms-auto">
+                                                <span class="badge-experience">2+ Years</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
+                            <div class="animated-border"></div>
                         </div>
-                        <div class="shimmer-effect"></div>
                     </div>
                 </div>
-                {% endfor %}
+
+                <!-- Row 2: Shekhar Maurya (Operations Lead) -->
+                <div class="row mb-4 justify-content-center reveal-fade" style="animation-delay: 0.1s;">
+                    <div class="col-lg-8 col-md-10">
+                        {% set shekhar_image = 'shekhar_maurya.jpg' %}
+                        <!-- Add image filename here, e.g., 'shekhar_maurya.jpg' -->
+                        <div class="team-card-spotlight glass-card border-0 position-relative overflow-hidden">
+                            <div class="spotlight-badge" style="background: linear-gradient(135deg, #3b82f6, #2563eb);">
+                                <i class="fas fa-cog me-2"></i>Operations
+                            </div>
+                            <div class="row g-0 align-items-center">
+                                <div class="col-md-4">
+                                    <div class="team-image-container-spotlight">
+                                        {% if shekhar_image %}
+                                        <!-- Real Image -->
+                                        <img src="{{ url_for('static', filename='images/team/' + shekhar_image) }}"
+                                            alt="Shekhar Maurya" class="team-member-image w-100 h-100"
+                                            style="object-fit: cover;">
+                                        {% else %}
+                                        <!-- Placeholder -->
+                                        <div class="team-placeholder-image">
+                                            <div class="placeholder-gradient"
+                                                style="background: linear-gradient(135deg, #3b82f6, #2563eb);"></div>
+                                            <div class="placeholder-initials">SM</div>
+                                        </div>
+                                        {% endif %}
+                                        <div class="team-image-overlay">
+                                            <div class="overlay-content">
+                                                <i class="fas fa-cog fa-4x text-white mb-2"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="p-5">
+                                        <div class="floating-badge mb-3"
+                                            style="background: linear-gradient(135deg, #3b82f6, #2563eb);">
+                                            <i class="fas fa-briefcase"></i> Head of Operations
+                                        </div>
+                                        <h3 class="fw-bold mb-2 text-slate-800">Shekhar Maurya</h3>
+                                        <p class="text-slate-600 mb-3">Expert in program management and strategic
+                                            planning.
+                                            Streamlining operations and driving efficiency across all initiatives.</p>
+                                        <div class="d-flex gap-3 align-items-center">
+                                            <a href="https://www.linkedin.com/in/rajender-mohan-verma-0b1b8b1b1/"
+                                                class="social-btn-premium" title="LinkedIn">
+                                                <i class="fab fa-linkedin-in"></i>
+                                            </a>
+                                            <a href="https://github.com/RajenderMohanVerma" class="social-btn-premium"
+                                                title="GitHub">
+                                                <i class="fab fa-github"></i>
+                                            </a>
+                                            <a href="#" class="social-btn-premium" title="Twitter">
+                                                <i class="fab fa-twitter"></i>
+                                            </a>
+                                            <div class="ms-auto">
+                                                <span class="badge-experience"
+                                                    style="background: linear-gradient(135deg, #3b82f6, #2563eb);">Operations</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="animated-border"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Row 3: Rajender Mohan Verma (Technical Lead) -->
+                <div class="row mb-4 justify-content-center reveal-fade" style="animation-delay: 0.2s;">
+                    <div class="col-lg-8 col-md-10">
+                        {% set rajender_tech_image = 'rajender_tech.jpg' %}
+                        <!-- Add image filename here, e.g., 'rajender_tech.jpg' -->
+                        <div class="team-card-spotlight glass-card border-0 position-relative overflow-hidden">
+                            <div class="spotlight-badge" style="background: linear-gradient(135deg, #8b5cf6, #7c3aed);">
+                                <i class="fas fa-code me-2"></i>Technical
+                            </div>
+                            <div class="row g-0 align-items-center">
+                                <div class="col-md-4">
+                                    <div class="team-image-container-spotlight">
+                                        {% if rajender_tech_image %}
+                                        <!-- Real Image -->
+                                        <img src="{{ url_for('static', filename='images/team/' + rajender_tech_image) }}"
+                                            alt="Rajender Mohan Verma" class="team-member-image w-100 h-100"
+                                            style="object-fit: cover;">
+                                        {% else %}
+                                        <!-- Placeholder -->
+                                        <div class="team-placeholder-image">
+                                            <div class="placeholder-gradient"
+                                                style="background: linear-gradient(135deg, #8b5cf6, #7c3aed);"></div>
+                                            <div class="placeholder-initials">RM</div>
+                                        </div>
+                                        {% endif %}
+                                        <div class="team-image-overlay">
+                                            <div class="overlay-content">
+                                                <i class="fas fa-code fa-4x text-white mb-2"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="p-5">
+                                        <div class="floating-badge mb-3"
+                                            style="background: linear-gradient(135deg, #8b5cf6, #7c3aed);">
+                                            <i class="fas fa-laptop-code"></i> Technical Lead
+                                        </div>
+                                        <h3 class="fw-bold mb-2 text-slate-800">Rajender Mohan Verma</h3>
+                                        <p class="text-slate-600 mb-3">Full-stack developer and tech architect.
+                                            Building scalable solutions and mentoring the development team.</p>
+                                        <div class="d-flex gap-3 align-items-center">
+                                            <a href="https://www.linkedin.com/in/rajender-mohan-verma-0b1b8b1b1/"
+                                                class="social-btn-premium" title="LinkedIn">
+                                                <i class="fab fa-linkedin-in"></i>
+                                            </a>
+                                            <a href="https://github.com/RajenderMohanVerma" class="social-btn-premium"
+                                                title="GitHub">
+                                                <i class="fab fa-github"></i>
+                                            </a>
+                                            <a href="#" class="social-btn-premium" title="Twitter">
+                                                <i class="fab fa-twitter"></i>
+                                            </a>
+                                            <div class="ms-auto">
+                                                <span class="badge-experience"
+                                                    style="background: linear-gradient(135deg, #8b5cf6, #7c3aed);">Technical</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="animated-border"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Row 4: Anushka Singh (Community Manager) -->
+                <div class="row mb-4 justify-content-center reveal-fade" style="animation-delay: 0.3s;">
+                    <div class="col-lg-8 col-md-10">
+                        {% set anushka_image = 'anushka_singh.jpg' %}
+                        <!-- Add image filename here, e.g., 'anushka_singh.jpg' -->
+                        <div class="team-card-spotlight glass-card border-0 position-relative overflow-hidden">
+                            <div class="spotlight-badge" style="background: linear-gradient(135deg, #ec4899, #db2777);">
+                                <i class="fas fa-users me-2"></i>Community
+                            </div>
+                            <div class="row g-0 align-items-center">
+                                <div class="col-md-4">
+                                    <div class="team-image-container-spotlight">
+                                        {% if anushka_image %}
+                                        <!-- Real Image -->
+                                        <img src="{{ url_for('static', filename='images/team/' + anushka_image) }}"
+                                            alt="Anushka Singh" class="team-member-image w-100 h-100"
+                                            style="object-fit: cover;">
+                                        {% else %}
+                                        <!-- Placeholder -->
+                                        <div class="team-placeholder-image">
+                                            <div class="placeholder-gradient"
+                                                style="background: linear-gradient(135deg, #ec4899, #db2777);"></div>
+                                            <div class="placeholder-initials">AS</div>
+                                        </div>
+                                        {% endif %}
+                                        <div class="team-image-overlay">
+                                            <div class="overlay-content">
+                                                <i class="fas fa-users fa-4x text-white mb-2"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="p-5">
+                                        <div class="floating-badge mb-3"
+                                            style="background: linear-gradient(135deg, #ec4899, #db2777);">
+                                            <i class="fas fa-heart"></i> Community Manager
+                                        </div>
+                                        <h3 class="fw-bold mb-2 text-slate-800">Anushka Singh</h3>
+                                        <p class="text-slate-600 mb-3">Building vibrant communities and fostering
+                                            meaningful connections.
+                                            Passionate about creating inclusive spaces for collaboration.</p>
+                                        <div class="d-flex gap-3 align-items-center">
+                                            <a href="https://www.linkedin.com/in/rajender-mohan-verma-0b1b8b1b1/"
+                                                class="social-btn-premium" title="LinkedIn">
+                                                <i class="fab fa-linkedin-in"></i>
+                                            </a>
+                                            <a href="https://github.com/RajenderMohanVerma" class="social-btn-premium"
+                                                title="GitHub">
+                                                <i class="fab fa-github"></i>
+                                            </a>
+                                            <a href="#" class="social-btn-premium" title="Twitter">
+                                                <i class="fab fa-twitter"></i>
+                                            </a>
+                                            <div class="ms-auto">
+                                                <span class="badge-experience"
+                                                    style="background: linear-gradient(135deg, #ec4899, #db2777);">Community</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="animated-border"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Row 5: Karuna Singh (Marketing Lead) -->
+                <div class="row mb-4 justify-content-center reveal-fade" style="animation-delay: 0.4s;">
+                    <div class="col-lg-8 col-md-10">
+                        {% set karuna_image = '' %}
+                        <!-- Add image filename here, e.g., 'karuna_singh.jpg' -->
+                        <div class="team-card-spotlight glass-card border-0 position-relative overflow-hidden">
+                            <div class="spotlight-badge" style="background: linear-gradient(135deg, #f97316, #ea580c);">
+                                <i class="fas fa-bullhorn me-2"></i>Marketing
+                            </div>
+                            <div class="row g-0 align-items-center">
+                                <div class="col-md-4">
+                                    <div class="team-image-container-spotlight">
+                                        {% if karuna_image %}
+                                        <!-- Real Image -->
+                                        <img src="{{ url_for('static', filename='images/team/' + karuna_image) }}"
+                                            alt="Karuna Singh" class="team-member-image w-100 h-100"
+                                            style="object-fit: cover;">
+                                        {% else %}
+                                        <!-- Placeholder -->
+                                        <div class="team-placeholder-image">
+                                            <div class="placeholder-gradient"
+                                                style="background: linear-gradient(135deg, #f97316, #ea580c);"></div>
+                                            <div class="placeholder-initials">KS</div>
+                                        </div>
+                                        {% endif %}
+                                        <div class="team-image-overlay">
+                                            <div class="overlay-content">
+                                                <i class="fas fa-bullhorn fa-4x text-white mb-2"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="p-5">
+                                        <div class="floating-badge mb-3"
+                                            style="background: linear-gradient(135deg, #f97316, #ea580c);">
+                                            <i class="fas fa-chart-line"></i> Marketing Lead
+                                        </div>
+                                        <h3 class="fw-bold mb-2 text-slate-800">Karuna Singh</h3>
+                                        <p class="text-slate-600 mb-3">Creative strategist driving brand growth and
+                                            engagement.
+                                            Crafting compelling narratives that resonate with our community.</p>
+                                        <div class="d-flex gap-3 align-items-center">
+                                            <a href="https://www.linkedin.com/in/rajender-mohan-verma-0b1b8b1b1/"
+                                                class="social-btn-premium" title="LinkedIn">
+                                                <i class="fab fa-linkedin-in"></i>
+                                            </a>
+                                            <a href="https://github.com/RajenderMohanVerma" class="social-btn-premium"
+                                                title="GitHub">
+                                                <i class="fab fa-github"></i>
+                                            </a>
+                                            <a href="#" class="social-btn-premium" title="Twitter">
+                                                <i class="fab fa-twitter"></i>
+                                            </a>
+                                            <div class="ms-auto">
+                                                <span class="badge-experience"
+                                                    style="background: linear-gradient(135deg, #f97316, #ea580c);">Marketing</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="animated-border"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Row 6: Sazida Sahin (Frontend Developer) -->
+                <div class="row mb-4 justify-content-center reveal-fade" style="animation-delay: 0.5s;">
+                    <div class="col-lg-8 col-md-10">
+                        {% set sazida_image = '' %}
+                        <!-- Add image filename here, e.g., 'sazida_sahin.jpg' -->
+                        <div class="team-card-spotlight glass-card border-0 position-relative overflow-hidden">
+                            <div class="spotlight-badge" style="background: linear-gradient(135deg, #14b8a6, #0d9488);">
+                                <i class="fas fa-palette me-2"></i>Frontend
+                            </div>
+                            <div class="row g-0 align-items-center">
+                                <div class="col-md-4">
+                                    <div class="team-image-container-spotlight">
+                                        {% if sazida_image %}
+                                        <!-- Real Image -->
+                                        <img src="{{ url_for('static', filename='images/team/' + sazida_image) }}"
+                                            alt="Sazida Sahin" class="team-member-image w-100 h-100"
+                                            style="object-fit: cover;">
+                                        {% else %}
+                                        <!-- Placeholder -->
+                                        <div class="team-placeholder-image">
+                                            <div class="placeholder-gradient"
+                                                style="background: linear-gradient(135deg, #14b8a6, #0d9488);"></div>
+                                            <div class="placeholder-initials">SS</div>
+                                        </div>
+                                        {% endif %}
+                                        <div class="team-image-overlay">
+                                            <div class="overlay-content">
+                                                <i class="fas fa-palette fa-4x text-white mb-2"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="p-5">
+                                        <div class="floating-badge mb-3"
+                                            style="background: linear-gradient(135deg, #14b8a6, #0d9488);">
+                                            <i class="fas fa-paint-brush"></i> Frontend Developer
+                                        </div>
+                                        <h3 class="fw-bold mb-2 text-slate-800">Sazida Sahin</h3>
+                                        <p class="text-slate-600 mb-3">UI/UX specialist creating beautiful, intuitive
+                                            interfaces.
+                                            Bringing designs to life with modern web technologies.</p>
+                                        <div class="d-flex gap-3 align-items-center">
+                                            <a href="https://www.linkedin.com/in/rajender-mohan-verma-0b1b8b1b1/"
+                                                class="social-btn-premium" title="LinkedIn">
+                                                <i class="fab fa-linkedin-in"></i>
+                                            </a>
+                                            <a href="https://github.com/RajenderMohanVerma" class="social-btn-premium"
+                                                title="GitHub">
+                                                <i class="fab fa-github"></i>
+                                            </a>
+                                            <a href="#" class="social-btn-premium" title="Twitter">
+                                                <i class="fab fa-twitter"></i>
+                                            </a>
+                                            <div class="ms-auto">
+                                                <span class="badge-experience"
+                                                    style="background: linear-gradient(135deg, #14b8a6, #0d9488);">Frontend</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="animated-border"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Row 7: Harsh Verma (Backend Developer) -->
+                <div class="row mb-4 justify-content-center reveal-fade" style="animation-delay: 0.6s;">
+                    <div class="col-lg-8 col-md-10">
+                        {% set harsh_image = '' %}
+                        <!-- Add image filename here, e.g., 'harsh_verma.jpg' -->
+                        <div class="team-card-spotlight glass-card border-0 position-relative overflow-hidden">
+                            <div class="spotlight-badge" style="background: linear-gradient(135deg, #10b981, #059669);">
+                                <i class="fas fa-server me-2"></i>Backend
+                            </div>
+                            <div class="row g-0 align-items-center">
+                                <div class="col-md-4">
+                                    <div class="team-image-container-spotlight">
+                                        {% if harsh_image %}
+                                        <!-- Real Image -->
+                                        <img src="{{ url_for('static', filename='images/team/' + harsh_image) }}"
+                                            alt="Harsh Verma" class="team-member-image w-100 h-100"
+                                            style="object-fit: cover;">
+                                        {% else %}
+                                        <!-- Placeholder -->
+                                        <div class="team-placeholder-image">
+                                            <div class="placeholder-gradient"
+                                                style="background: linear-gradient(135deg, #10b981, #059669);"></div>
+                                            <div class="placeholder-initials">HV</div>
+                                        </div>
+                                        {% endif %}
+                                        <div class="team-image-overlay">
+                                            <div class="overlay-content">
+                                                <i class="fas fa-server fa-4x text-white mb-2"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="p-5">
+                                        <div class="floating-badge mb-3"
+                                            style="background: linear-gradient(135deg, #10b981, #059669);">
+                                            <i class="fas fa-database"></i> Backend Developer
+                                        </div>
+                                        <h3 class="fw-bold mb-2 text-slate-800">Harsh Verma</h3>
+                                        <p class="text-slate-600 mb-3">Backend architect building robust, scalable
+                                            systems.
+                                            Ensuring reliability and performance at every layer.</p>
+                                        <div class="d-flex gap-3 align-items-center">
+                                            <a href="https://www.linkedin.com/in/rajender-mohan-verma-0b1b8b1b1/"
+                                                class="social-btn-premium" title="LinkedIn">
+                                                <i class="fab fa-linkedin-in"></i>
+                                            </a>
+                                            <a href="https://github.com/RajenderMohanVerma" class="social-btn-premium"
+                                                title="GitHub">
+                                                <i class="fab fa-github"></i>
+                                            </a>
+                                            <a href="#" class="social-btn-premium" title="Twitter">
+                                                <i class="fab fa-twitter"></i>
+                                            </a>
+                                            <div class="ms-auto">
+                                                <span class="badge-experience"
+                                                    style="background: linear-gradient(135deg, #10b981, #059669);">Backend</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="animated-border"></div>
+                        </div>
+                    </div>
+                </div>
             </div>
+
+            <!-- Instructions for Adding Images -->
+            <!--
+            TO ADD TEAM MEMBER IMAGES:
+            1. Save images in: alumni-web/static/images/team/
+            2. Replace placeholder divs with:
+               <img src="{{ url_for('static', filename='images/team/firstname_lastname.jpg') }}" 
+                    alt="Name" class="team-member-image">
+            3. Recommended: 400x400px, JPG/PNG format
+            -->
         </div>
 
         <!-- Journey Timeline -->
@@ -472,6 +911,647 @@
         background: #6366f1;
         color: white;
         transform: rotate(360deg) scale(1.2);
+    }
+
+    /* ===== NEW TEAM CARDS - UNIQUE DESIGNS ===== */
+
+    /* === 1. SPOTLIGHT CARD (Founder) === */
+    .team-card-spotlight {
+        border-radius: 30px !important;
+        overflow: hidden;
+        transition: all 0.5s ease;
+        position: relative;
+    }
+
+    .team-card-spotlight:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 30px 60px rgba(99, 102, 241, 0.2) !important;
+    }
+
+    .spotlight-badge {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        background: linear-gradient(135deg, #fbbf24, #f59e0b);
+        color: white;
+        padding: 8px 20px;
+        border-radius: 50px;
+        font-size: 0.85rem;
+        font-weight: 700;
+        z-index: 10;
+        box-shadow: 0 4px 15px rgba(251, 191, 36, 0.4);
+        animation: badge-float 3s ease-in-out infinite;
+    }
+
+    @keyframes badge-float {
+
+        0%,
+        100% {
+            transform: translateY(0px);
+        }
+
+        50% {
+            transform: translateY(-5px);
+        }
+    }
+
+    .team-image-container-spotlight {
+        height: 100%;
+        min-height: 350px;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .floating-badge {
+        display: inline-block;
+        background: linear-gradient(135deg, #6366f1, #a855f7);
+        color: white;
+        padding: 6px 16px;
+        border-radius: 50px;
+        font-size: 0.85rem;
+        font-weight: 600;
+        animation: float-badge 2s ease-in-out infinite;
+    }
+
+    @keyframes float-badge {
+
+        0%,
+        100% {
+            transform: translateY(0px);
+        }
+
+        50% {
+            transform: translateY(-3px);
+        }
+    }
+
+    .badge-experience {
+        background: linear-gradient(135deg, #ec4899, #f43f5e);
+        color: white;
+        padding: 6px 16px;
+        border-radius: 50px;
+        font-size: 0.85rem;
+        font-weight: 600;
+        box-shadow: 0 4px 15px rgba(236, 72, 153, 0.3);
+    }
+
+    .social-btn-premium {
+        width: 45px;
+        height: 45px;
+        background: linear-gradient(135deg, #f1f5f9, #e2e8f0);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #475569;
+        text-decoration: none;
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        border: 2px solid transparent;
+        position: relative;
+    }
+
+    .social-btn-premium::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(135deg, #6366f1, #a855f7);
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        border-radius: 50%;
+    }
+
+    .social-btn-premium i {
+        position: relative;
+        z-index: 1;
+        transition: all 0.3s ease;
+    }
+
+    .social-btn-premium:hover {
+        transform: translateY(-5px) scale(1.15);
+        border-color: #6366f1;
+        box-shadow: 0 10px 25px rgba(99, 102, 241, 0.3);
+    }
+
+    .social-btn-premium:hover::before {
+        opacity: 1;
+    }
+
+    .social-btn-premium:hover i {
+        color: white;
+        transform: rotate(360deg);
+    }
+
+    /* Animated Border */
+    .animated-border {
+        position: absolute;
+        inset: 0;
+        border-radius: 30px;
+        padding: 3px;
+        background: linear-gradient(45deg, #6366f1, #a855f7, #ec4899, #6366f1);
+        background-size: 300% 300%;
+        -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+        -webkit-mask-composite: xor;
+        mask-composite: exclude;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        animation: gradient-rotate 3s ease infinite;
+    }
+
+    .team-card-spotlight:hover .animated-border {
+        opacity: 1;
+    }
+
+    @keyframes gradient-rotate {
+        0% {
+            background-position: 0% 50%;
+        }
+
+        50% {
+            background-position: 100% 50%;
+        }
+
+        100% {
+            background-position: 0% 50%;
+        }
+    }
+
+    /* === 2. FLIP CARDS (Leadership Team) === */
+    .team-card-flip {
+        perspective: 1000px;
+        height: 450px;
+    }
+
+    .card-flip-inner {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        transform-style: preserve-3d;
+    }
+
+    .team-card-flip:hover .card-flip-inner {
+        transform: rotateY(180deg);
+    }
+
+    .card-flip-front,
+    .card-flip-back {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        backface-visibility: hidden;
+        border-radius: 30px !important;
+        overflow: hidden;
+    }
+
+    .card-flip-back {
+        transform: rotateY(180deg);
+        background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.9));
+    }
+
+    .floating-icon {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        width: 50px;
+        height: 50px;
+        background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(168, 85, 247, 0.1));
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #6366f1;
+        font-size: 1.2rem;
+        z-index: 10;
+        animation: icon-float 3s ease-in-out infinite;
+    }
+
+    @keyframes icon-float {
+
+        0%,
+        100% {
+            transform: translateY(0px) rotate(0deg);
+        }
+
+        50% {
+            transform: translateY(-8px) rotate(10deg);
+        }
+    }
+
+    .team-image-container-wide {
+        height: 250px;
+        width: 100%;
+        overflow: hidden;
+        position: relative;
+    }
+
+    .flip-indicator {
+        color: #94a3b8;
+        font-size: 0.75rem;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 5px;
+        animation: pulse-text 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse-text {
+
+        0%,
+        100% {
+            opacity: 0.6;
+        }
+
+        50% {
+            opacity: 1;
+        }
+    }
+
+    .flip-indicator i {
+        animation: rotate-icon 2s linear infinite;
+    }
+
+    @keyframes rotate-icon {
+        from {
+            transform: rotate(0deg);
+        }
+
+        to {
+            transform: rotate(360deg);
+        }
+    }
+
+    /* Pulse Ring Effect */
+    .pulse-ring {
+        position: absolute;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 60px;
+        height: 60px;
+        border: 3px solid #6366f1;
+        border-radius: 50%;
+        opacity: 0;
+        animation: pulse-ring-anim 2s ease-out infinite;
+    }
+
+    @keyframes pulse-ring-anim {
+        0% {
+            transform: translateX(-50%) scale(0.8);
+            opacity: 1;
+        }
+
+        100% {
+            transform: translateX(-50%) scale(1.5);
+            opacity: 0;
+        }
+    }
+
+    .social-btn-flip {
+        width: 50px;
+        height: 50px;
+        background: linear-gradient(135deg, #6366f1, #a855f7);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
+    }
+
+    .social-btn-flip:hover {
+        transform: translateY(-5px) scale(1.1);
+        box-shadow: 0 8px 25px rgba(99, 102, 241, 0.5);
+        background: linear-gradient(135deg, #a855f7, #ec4899);
+    }
+
+    /* === 3. COMPACT CARDS (Developers) === */
+    .team-card-compact {
+        border-radius: 25px !important;
+        overflow: hidden;
+        transition: all 0.4s ease;
+        position: relative;
+        height: 100%;
+    }
+
+    .team-card-compact:hover {
+        transform: translateY(-10px) scale(1.02);
+        box-shadow: 0 20px 40px rgba(99, 102, 241, 0.15) !important;
+    }
+
+    .compact-badge {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        width: 40px;
+        height: 40px;
+        background: linear-gradient(135deg, rgba(99, 102, 241, 0.15), rgba(168, 85, 247, 0.15));
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #6366f1;
+        font-size: 1rem;
+        z-index: 10;
+        transition: all 0.3s ease;
+    }
+
+    .team-card-compact:hover .compact-badge {
+        transform: rotate(360deg) scale(1.2);
+        background: linear-gradient(135deg, #6366f1, #a855f7);
+        color: white;
+    }
+
+    .team-image-container-compact {
+        height: 200px;
+        width: 100%;
+        overflow: hidden;
+        position: relative;
+    }
+
+    .placeholder-initials-small {
+        position: relative;
+        z-index: 2;
+        font-size: 3rem;
+        font-weight: 800;
+        color: white;
+        text-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        letter-spacing: 0.1em;
+        transition: all 0.5s ease;
+    }
+
+    .team-card-compact:hover .placeholder-initials-small {
+        transform: scale(1.3) rotate(10deg);
+    }
+
+    .social-btn-compact {
+        width: 35px;
+        height: 35px;
+        background: linear-gradient(135deg, #f1f5f9, #e2e8f0);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #475569;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        font-size: 0.85rem;
+    }
+
+    .social-btn-compact:hover {
+        background: linear-gradient(135deg, #6366f1, #a855f7);
+        color: white;
+        transform: translateY(-3px) scale(1.1);
+        box-shadow: 0 5px 15px rgba(99, 102, 241, 0.3);
+    }
+
+    /* Glow Effect */
+    .glow-effect {
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(circle at 50% 50%, rgba(99, 102, 241, 0.2), transparent 70%);
+        opacity: 0;
+        transition: opacity 0.4s ease;
+    }
+
+    .team-card-compact:hover .glow-effect {
+        opacity: 1;
+    }
+
+    /* === GRADIENT VARIATIONS === */
+    .gradient-blue {
+        background: linear-gradient(135deg, #3b82f6 0%, #2563eb 50%, #1d4ed8 100%) !important;
+    }
+
+    .gradient-purple {
+        background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 50%, #6d28d9 100%) !important;
+    }
+
+    .gradient-pink {
+        background: linear-gradient(135deg, #ec4899 0%, #db2777 50%, #be185d 100%) !important;
+    }
+
+    .gradient-orange {
+        background: linear-gradient(135deg, #f97316 0%, #ea580c 50%, #c2410c 100%) !important;
+    }
+
+    .gradient-teal {
+        background: linear-gradient(135deg, #14b8a6 0%, #0d9488 50%, #0f766e 100%) !important;
+    }
+
+    .gradient-green {
+        background: linear-gradient(135deg, #10b981 0%, #059669 50%, #047857 100%) !important;
+    }
+
+    /* === RESPONSIVE === */
+    @media (max-width: 992px) {
+        .team-card-spotlight {
+            margin-bottom: 2rem;
+        }
+
+        .team-image-container-spotlight {
+            min-height: 250px;
+        }
+
+        .team-card-flip {
+            height: 420px;
+        }
+
+        .team-image-container-wide {
+            height: 220px;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .team-card-flip {
+            height: 400px;
+        }
+
+        .team-image-container-wide {
+            height: 200px;
+        }
+
+        .team-image-container-compact {
+            height: 180px;
+        }
+
+        .placeholder-initials-small {
+            font-size: 2.5rem;
+        }
+    }
+
+    /* ===== ENHANCED TEAM CARDS WITH IMAGE SUPPORT ===== */
+    .team-card-enhanced {
+        overflow: hidden;
+        transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    /* Image Container */
+    .team-image-container {
+        width: 100%;
+        height: 280px;
+        overflow: hidden;
+        position: relative;
+    }
+
+    /* Real Team Member Image */
+    .team-member-image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.5s ease;
+    }
+
+    .team-card-enhanced:hover .team-member-image {
+        transform: scale(1.1);
+    }
+
+    /* Placeholder Image with Gradient */
+    .team-placeholder-image {
+        width: 100%;
+        height: 100%;
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .placeholder-gradient {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+        opacity: 0.9;
+        transition: all 0.5s ease;
+    }
+
+    .team-card-enhanced:hover .placeholder-gradient {
+        opacity: 1;
+        transform: scale(1.05);
+    }
+
+    /* Initials Display */
+    .placeholder-initials {
+        position: relative;
+        z-index: 2;
+        font-size: 4rem;
+        font-weight: 800;
+        color: white;
+        text-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        letter-spacing: 0.1em;
+        transition: all 0.5s ease;
+    }
+
+    .team-card-enhanced:hover .placeholder-initials {
+        transform: scale(1.2) rotate(5deg);
+        text-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+    }
+
+    /* Hover Overlay */
+    .team-image-overlay {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(180deg, transparent 0%, rgba(99, 102, 241, 0.95) 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        transition: opacity 0.4s ease;
+    }
+
+    .team-card-enhanced:hover .team-image-overlay {
+        opacity: 1;
+    }
+
+    .overlay-content {
+        transform: translateY(20px);
+        transition: transform 0.4s ease;
+    }
+
+    .team-card-enhanced:hover .overlay-content {
+        transform: translateY(0);
+    }
+
+    /* Card Content Area */
+    .team-card-content {
+        background: rgba(255, 255, 255, 0.95);
+        position: relative;
+        z-index: 1;
+    }
+
+    /* Enhanced Social Buttons */
+    .social-btn-enhanced {
+        width: 40px;
+        height: 40px;
+        background: linear-gradient(135deg, #f1f5f9, #e2e8f0);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #475569;
+        text-decoration: none;
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        border: 2px solid transparent;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .social-btn-enhanced::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(135deg, #6366f1, #a855f7);
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        border-radius: 50%;
+    }
+
+    .social-btn-enhanced i {
+        position: relative;
+        z-index: 1;
+        transition: transform 0.3s ease;
+    }
+
+    .social-btn-enhanced:hover {
+        transform: translateY(-5px) scale(1.15);
+        border-color: #6366f1;
+        box-shadow: 0 10px 25px rgba(99, 102, 241, 0.3);
+    }
+
+    .social-btn-enhanced:hover::before {
+        opacity: 1;
+    }
+
+    .social-btn-enhanced:hover i {
+        color: white;
+        transform: rotate(360deg);
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+        .team-image-container {
+            height: 240px;
+        }
+
+        .placeholder-initials {
+            font-size: 3rem;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .team-image-container {
+            height: 200px;
+        }
+
+        .placeholder-initials {
+            font-size: 2.5rem;
+        }
+
+        .social-btn-enhanced {
+            width: 35px;
+            height: 35px;
+        }
     }
 
     /* Timeline */
