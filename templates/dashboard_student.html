@@ -32,13 +32,18 @@
                     <div class="hero-content" style="animation: fadeInLeft 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);">
                         <div class="badge-animated rounded-pill bg-white text-primary px-3 py-2 mb-3 shadow-lg border-0"
                             id="timeGreetingBadge" style="display: inline-block; animation: bounceIn 0.8s ease;">
-                            <i class="far fa-clock me-1"></i> <span id="dynamicGreeting" class="fw-bold">Loading...</span>
+                            <i class="far fa-clock me-1"></i> <span id="dynamicGreeting"
+                                class="fw-bold">Loading...</span>
                         </div>
-                        <h1 class="text-white display-4 fw-bold mb-3 reveal-text split-text-hero" style="line-height: 1.2; letter-spacing: -1px;">
-                            <i class="fas fa-user-graduate me-3 slide-in-icon"></i><span class="word-reveal">Hello,</span> <span
-                                class="text-holographic typing-text gradient-text animate-gradient">{{ current_user.name }}!</span>
+                        <h1 class="text-white display-4 fw-bold mb-3 reveal-text split-text-hero"
+                            style="line-height: 1.2; letter-spacing: -1px;">
+                            <i class="fas fa-user-graduate me-3 slide-in-icon"></i><span
+                                class="word-reveal">Hello,</span> <span
+                                class="text-holographic typing-text gradient-text animate-gradient">{{ current_user.name
+                                }}!</span>
                         </h1>
-                        <p class="text-white-50 lead mb-4 reveal-fade" style="font-size: 1.25rem; max-width: 600px; animation: slideInDown 1s ease 0.3s both;">
+                        <p class="text-white-50 lead mb-4 reveal-fade"
+                            style="font-size: 1.25rem; max-width: 600px; animation: slideInDown 1s ease 0.3s both;">
                             Empower your future. Connect with the elite network of alumni and mentors.
                         </p>
 
@@ -46,14 +51,22 @@
                         <div class="profile-completeness-wrapper glass-card p-4 d-inline-block"
                             style="min-width: 320px; animation: slideInLeft 0.8s ease 0.5s both; backdrop-filter: blur(15px);">
                             <div class="d-flex justify-content-between align-items-center mb-3">
-                                <span class="text-white small fw-bold" style="font-size: 0.95rem;">Profile Completeness</span>
-                                <span class="text-white small fw-bold badge bg-primary" id="completenessPercent" style="font-size: 0.9rem; animation: counterPop 0.6s ease;">0%</span>
+                                <span class="text-white small fw-bold" style="font-size: 0.95rem;">Profile
+                                    Completeness</span>
+                                <span class="text-white small fw-bold badge bg-primary" id="completenessPercent"
+                                    style="font-size: 0.9rem; animation: counterPop 0.6s ease;">0%</span>
                             </div>
-                            <div class="progress" style="height: 12px; border-radius: 8px; background: rgba(255,255,255,0.15); overflow: hidden; box-shadow: inset 0 2px 4px rgba(0,0,0,0.2);">
-                                <div class="progress-bar bg-info progress-bar-striped" id="completenessBar" role="progressbar" style="width: 0%; border-radius: 8px; background: linear-gradient(90deg, #10b981, #3b82f6); box-shadow: 0 0 10px rgba(59, 130, 246, 0.5); animation: slideUp 1s ease-out 0.7s both;"></div>
+                            <div class="progress"
+                                style="height: 12px; border-radius: 8px; background: rgba(255,255,255,0.15); overflow: hidden; box-shadow: inset 0 2px 4px rgba(0,0,0,0.2);">
+                                <div class="progress-bar bg-info progress-bar-striped" id="completenessBar"
+                                    role="progressbar"
+                                    style="width: 0%; border-radius: 8px; background: linear-gradient(90deg, #10b981, #3b82f6); box-shadow: 0 0 10px rgba(59, 130, 246, 0.5); animation: slideUp 1s ease-out 0.7s both;">
+                                </div>
                             </div>
                             <p class="text-white-50 small mt-3 mb-0" style="font-size: 0.85rem;">
-                                <i class="fas fa-magic me-2 text-warning" style="animation: spin 2s linear infinite;"></i> <span id="completenessTip">Complete your profile to stand out!</span>
+                                <i class="fas fa-magic me-2 text-warning"
+                                    style="animation: spin 2s linear infinite;"></i> <span id="completenessTip">Complete
+                                    your profile to stand out!</span>
                             </p>
                         </div>
                     </div>
@@ -265,7 +278,7 @@
             <div class="row g-4" id="alumniGrid">
                 {% for alum in alumni %}
                 <div class="col-lg-4 col-md-6 user-card alum-card" data-name="{{ alum['name'].lower() }}"
-                    data-info="{{ (alum['company_name'] or alum['department'] or '').lower() }}">
+                    data-info="{{ (alum['company_name'] or alum['department'] or '')|lower }}">
                     <div class="premium-card holographic-border">
                         <div class="card-gradient-top alumni-gradient"></div>
                         <div class="card-avatar-wrapper">
@@ -289,7 +302,7 @@
                                     class="btn btn-primary rounded-pill py-2 shadow-sm fw-bold"><i
                                         class="fas fa-user-circle me-2"></i>Profile</a>
                                 <button class="btn btn-outline-primary rounded-pill btn-sm py-2 fw-600"
-                                    onclick="connectUser('{{ alum['id'] }}', 'alumni')"><i
+                                    onclick="connectUser('{{ alum.id }}', 'alumni')"><i
                                         class="fas fa-plus me-2"></i>Connect</button>
                             </div>
                         </div>
@@ -304,7 +317,7 @@
             <div class="row g-4" id="studentGrid">
                 {% for s in other_students %}
                 <div class="col-lg-4 col-md-6 user-card student-card" data-name="{{ s['name'].lower() }}"
-                    data-info="{{ (s['department'] or s['degree'] or '').lower() }}">
+                    data-info="{{ (s['department'] or s['degree'] or '')|lower }}">
                     <div class="premium-card holographic-border">
                         <div class="card-gradient-top student-gradient"></div>
                         <div class="card-avatar-wrapper">
@@ -331,11 +344,11 @@
 
                             <div class="card-footer-actions d-grid gap-2 mt-auto">
                                 <button class="btn btn-info text-white rounded-pill py-2 shadow-sm fw-bold"
-                                    onclick="viewStudentModal('{{ s['id'] }}')">
+                                    onclick="viewStudentModal('{{ s.id }}')">
                                     <i class="fas fa-bolt me-2"></i>Quick View
                                 </button>
                                 <button class="btn btn-outline-info rounded-pill btn-sm py-2 fw-600"
-                                    onclick="connectUser('{{ s['id'] }}', 'student')">
+                                    onclick="connectUser('{{ s.id }}', 'student')">
                                     <i class="fas fa-plus me-2"></i>Connect
                                 </button>
                             </div>
@@ -351,7 +364,7 @@
             <div class="row g-4" id="facultyGrid">
                 {% for f in faculty %}
                 <div class="col-lg-4 col-md-6 user-card faculty-card" data-name="{{ f['name'].lower() }}"
-                    data-info="{{ (f['department'] or f['designation'] or '').lower() }}">
+                    data-info="{{ (f['department'] or f['designation'] or '')|lower }}">
                     <div class="premium-card holographic-border">
                         <div class="card-gradient-top faculty-gradient"></div>
                         <div class="card-avatar-wrapper">
@@ -374,7 +387,7 @@
                                     class="btn btn-danger rounded-pill py-2 shadow-sm fw-bold"><i
                                         class="fas fa-user-tie me-2"></i>Profile</a>
                                 <button class="btn btn-outline-danger rounded-pill btn-sm py-2 fw-600"
-                                    onclick="connectUser('{{ f['id'] }}', 'faculty')"><i
+                                    onclick="connectUser('{{ f.id }}', 'faculty')"><i
                                         class="fas fa-link me-2"></i>Connect</button>
                             </div>
                         </div>
@@ -448,7 +461,8 @@
     <!-- Action Buttons -->
     <div class="action-buttons mt-5 mb-5">
         <div class="text-center">
-            <a href="{{ url_for('edit_student_profile', user_id=current_user.id) }}" class="btn btn-primary btn-lg me-2 action-btn"
+            <a href="{{ url_for('edit_student_profile', user_id=current_user.id) }}"
+                class="btn btn-primary btn-lg me-2 action-btn"
                 style="border-radius: 12px; padding: 0.9rem 2.5rem; font-weight: 600; transition: all 0.3s ease; position: relative; overflow: hidden;"
                 onmouseover="this.style.transform='translateY(-4px)'; this.style.boxShadow='0 15px 35px rgba(102,126,234,0.5)'"
                 onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'">
@@ -495,6 +509,34 @@
                 <a id="viewFullProfileBtn" href="#" class="btn btn-success">
                     <i class="fas fa-external-link-alt"></i> Full Profile
                 </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Student Modal -->
+<div class="modal fade" id="studentDetailsModal" tabindex="-1">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content border-0 shadow-lg" style="border-radius: 20px;">
+            <div class="modal-header"
+                style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); border: none; border-radius: 20px 20px 0 0;">
+                <h5 class="modal-title fw-bold text-white">
+                    <i class="fas fa-user-graduate"></i> Student Details
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body p-5" id="studentDetailsContent">
+                <div class="text-center">
+                    <div class="spinner-border text-info" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer border-0">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button class="btn btn-info text-white" id="connectStudentBtn" onclick="connectFromModal()">
+                    <i class="fas fa-plus me-2"></i> Connect
+                </button>
             </div>
         </div>
     </div>
@@ -1336,17 +1378,19 @@
     }
 
     @keyframes bounceX {
+
         0%,
         100% {
             transform: translateX(0);
         }
+
         50% {
             transform: translateX(5px);
         }
     }
 
     /* ===== ADVANCED ANIMATION STYLES ===== */
-    
+
     /* Split Text Animations */
     .split-text-hero {
         display: block;
@@ -1364,6 +1408,7 @@
             transform: translateY(-40px);
             opacity: 0;
         }
+
         to {
             transform: translateY(0);
             opacity: 1;
@@ -1383,9 +1428,12 @@
     }
 
     @keyframes gradientShift {
-        0%, 100% {
+
+        0%,
+        100% {
             background-position: 0% center;
         }
+
         50% {
             background-position: 100% center;
         }
@@ -1414,9 +1462,11 @@
             transform: scale(0.8);
             opacity: 0;
         }
+
         50% {
             transform: scale(1.05);
         }
+
         100% {
             transform: scale(1);
             opacity: 1;
@@ -1431,9 +1481,9 @@
         width: 100%;
         height: 100%;
         opacity: 0.08;
-        background-image: 
-            linear-gradient(90deg, transparent 24%, rgba(255,255,255,.2) 25%, rgba(255,255,255,.2) 26%, transparent 27%, transparent 74%, rgba(255,255,255,.2) 75%, rgba(255,255,255,.2) 76%, transparent 77%, transparent),
-            linear-gradient(0deg, transparent 24%, rgba(255,255,255,.2) 25%, rgba(255,255,255,.2) 26%, transparent 27%, transparent 74%, rgba(255,255,255,.2) 75%, rgba(255,255,255,.2) 76%, transparent 77%, transparent);
+        background-image:
+            linear-gradient(90deg, transparent 24%, rgba(255, 255, 255, .2) 25%, rgba(255, 255, 255, .2) 26%, transparent 27%, transparent 74%, rgba(255, 255, 255, .2) 75%, rgba(255, 255, 255, .2) 76%, transparent 77%, transparent),
+            linear-gradient(0deg, transparent 24%, rgba(255, 255, 255, .2) 25%, rgba(255, 255, 255, .2) 26%, transparent 27%, transparent 74%, rgba(255, 255, 255, .2) 75%, rgba(255, 255, 255, .2) 76%, transparent 77%, transparent);
         background-size: 50px 50px;
         animation: moveLines 15s linear infinite;
         pointer-events: none;
@@ -1443,6 +1493,7 @@
         0% {
             transform: translateY(0);
         }
+
         100% {
             transform: translateY(50px);
         }
@@ -1461,7 +1512,7 @@
         left: -100%;
         width: 100%;
         height: 100%;
-        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
         transition: left 0.5s ease;
     }
 
@@ -1469,10 +1520,21 @@
         left: 100%;
     }
 
-    .stat-card:nth-child(1) { animation-delay: 0.2s; }
-    .stat-card:nth-child(2) { animation-delay: 0.4s; }
-    .stat-card:nth-child(3) { animation-delay: 0.6s; }
-    .stat-card:nth-child(4) { animation-delay: 0.8s; }
+    .stat-card:nth-child(1) {
+        animation-delay: 0.2s;
+    }
+
+    .stat-card:nth-child(2) {
+        animation-delay: 0.4s;
+    }
+
+    .stat-card:nth-child(3) {
+        animation-delay: 0.6s;
+    }
+
+    .stat-card:nth-child(4) {
+        animation-delay: 0.8s;
+    }
 
     /* Premium Card Enhancements */
     .premium-card {
@@ -1487,7 +1549,7 @@
         left: -50%;
         width: 200%;
         height: 200%;
-        background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, transparent 70%);
+        background: radial-gradient(circle, rgba(255, 255, 255, 0.3) 0%, transparent 70%);
         animation: rotate 8s linear infinite;
         pointer-events: none;
     }
@@ -1496,6 +1558,7 @@
         0% {
             transform: rotate(0deg);
         }
+
         100% {
             transform: rotate(360deg);
         }
@@ -1522,6 +1585,7 @@
             width: 0;
             opacity: 0;
         }
+
         to {
             width: 100%;
             opacity: 1;
@@ -1535,10 +1599,20 @@
     }
 
     @keyframes neonFlicker {
-        0%, 18%, 22%, 25%, 53%, 57%, 100% {
+
+        0%,
+        18%,
+        22%,
+        25%,
+        53%,
+        57%,
+        100% {
             text-shadow: 0 0 10px rgba(0, 212, 255, 0.5), 0 0 20px rgba(0, 212, 255, 0.3);
         }
-        20%, 24%, 55% {
+
+        20%,
+        24%,
+        55% {
             text-shadow: 0 0 5px rgba(0, 212, 255, 0.2);
         }
     }
@@ -1575,9 +1649,11 @@
             transform: scale(0.5);
             opacity: 0;
         }
+
         50% {
             transform: scale(1.1);
         }
+
         100% {
             transform: scale(1);
             opacity: 1;
@@ -1586,9 +1662,12 @@
 
     /* Floating Animation Enhancement */
     @keyframes floatUpDown {
-        0%, 100% {
+
+        0%,
+        100% {
             transform: translateY(0px);
         }
+
         50% {
             transform: translateY(-20px);
         }
@@ -1608,6 +1687,7 @@
             opacity: 0;
             transform: scale(0.9) translateY(30px);
         }
+
         to {
             opacity: 1;
             transform: scale(1) translateY(0);
@@ -1615,7 +1695,9 @@
     }
 
     /* Card Stagger Animation */
-    .alumniGrid, .studentGrid, .facultyGrid {
+    .alumniGrid,
+    .studentGrid,
+    .facultyGrid {
         animation: fadeIn 0.6s ease;
     }
 
@@ -1623,6 +1705,7 @@
         from {
             opacity: 0;
         }
+
         to {
             opacity: 1;
         }
@@ -1655,6 +1738,7 @@
         from {
             transform: rotate(0deg);
         }
+
         to {
             transform: rotate(360deg);
         }
@@ -1666,9 +1750,11 @@
             transform: scale(0.5);
             opacity: 0;
         }
+
         50% {
             transform: scale(1.2);
         }
+
         100% {
             transform: scale(1);
             opacity: 1;
@@ -1681,6 +1767,7 @@
             opacity: 0;
             transform: translateY(10px);
         }
+
         100% {
             opacity: 1;
             transform: translateY(0);
@@ -1689,9 +1776,12 @@
 
     /* Pulse Glow Animation */
     @keyframes pulseGlow {
-        0%, 100% {
+
+        0%,
+        100% {
             box-shadow: 0 0 0 0 rgba(102, 126, 234, 0.7);
         }
+
         50% {
             box-shadow: 0 0 0 10px rgba(102, 126, 234, 0);
         }
@@ -1753,6 +1843,7 @@
             opacity: 0;
             transform: scale(0.85) translateY(50px);
         }
+
         to {
             opacity: 1;
             transform: scale(1) translateY(0);
@@ -1765,9 +1856,12 @@
     }
 
     @keyframes badgePulse {
-        0%, 100% {
+
+        0%,
+        100% {
             box-shadow: 0 0 0 0 rgba(102, 126, 234, 0.7);
         }
+
         50% {
             box-shadow: 0 0 0 8px rgba(102, 126, 234, 0);
         }
@@ -1960,7 +2054,7 @@
             const elapsed = time - startTime;
             current = Math.min((elapsed / duration) * target, target);
             el.textContent = Math.floor(current);
-            
+
             if (elapsed < duration) {
                 requestAnimationFrame(frame);
             } else {
@@ -1975,15 +2069,15 @@
         // Card hover effects
         const cards = document.querySelectorAll('.premium-card');
         cards.forEach(card => {
-            card.addEventListener('mouseenter', function() {
+            card.addEventListener('mouseenter', function () {
                 this.style.transition = 'all 0.4s cubic-bezier(0.23, 1, 0.32, 1)';
                 this.style.transform = 'translateY(-15px) scale(1.02)';
-                
+
                 const avatar = this.querySelector('.card-avatar-wrapper');
                 if (avatar) avatar.style.transform = 'scale(1.1) rotate(5deg)';
             });
-            
-            card.addEventListener('mouseleave', function() {
+
+            card.addEventListener('mouseleave', function () {
                 this.style.transform = 'translateY(0) scale(1)';
                 const avatar = this.querySelector('.card-avatar-wrapper');
                 if (avatar) avatar.style.transform = 'scale(1) rotate(0deg)';
@@ -1993,13 +2087,13 @@
         // Glow effect on buttons
         const buttons = document.querySelectorAll('.btn-primary, .btn-info');
         buttons.forEach(btn => {
-            btn.addEventListener('mouseenter', function() {
+            btn.addEventListener('mouseenter', function () {
                 this.style.boxShadow = '0 0 25px rgba(102, 126, 234, 0.6)';
                 this.style.transition = 'all 0.3s ease';
                 this.style.transform = 'translateY(-2px)';
             });
-            
-            btn.addEventListener('mouseleave', function() {
+
+            btn.addEventListener('mouseleave', function () {
                 this.style.boxShadow = '';
                 this.style.transform = 'translateY(0)';
             });
@@ -2083,7 +2177,7 @@
             const name = c.dataset.name || "";
             const info = c.dataset.info || "";
             const isMatch = (name.includes(q) || info.includes(q));
-            
+
             c.style.display = isMatch ? 'block' : 'none';
             if (isMatch) {
                 c.style.animation = `slideUp 0.4s ease-out backwards`;
@@ -2137,26 +2231,26 @@
 
     function viewStudentModal(studentId) {
         try {
-            const contentEl = document.getElementById('alumniDetailsContent');
-            const modalEl = document.getElementById('alumniDetailsModal');
-            
+            const contentEl = document.getElementById('studentDetailsContent');
+            const modalEl = document.getElementById('studentDetailsModal');
+
             if (!contentEl) {
-                console.error('alumniDetailsContent element not found');
+                console.error('studentDetailsContent element not found');
                 return;
             }
             if (!modalEl) {
-                console.error('alumniDetailsModal element not found');
+                console.error('studentDetailsModal element not found');
                 return;
             }
-            
+
             contentEl.innerHTML = '<div class="text-center p-5"><div class="spinner-border text-info"></div></div>';
-            
+
             // Ensure Bootstrap Modal is available
             if (!window.bootstrap || !window.bootstrap.Modal) {
                 console.error('Bootstrap Modal not loaded');
                 return;
             }
-            
+
             const modal = new bootstrap.Modal(modalEl);
             modal.show();
 
@@ -2188,7 +2282,7 @@
                                 <div class="col-12"><p class="mb-0 text-muted small">Email Address</p><p class="fw-bold">${u.email}</p></div>
                             </div>
                         </div>`;
-                    document.getElementById('viewFullProfileBtn').style.display = 'none';
+                    document.getElementById('connectStudentBtn').setAttribute('onclick', `connectUser('${u.id}', 'student')`);
                 })
                 .catch(err => {
                     console.error('Error fetching student data:', err);
@@ -2203,7 +2297,7 @@
         try {
             const contentEl = document.getElementById('alumniDetailsContent');
             const modalEl = document.getElementById('alumniDetailsModal');
-            
+
             if (!contentEl) {
                 console.error('alumniDetailsContent element not found');
                 return;
@@ -2212,15 +2306,15 @@
                 console.error('alumniDetailsModal element not found');
                 return;
             }
-            
+
             contentEl.innerHTML = '<div class="text-center p-5"><div class="spinner-border text-primary"></div></div>';
-            
+
             // Ensure Bootstrap Modal is available
             if (!window.bootstrap || !window.bootstrap.Modal) {
                 console.error('Bootstrap Modal not loaded');
                 return;
             }
-            
+
             const modal = new bootstrap.Modal(modalEl);
             modal.show();
 
@@ -2276,7 +2370,7 @@
         toast.style.animation = 'slideUp 0.4s ease';
 
         const iconClass = type === 'success' ? 'fa-check-circle' : type === 'danger' ? 'fa-exclamation-circle' : 'fa-info-circle';
-        
+
         toast.innerHTML = `
             <div style="background: linear-gradient(135deg, ${color}, ${color}dd); color: white; padding: 16px 24px; border-radius: 12px; box-shadow: 0 12px 35px rgba(0,0,0,0.25); font-weight: 600; min-width: 280px; border-left: 4px solid rgba(255,255,255,0.3); backdrop-filter: blur(10px);">
                 <i class="fas ${iconClass} me-2"></i>${message}

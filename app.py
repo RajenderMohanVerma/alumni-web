@@ -35,6 +35,9 @@ app.config['MAIL_DEFAULT_SENDER'] = ('Alumni Hub', os.getenv('MAIL_USERNAME', 'a
 # Initialize SocketIO for real-time messaging
 socketio = SocketIO(app, cors_allowed_origins="*", ping_timeout=60, ping_interval=25, async_mode='threading')
 
+# Initialize Mail
+mail.init_app(app)
+
 DB_NAME = app.config['DB_NAME']
 
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
