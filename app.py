@@ -1345,11 +1345,7 @@ def dashboard_admin():
 
 # --- MESSAGING ROUTES ---
 
-@app.route('/messages')
-@login_required
-def messaging_dashboard():
-    """Display messaging dashboard with public messages and inbox"""
-    return render_template('messaging_dashboard.html')
+# Removed - /messages route moved to student-specific section
 
 
 @app.route('/chat/<int:other_user_id>')
@@ -2488,12 +2484,7 @@ def search_network():
 
 # --- NOTIFICATIONS & UPDATES ---
 
-@app.route('/notifications')
-@login_required
-def notifications():
-    """View user notifications"""
-    # Placeholder for notifications system
-    return render_template('notifications.html')
+# Removed - notifications route moved to student-specific section
 
 # Import the social routes blueprint
 try:
@@ -3269,14 +3260,28 @@ def send_user_email():
 def events():
     return render_template('events.html')
 
-@app.route('/settings')
-@login_required
-def settings():
-    return render_template('settings.html')
+# Removed - moved to student-specific routes below
 
 
 
 # --- STUDENT ROUTES ---
+
+# Student-specific routes - all use student folder templates
+@app.route('/network')
+@login_required
+def network():
+    if current_user.role != 'student':
+        flash('Access denied!', 'danger')
+        return redirect(url_for('home'))
+    return render_template('student/network.html')
+
+@app.route('/messages')
+@login_required
+def messages():
+    if current_user.role != 'student':
+        flash('Access denied!', 'danger')
+        return redirect(url_for('home'))
+    return render_template('student/messages.html')
 
 @app.route('/mentorship')
 @login_required
@@ -3284,7 +3289,7 @@ def mentorship():
     if current_user.role != 'student':
         flash('Access denied!', 'danger')
         return redirect(url_for('home'))
-    return render_template('mentorship.html')
+    return render_template('student/mentorship.html')
 
 @app.route('/jobs')
 @login_required
@@ -3292,7 +3297,7 @@ def jobs():
     if current_user.role != 'student':
         flash('Access denied!', 'danger')
         return redirect(url_for('home'))
-    return render_template('jobs.html')
+    return render_template('student/jobs.html')
 
 @app.route('/upgrade')
 @login_required
@@ -3300,7 +3305,23 @@ def upgrade():
     if current_user.role != 'student':
         flash('Access denied!', 'danger')
         return redirect(url_for('home'))
-    return render_template('upgrade_to_alumni.html')
+    return render_template('student/upgrade.html')
+
+@app.route('/notifications')
+@login_required
+def notifications():
+    if current_user.role != 'student':
+        flash('Access denied!', 'danger')
+        return redirect(url_for('home'))
+    return render_template('student/notifications.html')
+
+@app.route('/settings')
+@login_required
+def settings():
+    if current_user.role != 'student':
+        flash('Access denied!', 'danger')
+        return redirect(url_for('home'))
+    return render_template('student/settings.html')
 
 # --- ALUMNI ROUTES ---
 
