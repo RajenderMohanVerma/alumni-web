@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}Register - Alumni Hub{% endblock %}
+{% block title %}Register - DBIT Alumni Hub{% endblock %}
 
 {% block content %}
 <link
@@ -23,505 +23,277 @@
         <div class="row justify-content-center">
             <div class="col-xl-11 col-lg-12">
 
-                <!-- Glassmorphic Card (Fixed Height & Split) -->
-                <div class="card-modern glass-panel reveal-fade"
-                    style="border-radius: 24px; overflow: hidden; height: 85vh; min-height: 600px;">
+                <!-- Glassmorphic Card -->
+                <div class="card-modern glass-panel reveal-fade shadow-2xl"
+                    style="border-radius: 30px; overflow: hidden; height: 85vh; min-height: 700px; border: 1px solid rgba(255,255,255,0.4);">
                     <div class="row g-0 h-100">
 
-                        <!-- LEFT SIDE: Branding (Sticky/Fixed) -->
+                        <!-- LEFT SIDE: Branding (Sticky) -->
                         <div
-                            class="col-lg-4 d-none d-lg-flex flex-column justify-content-center align-items-center text-center p-5 position-relative overflow-hidden bg-primary-subtle bg-opacity-10">
-                            <!-- Animated Gradient Overlay -->
-                            <div class="position-absolute top-0 start-0 w-100 h-100"
-                                style="background: linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(236, 72, 153, 0.1) 100%); z-index: 0;">
-                            </div>
-
-                            <!-- 3D Floating Icons (Parallax) -->
-                            <div class="floating-icon icon-1 position-absolute"
-                                style="top: 15%; left: 10%; font-size: 2rem; color: rgba(99, 102, 241, 0.2);"><i
-                                    class="fas fa-graduation-cap"></i></div>
-                            <div class="floating-icon icon-2 position-absolute"
-                                style="top: 70%; right: 15%; font-size: 2.5rem; color: rgba(236, 72, 153, 0.2);"><i
-                                    class="fas fa-rocket"></i></div>
-                            <div class="floating-icon icon-3 position-absolute"
-                                style="bottom: 20%; left: 20%; font-size: 1.5rem; color: rgba(245, 158, 11, 0.2);"><i
-                                    class="fas fa-certificate"></i></div>
+                            class="col-lg-4 d-none d-lg-flex flex-column justify-content-center align-items-center text-center p-5 position-relative overflow-hidden bg-gradient-premium">
+                            <div class="absolute-bg-animation"></div>
 
                             <div class="position-relative z-1 reveal-fade" style="transition-delay: 0.2s;">
                                 <div class="mb-5">
                                     <div class="icon-circle bg-white text-primary rounded-circle d-flex align-items-center justify-content-center mx-auto shadow-lg"
-                                        style="width: 120px; height: 120px; font-size: 3rem;">
+                                        style="width: 100px; height: 100px; font-size: 2.5rem; animation: pulse-slow 3s infinite;">
                                         <i class="fas fa-user-plus"></i>
                                     </div>
                                 </div>
-                                <h1 class="fw-bold display-5 mb-3 text-dark">
-                                    <span id="typing-text" class="text-primary"></span><span
-                                        class="cursor-blink">|</span>
-                                </h1>
-                                <p class="lead text-muted mb-5">Be part of a thriving network.</p>
+                                <h2 class="fw-bold display-6 mb-3 text-white">Join the <br>Community</h2>
+                                <p class="lead text-white-50 mb-5 text-sm">Unlock exclusive opportunities, mentorship,
+                                    and lifelong connections.</p>
 
-                                <div class="d-flex flex-column gap-3 align-items-center w-75 mx-auto">
-                                    <div class="d-flex align-items-center gap-3 text-muted scale-hover">
-                                        <div class="icon-box-sm bg-success-subtle text-success rounded-circle p-1"><i
-                                                class="fas fa-check"></i></div> <span>Expand Network</span>
-                                    </div>
-                                    <div class="d-flex align-items-center gap-3 text-muted scale-hover">
-                                        <div class="icon-box-sm bg-success-subtle text-success rounded-circle p-1"><i
-                                                class="fas fa-check"></i></div> <span>Mentorship</span>
-                                    </div>
-                                    <div class="d-flex align-items-center gap-3 text-muted scale-hover">
-                                        <div class="icon-box-sm bg-success-subtle text-success rounded-circle p-1"><i
-                                                class="fas fa-check"></i></div> <span>Job Opportunities</span>
-                                    </div>
-                                </div>
+                                <ul class="list-unstyled text-start w-75 mx-auto text-white-50">
+                                    <li class="mb-3 d-flex align-items-center"><i
+                                            class="fas fa-check-circle text-warning me-3"></i> Expand your network</li>
+                                    <li class="mb-3 d-flex align-items-center"><i
+                                            class="fas fa-check-circle text-warning me-3"></i> Find mentors & jobs</li>
+                                    <li class="mb-3 d-flex align-items-center"><i
+                                            class="fas fa-check-circle text-warning me-3"></i> Stay updated</li>
+                                </ul>
                             </div>
 
-                            <!-- Bottom Link -->
                             <div class="mt-auto position-relative z-1">
-                                <a href="/" class="text-muted text-sm text-decoration-none hover-item">
-                                    <i class="fas fa-arrow-left me-1"></i> Back to Home
-                                </a>
+                                <a href="/" class="text-white text-decoration-none hover-item small"><i
+                                        class="fas fa-arrow-left me-2"></i> Back to Home</a>
                             </div>
                         </div>
 
                         <!-- RIGHT SIDE: Scrollable Form -->
-                        <div class="col-lg-8 h-100 bg-white bg-opacity-10 position-relative">
+                        <div class="col-lg-8 h-100 bg-white position-relative">
 
-                            <!-- Live Completion Progress Bar (Sticky Top) -->
-                            <div class="progress-wrapper position-absolute top-0 start-0 w-100 z-3"
-                                style="height: 4px; background: rgba(0,0,0,0.05);">
+                            <!-- Progress Bar -->
+                            <div class="progress-container position-absolute top-0 start-0 w-100 z-3"
+                                style="height: 6px; background: #f1f5f9;">
                                 <div id="form-progress" class="progress-bar-premium"
-                                    style="width: 0%; height: 100%; background: linear-gradient(90deg, #6366f1, #ec4899); transition: width 0.4s ease;">
+                                    style="width: 0%; height: 100%; background: linear-gradient(90deg, #6366f1, #ec4899); transition: width 0.3s ease;">
                                 </div>
                             </div>
 
-                            <div class="h-100 overflow-y-auto custom-scrollbar p-4 p-md-5">
+                            <div class="h-100 overflow-y-auto custom-scrollbar p-5">
 
-                                <!-- Mobile Header -->
-                                <div class="text-center mb-4 d-lg-none">
-                                    <h2 class="fw-bold display-6">Join <span class="text-primary">Alumni Hub</span></h2>
-                                </div>
-
-                                <!-- Desktop Header (Form Side) -->
-                                <div class="mb-4 reveal-fade d-flex justify-content-between align-items-center"
-                                    style="transition-delay: 0.1s;">
+                                <div class="d-flex justify-content-between align-items-end mb-5">
                                     <div>
-                                        <h3 class="fw-bold mb-1">Create Account</h3>
-                                        <p class="text-muted text-sm">Fill in your details to register</p>
+                                        <h2 class="fw-bold text-dark mb-1 font-heading">Create Account</h2>
+                                        <p class="text-muted mb-0">It only takes a minute.</p>
                                     </div>
-                                    <div class="text-end">
-                                        <span class="badge bg-primary-subtle text-primary rounded-pill px-3 py-2"
-                                            id="completion-badge">0% Complete</span>
-                                    </div>
+                                    <span class="badge bg-light text-primary border rounded-pill px-3 py-2"
+                                        id="completion-badge">0% Completed</span>
                                 </div>
 
-                                <!-- Flash Messages -->
                                 {% with messages = get_flashed_messages(with_categories=true) %}
                                 {% if messages %}
                                 {% for category, message in messages %}
-                                <div class="alert alert-modern alert-{{ category }} alert-dismissible fade show reveal-fade"
+                                <div class="alert alert-{{ category }} fade show mb-4 border-0 shadow-sm rounded-3"
                                     role="alert">
-                                    <i class="fas fa-info-circle me-2"></i>
-                                    <span>{{ message }}</span>
-                                    <button type="button" class="btn-close" data-bs-dismiss="alert"
-                                        aria-label="Close"></button>
+                                    <i class="fas fa-info-circle me-2"></i> {{ message }}
                                 </div>
                                 {% endfor %}
                                 {% endif %}
                                 {% endwith %}
 
-                                <form method="POST" id="registerForm" class="needs-validation" onsubmit="return validateRegisterForm()">
+                                <form method="POST" id="registerForm" class="needs-validation"
+                                    onsubmit="return validateRegisterForm()">
 
                                     <!-- Role Selection -->
-                                    <div class="mb-4 reveal-fade" style="transition-delay: 0.2s;">
+                                    <div class="mb-5 section-fade">
                                         <label
-                                            class="form-label fw-bold text-uppercase text-xs text-muted mb-3 d-block">Select
-                                            Role</label>
+                                            class="form-label fw-bold small text-uppercase text-muted tracking-wide mb-3">I
+                                            am a...</label>
                                         <div class="row g-3">
                                             <div class="col-md-4">
                                                 <input type="radio" class="btn-check" name="role" id="roleStudent"
                                                     value="student" {% if role=='student' %}checked{% endif %}
                                                     onchange="updateFormFields()">
-                                                <label class="card-role h-100 p-3 text-center cursor-pointer"
+                                                <label
+                                                    class="card-role w-100 p-4 text-center cursor-pointer rounded-4 border"
                                                     for="roleStudent">
-                                                    <div class="role-icon mb-2"><i class="fas fa-graduation-cap"></i>
-                                                    </div>
-                                                    <div class="role-name text-sm">Student</div>
-                                                    <div class="role-check"><i class="fas fa-check-circle"></i></div>
+                                                    <i class="fas fa-graduation-cap fa-2x mb-3 text-primary"></i>
+                                                    <div class="fw-bold">Student</div>
                                                 </label>
                                             </div>
                                             <div class="col-md-4">
                                                 <input type="radio" class="btn-check" name="role" id="roleAlumni"
                                                     value="alumni" {% if role=='alumni' %}checked{% endif %}
                                                     onchange="updateFormFields()">
-                                                <label class="card-role h-100 p-3 text-center cursor-pointer"
+                                                <label
+                                                    class="card-role w-100 p-4 text-center cursor-pointer rounded-4 border"
                                                     for="roleAlumni">
-                                                    <div class="role-icon mb-2"><i class="fas fa-users"></i></div>
-                                                    <div class="role-name text-sm">Alumni</div>
-                                                    <div class="role-check"><i class="fas fa-check-circle"></i></div>
+                                                    <i class="fas fa-user-tie fa-2x mb-3 text-success"></i>
+                                                    <div class="fw-bold">Alumni</div>
                                                 </label>
                                             </div>
                                             <div class="col-md-4">
                                                 <input type="radio" class="btn-check" name="role" id="roleFaculty"
                                                     value="faculty" {% if role=='faculty' %}checked{% endif %}
                                                     onchange="updateFormFields()">
-                                                <label class="card-role h-100 p-3 text-center cursor-pointer"
+                                                <label
+                                                    class="card-role w-100 p-4 text-center cursor-pointer rounded-4 border"
                                                     for="roleFaculty">
-                                                    <div class="role-icon mb-2"><i class="fas fa-chalkboard-user"></i>
-                                                    </div>
-                                                    <div class="role-name text-sm">Faculty</div>
-                                                    <div class="role-check"><i class="fas fa-check-circle"></i></div>
+                                                    <i class="fas fa-chalkboard-teacher fa-2x mb-3 text-warning"></i>
+                                                    <div class="fw-bold">Faculty</div>
                                                 </label>
                                             </div>
                                         </div>
                                     </div>
 
-                                    <!-- Common Fields -->
-                                    <div class="row g-3 mb-4">
-                                        <div class="col-md-6 reveal-fade" style="transition-delay: 0.3s;">
-                                            <div class="form-floating-premium">
-                                                <input type="text" class="form-control form-control-modern ps-5"
-                                                    id="name" name="name" placeholder="" required>
-                                                <label for="name" class="ps-5">Full Name</label>
-                                                <i
-                                                    class="fas fa-user position-absolute top-50 start-0 translate-middle-y ms-3 text-muted"></i>
-                                                <div class="liquid-focus-border"></div>
+                                    <!-- Basic Info -->
+                                    <div class="mb-5">
+                                        <h5 class="fw-bold text-dark mb-4 pb-2 border-bottom">Basic Information</h5>
+                                        <div class="row g-4">
+                                            <div class="col-md-6">
+                                                <label class="form-label fw-bold small text-muted">Full Name</label>
+                                                <input type="text"
+                                                    class="form-control form-control-lg bg-light border-0" id="name"
+                                                    name="name" required placeholder="John Doe">
                                             </div>
-                                        </div>
-                                        <div class="col-md-6 reveal-fade" style="transition-delay: 0.3s;">
-                                            <div class="form-floating-premium">
-                                                <input type="email" class="form-control form-control-modern ps-5"
-                                                    id="email" name="email" placeholder="" required>
-                                                <label for="email" class="ps-5">Email Address</label>
-                                                <i
-                                                    class="fas fa-envelope position-absolute top-50 start-0 translate-middle-y ms-3 text-muted"></i>
-                                                <div class="liquid-focus-border"></div>
+                                            <div class="col-md-6">
+                                                <label class="form-label fw-bold small text-muted">Email Address</label>
+                                                <input type="email"
+                                                    class="form-control form-control-lg bg-light border-0" id="email"
+                                                    name="email" required placeholder="john@example.com">
                                             </div>
-                                        </div>
-                                        <div class="col-md-6 reveal-fade" style="transition-delay: 0.4s;">
-                                            <div class="form-floating-premium">
-                                                <input type="tel" class="form-control form-control-modern ps-5"
-                                                    id="phone" name="phone" placeholder="" required>
-                                                <label for="phone" class="ps-5">Phone Number</label>
-                                                <i
-                                                    class="fas fa-phone position-absolute top-50 start-0 translate-middle-y ms-3 text-muted"></i>
-                                                <div class="liquid-focus-border"></div>
+                                            <div class="col-md-6">
+                                                <label class="form-label fw-bold small text-muted">Phone Number</label>
+                                                <input type="tel" class="form-control form-control-lg bg-light border-0"
+                                                    id="phone" name="phone" required placeholder="+91 9876543210">
                                             </div>
-                                        </div>
-                                        <div class="col-md-6 reveal-fade" style="transition-delay: 0.4s;">
-                                            <div class="form-floating-premium">
-                                                <input type="password" class="form-control form-control-modern ps-5"
-                                                    id="password" name="password" placeholder="" required>
-                                                <label for="password" class="ps-5">Password</label>
-                                                <i
-                                                    class="fas fa-lock position-absolute top-50 start-0 translate-middle-y ms-3 text-muted"></i>
-                                                <div class="liquid-focus-border"></div>
+                                            <div class="col-md-6">
+                                                <label class="form-label fw-bold small text-muted">Password</label>
+                                                <input type="password"
+                                                    class="form-control form-control-lg bg-light border-0" id="password"
+                                                    name="password" required placeholder="••••••••">
                                             </div>
                                         </div>
                                     </div>
 
-                                    <!-- Student Specific Fields -->
-                                    <div id="studentFields"
-                                        style="display: {% if role == 'student' %}block{% else %}none{% endif %};"
-                                        class="reveal-fade">
-                                        <div class="glass-inner p-4 rounded-4 mb-4">
-                                            <h6 class="fw-bold mb-4 text-primary text-sm uppercase tracking-wide">
-                                                Student Details</h6>
-                                            <div class="row g-3">
-                                                <div class="col-md-6">
-                                                    <div class="form-floating-premium">
-                                                        <input type="text" class="form-control form-control-modern"
-                                                            id="enrollment_no" name="enrollment_no" placeholder="">
-                                                        <label>Enrollment No</label>
-                                                        <div class="liquid-focus-border"></div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <div class="form-floating-premium">
-                                                        <select class="form-select form-control-modern" id="category"
-                                                            name="category" onchange="updateCourseDropdown()">
-                                                            <option value="">Select Category</option>
-                                                            <option value="IT">IT / Technology</option>
-                                                            <option value="Engineering">Engineering (Non-IT)</option>
-                                                            <option value="Science">Science</option>
-                                                            <option value="Commerce">Commerce & Management</option>
-                                                            <option value="Arts">Arts / Humanities</option>
-                                                            <option value="Medical">Medical & Health Sciences</option>
-                                                            <option value="Law">Law / Education / Others</option>
-                                                        </select>
-                                                        <label>Category</label>
-                                                        <div class="liquid-focus-border"></div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <div class="form-floating-premium">
-                                                        <select class="form-select form-control-modern" id="level"
-                                                            name="level" onchange="updateCourseDropdown()">
-                                                            <option value="">Select Level</option>
-                                                            <option value="UG">Undergraduate (UG)</option>
-                                                            <option value="PG">Postgraduate (PG)</option>
-                                                            <option value="Diploma">Diploma / Certification</option>
-                                                        </select>
-                                                        <label>Level</label>
-                                                        <div class="liquid-focus-border"></div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <div class="form-floating-premium">
-                                                        <select class="form-select form-control-modern" id="degree"
-                                                            name="degree">
-                                                            <option value="">Select Course First</option>
-                                                        </select>
-                                                        <label>Course / Degree</label>
-                                                        <div class="liquid-focus-border"></div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <div class="form-floating-premium">
-                                                        <select class="form-select form-control-modern" id="department"
-                                                            name="department">
-                                                            <option value="">Select Department</option>
-                                                            <option value="Information Technology">Information
-                                                                Technology</option>
-                                                            <option value="Computer Science">Computer Science</option>
-                                                            <option value="Computer Engineering">Computer Engineering
-                                                            </option>
-                                                            <option value="Electronics & Communication">Electronics &
-                                                                Communication</option>
-                                                            <option value="Mechanical Engineering">Mechanical
-                                                                Engineering</option>
-                                                            <option value="Civil Engineering">Civil Engineering</option>
-                                                            <option value="Commerce">Commerce</option>
-                                                            <option value="Management">Management</option>
-                                                            <option value="Arts">Arts</option>
-                                                            <option value="Science">Science</option>
-                                                            <option value="Others">Others</option>
-                                                        </select>
-                                                        <label>Department</label>
-                                                        <div class="liquid-focus-border"></div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <div class="form-floating-premium">
-                                                        <select class="form-select form-control-modern" id="semester"
-                                                            name="semester">
-                                                            <option value="">Select Semester</option>
-                                                            <option value="1">1st Semester</option>
-                                                            <option value="2">2nd Semester</option>
-                                                            <option value="3">3rd Semester</option>
-                                                            <option value="4">4th Semester</option>
-                                                            <option value="5">5th Semester</option>
-                                                            <option value="6">6th Semester</option>
-                                                            <option value="7">7th Semester</option>
-                                                            <option value="8">8th Semester</option>
-                                                        </select>
-                                                        <label>Semester</label>
-                                                        <div class="liquid-focus-border"></div>
-                                                    </div>
-                                                </div>
+                                    <!-- Dynamic Fields (Hidden by default) -->
+                                    <div id="studentFields" style="display: none;" class="mb-5 animate-slide-down">
+                                        <h5 class="fw-bold text-primary mb-4 pb-2 border-bottom">Student Details</h5>
+                                        <div class="row g-4">
+                                            <div class="col-md-6"><label
+                                                    class="form-label small fw-bold text-muted">Enrollment
+                                                    No</label><input type="text" class="form-control bg-light border-0"
+                                                    name="enrollment_no"></div>
+                                            <!-- Additional fields layout similar to basic info, using standard labels and inputs -->
+                                            <div class="col-md-6">
+                                                <label class="form-label small fw-bold text-muted">Category</label>
+                                                <select class="form-select bg-light border-0" id="category"
+                                                    name="category" onchange="updateCourseDropdown()">
+                                                    <option value="">Select Category</option>
+                                                    <option value="IT">IT / Technology</option>
+                                                    <option value="Engineering">Engineering</option>
+                                                    <!-- ... options ... -->
+                                                </select>
+                                            </div>
+                                            <!-- ... Repeat for other dropdowns styling ... -->
+                                            <div class="col-md-6">
+                                                <label class="form-label small fw-bold text-muted">Level</label>
+                                                <select class="form-select bg-light border-0" id="level" name="level"
+                                                    onchange="updateCourseDropdown()">
+                                                    <option value="">Select Level</option>
+                                                    <option value="UG">Undergraduate</option>
+                                                    <option value="PG">Postgraduate</option>
+                                                    <option value="Diploma">Diploma</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label class="form-label small fw-bold text-muted">Course</label>
+                                                <select class="form-select bg-light border-0" id="degree" name="degree">
+                                                    <option value="">Select Course</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label class="form-label small fw-bold text-muted">Department</label>
+                                                <select class="form-select bg-light border-0" id="department"
+                                                    name="department">
+                                                    <option value="">Select Department</option>
+                                                    <option value="Information Technology">IT</option>
+                                                    <option value="Computer Science">CS</option>
+                                                    <option value="Computer Engineering">Computer Engg</option>
+                                                    <option value="Electronics & Communication">EXTC</option>
+                                                    <option value="Mechanical Engineering">Mechanical</option>
+                                                    <option value="Civil Engineering">Civil</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label class="form-label small fw-bold text-muted">Semester</label>
+                                                <select class="form-select bg-light border-0" name="semester">
+                                                    <option value="">Select Semester</option>
+                                                    <option value="1">1</option>
+                                                    <option value="2">2</option>
+                                                    <option value="3">3</option>
+                                                    <option value="4">4</option>
+                                                    <option value="5">5</option>
+                                                    <option value="6">6</option>
+                                                    <option value="7">7</option>
+                                                    <option value="8">8</option>
+                                                </select>
                                             </div>
                                         </div>
                                     </div>
 
-                                    <!-- Alumni Specific Fields -->
-                                    <div id="alumniFields"
-                                        style="display: {% if role == 'alumni' %}block{% else %}none{% endif %};"
-                                        class="reveal-fade">
-                                        <div class="glass-inner p-4 rounded-4 mb-4">
-                                            <h6 class="fw-bold mb-4 text-success text-sm uppercase tracking-wide">Alumni
-                                                Details</h6>
-                                            <div class="row g-3">
-                                                <div class="col-md-6">
-                                                    <div class="form-floating-premium">
-                                                        <input type="text" class="form-control form-control-modern"
-                                                            id="alum_enrollment_no" name="enrollment_no" placeholder="">
-                                                        <label>Enrollment No</label>
-                                                        <div class="liquid-focus-border"></div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <div class="form-floating-premium">
-                                                        <select class="form-select form-control-modern"
-                                                            id="alum_category" name="category"
-                                                            onchange="updateAlumniCourseDropdown()">
-                                                            <option value="">Select Category</option>
-                                                            <option value="IT">IT / Technology</option>
-                                                            <option value="Engineering">Engineering (Non-IT)</option>
-                                                            <option value="Science">Science</option>
-                                                            <option value="Commerce">Commerce & Management</option>
-                                                            <option value="Arts">Arts / Humanities</option>
-                                                            <option value="Medical">Medical & Health Sciences</option>
-                                                            <option value="Law">Law / Education / Others</option>
-                                                        </select>
-                                                        <label>Category</label>
-                                                        <div class="liquid-focus-border"></div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <div class="form-floating-premium">
-                                                        <select class="form-select form-control-modern" id="alum_level"
-                                                            name="level" onchange="updateAlumniCourseDropdown()">
-                                                            <option value="">Select Level</option>
-                                                            <option value="UG">Undergraduate (UG)</option>
-                                                            <option value="PG">Postgraduate (PG)</option>
-                                                            <option value="Diploma">Diploma / Certification</option>
-                                                        </select>
-                                                        <label>Level</label>
-                                                        <div class="liquid-focus-border"></div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <div class="form-floating-premium">
-                                                        <select class="form-select form-control-modern" id="alum_degree"
-                                                            name="degree">
-                                                            <option value="">Select Course First</option>
-                                                        </select>
-                                                        <label>Course / Degree</label>
-                                                        <div class="liquid-focus-border"></div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <div class="form-floating-premium">
-                                                        <select class="form-select form-control-modern"
-                                                            id="alum_department" name="department">
-                                                            <option value="">Select Department</option>
-                                                            <option value="Information Technology">Information
-                                                                Technology</option>
-                                                            <option value="Computer Science">Computer Science</option>
-                                                            <option value="Commerce">Commerce</option>
-                                                            <option value="Arts">Arts</option>
-                                                            <option value="Science">Science</option>
-                                                            <option value="Others">Others</option>
-                                                        </select>
-                                                        <label>Department</label>
-                                                        <div class="liquid-focus-border"></div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <div class="form-floating-premium">
-                                                        <select class="form-select form-control-modern" id="pass_year"
-                                                            name="pass_year">
-                                                            <option value="">Select Year</option>
-                                                            {% for year in range(2024, 1999, -1) %}
-                                                            <option value="{{ year }}">{{ year }}</option>
-                                                            {% endfor %}
-                                                        </select>
-                                                        <label>Passing Year</label>
-                                                        <div class="liquid-focus-border"></div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <div class="form-floating-premium">
-                                                        <input type="text" class="form-control form-control-modern"
-                                                            id="company_name" name="company_name" placeholder="">
-                                                        <label>Current Company</label>
-                                                        <div class="liquid-focus-border"></div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <div class="form-floating-premium">
-                                                        <input type="text" class="form-control form-control-modern"
-                                                            id="designation" name="designation" placeholder="">
-                                                        <label>Designation</label>
-                                                        <div class="liquid-focus-border"></div>
-                                                    </div>
-                                                </div>
+                                    <div id="alumniFields" style="display: none;" class="mb-5 animate-slide-down">
+                                        <h5 class="fw-bold text-success mb-4 pb-2 border-bottom">Alumni Details</h5>
+                                        <div class="row g-4">
+                                            <div class="col-md-6"><label
+                                                    class="form-label small fw-bold text-muted">Enrollment
+                                                    No</label><input type="text" class="form-control bg-light border-0"
+                                                    name="enrollment_no"></div>
+                                            <!-- Alumni specific fields -->
+                                            <div class="col-md-6"><label
+                                                    class="form-label small fw-bold text-muted">Passing Year</label>
+                                                <select class="form-select bg-light border-0" name="pass_year">
+                                                    {% for year in range(2024, 1999, -1) %}<option value="{{ year }}">{{
+                                                        year }}</option>{% endfor %}
+                                                </select>
+                                            </div>
+                                            <div class="col-md-6"><label
+                                                    class="form-label small fw-bold text-muted">Current
+                                                    Company</label><input type="text"
+                                                    class="form-control bg-light border-0" name="company_name"></div>
+                                            <div class="col-md-6"><label
+                                                    class="form-label small fw-bold text-muted">Designation</label><input
+                                                    type="text" class="form-control bg-light border-0"
+                                                    name="designation"></div>
+                                        </div>
+                                    </div>
+
+                                    <div id="facultyFields" style="display: none;" class="mb-5 animate-slide-down">
+                                        <h5 class="fw-bold text-warning mb-4 pb-2 border-bottom">Faculty Details</h5>
+                                        <div class="row g-4">
+                                            <div class="col-md-6"><label
+                                                    class="form-label small fw-bold text-muted">Employee
+                                                    ID</label><input type="text" class="form-control bg-light border-0"
+                                                    name="employee_id"></div>
+                                            <div class="col-md-6"><label
+                                                    class="form-label small fw-bold text-muted">Department</label>
+                                                <select class="form-select bg-light border-0" name="department">
+                                                    <option value="">Select Department</option>
+                                                    <option value="Information Technology">IT</option>
+                                                    <option value="Computer Science">CS</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-6"><label
+                                                    class="form-label small fw-bold text-muted">Designation</label>
+                                                <select class="form-select bg-light border-0" name="designation">
+                                                    <option value="Professor">Professor</option>
+                                                    <option value="Assistant Professor">Assistant Professor</option>
+                                                </select>
                                             </div>
                                         </div>
                                     </div>
 
-                                    <!-- Faculty Specific Fields -->
-                                    <div id="facultyFields"
-                                        style="display: {% if role == 'faculty' %}block{% else %}none{% endif %};"
-                                        class="reveal-fade">
-                                        <div class="glass-inner p-4 rounded-4 mb-4">
-                                            <h6 class="fw-bold mb-4 text-warning text-sm uppercase tracking-wide">
-                                                Faculty Details</h6>
-                                            <div class="row g-3">
-                                                <div class="col-md-6">
-                                                    <div class="form-floating-premium">
-                                                        <input type="text" class="form-control form-control-modern"
-                                                            id="employee_id" name="employee_id" placeholder="">
-                                                        <label>Employee ID</label>
-                                                        <div class="liquid-focus-border"></div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <div class="form-floating-premium">
-                                                        <select class="form-select form-control-modern"
-                                                            id="fac_department" name="department">
-                                                            <option value="">Select Department</option>
-                                                            <option value="Information Technology">Information
-                                                                Technology</option>
-                                                            <option value="Computer Science">Computer Science</option>
-                                                            <option value="Electronics & Communication">Electronics &
-                                                                Communication</option>
-                                                            <option value="Mechanical Engineering">Mechanical
-                                                                Engineering</option>
-                                                            <option value="Civil Engineering">Civil Engineering</option>
-                                                            <option value="Commerce">Commerce</option>
-                                                            <option value="Arts">Arts</option>
-                                                            <option value="Science">Science</option>
-                                                        </select>
-                                                        <label>Department</label>
-                                                        <div class="liquid-focus-border"></div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <div class="form-floating-premium">
-                                                        <select class="form-select form-control-modern"
-                                                            id="fac_designation" name="designation">
-                                                            <option value="">Select Designation</option>
-                                                            <option value="Professor">Professor</option>
-                                                            <option value="Associate Professor">Associate Professor
-                                                            </option>
-                                                            <option value="Assistant Professor">Assistant Professor
-                                                            </option>
-                                                            <option value="Lecturer">Lecturer</option>
-                                                            <option value="Head of Department">Head of Department
-                                                            </option>
-                                                            <option value="Dean">Dean</option>
-                                                        </select>
-                                                        <label>Designation</label>
-                                                        <div class="liquid-focus-border"></div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <div class="form-floating-premium">
-                                                        <input type="text" class="form-control form-control-modern"
-                                                            id="qualification" name="qualification" placeholder="">
-                                                        <label>Qualification (e.g. Ph.D)</label>
-                                                        <div class="liquid-focus-border"></div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    <button type="submit"
+                                        class="btn btn-primary btn-lg w-100 py-3 fw-bold shadow-lg hover-lift"
+                                        style="border-radius: 12px; background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%); border: none;">
+                                        Create Account <i class="fas fa-arrow-right ms-2"></i>
+                                    </button>
 
-                                    <!-- Submit Button -->
-                                    <div class="reveal-fade mt-4">
-                                        <button type="submit"
-                                            class="btn btn-premium-gradient w-100 py-3 magnetic-button"
-                                            style="font-size: 1.1rem;">
-                                            <span class="position-relative z-2">Create Account</span>
-                                            <div class="btn-glow"></div>
-                                        </button>
-                                    </div>
-
-                                    <!-- Login Link -->
-                                    <div class="text-center mt-4 pt-3 border-top border-light-subtle reveal-fade">
-                                        <p class="text-muted mb-0">
-                                            Already have an account?
-                                            <a href="{{ url_for('login') }}"
-                                                class="text-primary fw-bold text-decoration-none hover-scale d-inline-block">Login
-                                                Here</a>
-                                        </p>
-                                        <!-- Mobile Back Link -->
-                                        <div class="mt-3 d-lg-none">
-                                            <a href="/" class="text-muted text-sm text-decoration-none hover-item">
-                                                <i class="fas fa-arrow-left me-1"></i> Back to Home
-                                            </a>
-                                        </div>
+                                    <div class="text-center mt-4 text-muted">
+                                        Already have an account? <a href="/login"
+                                            class="fw-bold text-primary text-decoration-none">Login Here</a>
                                     </div>
 
                                 </form>
@@ -529,10 +301,48 @@
                         </div>
                     </div>
                 </div>
+
             </div>
         </div>
     </div>
 </div>
+
+<style>
+    .card-role {
+        transition: all 0.3s ease;
+        border-color: #e2e8f0;
+    }
+
+    .btn-check:checked+.card-role {
+        border-color: #6366f1;
+        background-color: #eff6ff;
+        color: #4f46e5;
+        box-shadow: 0 4px 6px -1px rgba(99, 102, 241, 0.1), 0 2px 4px -1px rgba(99, 102, 241, 0.06);
+    }
+
+    .form-control:focus,
+    .form-select:focus {
+        background-color: #fff !important;
+        border: 1px solid #6366f1 !important;
+        box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1) !important;
+    }
+
+    .animate-slide-down {
+        animation: slideDown 0.4s ease-out;
+    }
+
+    @keyframes slideDown {
+        from {
+            opacity: 0;
+            transform: translateY(-10px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+</style>
 
 <style>
     /* Role Card Styles */
