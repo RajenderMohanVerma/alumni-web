@@ -121,42 +121,50 @@
                 <ul class="navbar-nav ms-auto align-items-center">
                     {% if not current_user.is_authenticated %}
                     <!-- Public View -->
-                    <li class="nav-item">
-                        <a class="nav-link nav-pill-link" href="/">
-                            <i class="fas fa-home"></i> <span>Home</span>
+                    <!-- Island Navigation (Centered) -->
+                    <ul class="navbar-nav mx-auto d-none d-lg-flex align-items-center gap-1 shadow-sm rounded-pill px-2 py-1 bg-white border"
+                        style="box-shadow: 0 4px 20px rgba(0,0,0,0.05) !important;">
+                        <li class="nav-item">
+                            <a class="nav-link nav-pill-link" href="/">
+                                <i class="fas fa-home text-primary bg-primary-subtle rounded-circle p-2"
+                                    style="width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;"></i>
+                                <span class="fw-semibold text-dark d-none d-xl-inline">Home</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link nav-pill-link" href="/about">
+                                <span class="fw-semibold text-secondary hover-text-primary transition-all">About</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link nav-pill-link" href="/services">
+                                <span
+                                    class="fw-semibold text-secondary hover-text-primary transition-all">Services</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link nav-pill-link" href="/events">
+                                <span class="fw-semibold text-secondary hover-text-primary transition-all">Events</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link nav-pill-link" href="/contact">
+                                <span
+                                    class="fw-semibold text-secondary hover-text-primary transition-all">Contact</span>
+                            </a>
+                        </li>
+                    </ul>
+
+                    <!-- Right Actions -->
+                    <div class="d-flex align-items-center ms-auto gap-3">
+                        <a class="nav-link fw-bold text-dark px-3" href="/login">
+                            Log In
                         </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link nav-pill-link" href="/about">
-                            <i class="fas fa-info-circle"></i> <span>About</span>
+                        <a class="btn btn-premium-gradient btn-glow rounded-pill px-4 py-2 fw-bold text-nowrap"
+                            href="/register" style="box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4);">
+                            Get Started <i class="fas fa-arrow-right ms-2"></i>
                         </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link nav-pill-link" href="/services">
-                            <i class="fas fa-briefcase"></i> <span>Services</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link nav-pill-link" href="/events">
-                            <i class="fas fa-calendar-alt"></i> <span>Events</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link nav-pill-link" href="/contact">
-                            <i class="fas fa-envelope"></i> <span>Contact</span>
-                        </a>
-                    </li>
-                    <li class="nav-item ms-lg-2">
-                        <a class="nav-link nav-pill-link" href="/login">
-                            <i class="fas fa-key"></i> <span>Login</span>
-                        </a>
-                    </li>
-                    <li class="nav-item ms-lg-2">
-                        <a class="btn btn-premium-gradient btn-glow" href="/register">
-                            <span>Get Started</span>
-                            <i class="fas fa-arrow-right ms-2 transition-icon"></i>
-                        </a>
-                    </li>
+                    </div>
                     {% else %}
                     <!-- Authenticated View -->
                     {% if current_user.role == 'student' %}

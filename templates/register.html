@@ -7,8 +7,8 @@
     href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap"
     rel="stylesheet">
 
-<div class="position-relative overflow-hidden min-vh-100 d-flex align-items-center justify-content-center py-5"
-    style="padding-top: 250px;">
+<div class="position-relative overflow-hidden min-vh-100 d-flex justify-content-center py-5"
+    style="padding-top: 180px;">
 
     <!-- Animated Mesh Background -->
     <div class="mesh-background">
@@ -29,34 +29,113 @@
                     <div class="row g-0 h-100">
 
                         <!-- LEFT SIDE: Branding (Sticky) -->
-                        <div
-                            class="col-lg-4 d-none d-lg-flex flex-column justify-content-center align-items-center text-center p-5 position-relative overflow-hidden bg-gradient-premium">
-                            <div class="absolute-bg-animation"></div>
+                        <div class="col-lg-4 d-none d-lg-flex flex-column position-relative overflow-hidden text-dark"
+                            style="background: linear-gradient(135deg, #f0fdf4 0%, #ecfeff 100%);">
 
-                            <div class="position-relative z-1 reveal-fade" style="transition-delay: 0.2s;">
-                                <div class="mb-5">
-                                    <div class="icon-circle bg-white text-primary rounded-circle d-flex align-items-center justify-content-center mx-auto shadow-lg"
-                                        style="width: 100px; height: 100px; font-size: 2.5rem; animation: pulse-slow 3s infinite;">
-                                        <i class="fas fa-user-plus"></i>
-                                    </div>
+                            <!-- Animated Background Elements -->
+                            <div class="position-absolute top-0 start-0 w-100 h-100 overflow-hidden">
+                                <div class="blob-1 position-absolute rounded-circle filter-blur"
+                                    style="width: 300px; height: 300px; background: #86efac; opacity: 0.3; top: -100px; left: -100px; filter: blur(60px); animation: float 10s infinite ease-in-out;">
                                 </div>
-                                <h2 class="fw-bold display-6 mb-3 text-white">Join the <br>Community</h2>
-                                <p class="lead text-white-50 mb-5 text-sm">Unlock exclusive opportunities, mentorship,
-                                    and lifelong connections.</p>
-
-                                <ul class="list-unstyled text-start w-75 mx-auto text-white-50">
-                                    <li class="mb-3 d-flex align-items-center"><i
-                                            class="fas fa-check-circle text-warning me-3"></i> Expand your network</li>
-                                    <li class="mb-3 d-flex align-items-center"><i
-                                            class="fas fa-check-circle text-warning me-3"></i> Find mentors & jobs</li>
-                                    <li class="mb-3 d-flex align-items-center"><i
-                                            class="fas fa-check-circle text-warning me-3"></i> Stay updated</li>
-                                </ul>
+                                <div class="blob-2 position-absolute rounded-circle filter-blur"
+                                    style="width: 250px; height: 250px; background: #bae6fd; opacity: 0.3; bottom: -50px; right: -50px; filter: blur(50px); animation: float 12s infinite ease-in-out reverse;">
+                                </div>
                             </div>
 
-                            <div class="mt-auto position-relative z-1">
-                                <a href="/" class="text-white text-decoration-none hover-item small"><i
-                                        class="fas fa-arrow-left me-2"></i> Back to Home</a>
+                            <div class="p-5 d-flex flex-column h-100 position-relative z-1">
+                                <!-- Logo AREA -->
+                                <div class="mb-5">
+                                    <div
+                                        class="d-inline-flex align-items-center gap-2 bg-white bg-opacity-50 px-3 py-2 rounded-pill backdrop-blur-sm border border-secondary border-opacity-10 shadow-sm">
+                                        <div class="bg-primary rounded-circle d-flex align-items-center justify-content-center"
+                                            style="width: 24px; height: 24px;">
+                                            <i class="fas fa-graduation-cap text-white" style="font-size: 12px;"></i>
+                                        </div>
+                                        <span class="small fw-bold tracking-wide text-uppercase text-dark">DBIT Alumni
+                                            Hub</span>
+                                    </div>
+                                </div>
+
+                                <!-- Main Content with Carousel -->
+                                <div class="my-auto py-4">
+                                    <h1 class="display-6 fw-bold mb-4 leading-tight text-dark">Your gateway to
+                                        a<br><span class="text-gradient-primary"
+                                            style="background: linear-gradient(to right, #0ea5e9, #10b981); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Global
+                                            Network</span></h1>
+
+                                    <!-- Testimonial/Benefit Carousel -->
+                                    <div id="brandingCarousel" class="carousel slide carousel-fade"
+                                        data-bs-ride="carousel" data-bs-interval="4000">
+                                        <div class="carousel-inner">
+                                            <!-- Slide 1 -->
+                                            <div class="carousel-item active">
+                                                <div
+                                                    class="glass-card p-4 rounded-3 border border-secondary border-opacity-10 bg-white bg-opacity-60 shadow-sm">
+                                                    <i class="fas fa-users mb-3 text-info fs-4"></i>
+                                                    <h5 class="fw-bold mb-2 text-dark">Build Connections</h5>
+                                                    <p class="text-muted small mb-0">Reconnect with batchmates and
+                                                        expand your professional network across industries.</p>
+                                                </div>
+                                            </div>
+                                            <!-- Slide 2 -->
+                                            <div class="carousel-item">
+                                                <div
+                                                    class="glass-card p-4 rounded-3 border border-secondary border-opacity-10 bg-white bg-opacity-60 shadow-sm">
+                                                    <i class="fas fa-briefcase mb-3 text-warning fs-4"></i>
+                                                    <h5 class="fw-bold mb-2 text-dark">Career Growth</h5>
+                                                    <p class="text-muted small mb-0">Discover job opportunities,
+                                                        mentorship programs, and exclusive career events.</p>
+                                                </div>
+                                            </div>
+                                            <!-- Slide 3 -->
+                                            <div class="carousel-item">
+                                                <div
+                                                    class="glass-card p-4 rounded-3 border border-secondary border-opacity-10 bg-white bg-opacity-60 shadow-sm">
+                                                    <i class="fas fa-university mb-3 text-success fs-4"></i>
+                                                    <h5 class="fw-bold mb-2 text-dark">Give Back</h5>
+                                                    <p class="text-muted small mb-0">Share your expertise, mentor
+                                                        students, and contribute to your alma mater's legacy.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- Indicators -->
+                                        <div
+                                            class="carousel-indicators position-static justify-content-start mt-4 px-0 mx-0">
+                                            <button type="button" data-bs-target="#brandingCarousel"
+                                                data-bs-slide-to="0" class="active rounded-circle bg-secondary"
+                                                style="width: 8px; height: 8px;"></button>
+                                            <button type="button" data-bs-target="#brandingCarousel"
+                                                data-bs-slide-to="1" class="rounded-circle bg-secondary"
+                                                style="width: 8px; height: 8px;"></button>
+                                            <button type="button" data-bs-target="#brandingCarousel"
+                                                data-bs-slide-to="2" class="rounded-circle bg-secondary"
+                                                style="width: 8px; height: 8px;"></button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Footer / Stats -->
+                                <div class="mt-5 pt-4 border-top border-secondary border-opacity-10">
+                                    <div class="row g-3">
+                                        <div class="col-6">
+                                            <h4 class="fw-bold mb-0 text-dark">5,000+</h4>
+                                            <span class="text-muted small">Alumni Connected</span>
+                                        </div>
+                                        <div class="col-6">
+                                            <h4 class="fw-bold mb-0 text-dark">100+</h4>
+                                            <span class="text-muted small">Partner Companies</span>
+                                        </div>
+                                    </div>
+                                    <div class="mt-4">
+                                        <a href="/"
+                                            class="text-muted text-decoration-none hover-dark small transition-all">
+                                            <i class="fas fa-arrow-left me-2"></i> Back to Home
+                                        </a>
+                                    </div>
+                                </div>
+
+
+
                             </div>
                         </div>
 
@@ -104,8 +183,8 @@
                                         <div class="row g-3">
                                             <div class="col-md-4">
                                                 <input type="radio" class="btn-check" name="role" id="roleStudent"
-                                                    value="student" {% if role=='student' %}checked{% endif %}
-                                                    onchange="updateFormFields()">
+                                                    value="student" {% if role=='student' or not role %}checked{% endif
+                                                    %} onchange="updateFormFields()">
                                                 <label
                                                     class="card-role w-100 p-4 text-center cursor-pointer rounded-4 border"
                                                     for="roleStudent">
@@ -146,18 +225,24 @@
                                                 <label class="form-label fw-bold small text-muted">Full Name</label>
                                                 <input type="text"
                                                     class="form-control form-control-lg bg-light border-0" id="name"
-                                                    name="name" required placeholder="John Doe">
+                                                    name="name" required placeholder="John Doe"
+                                                    value="{{ form_data.get('name', '') if form_data else '' }}">
                                             </div>
                                             <div class="col-md-6">
                                                 <label class="form-label fw-bold small text-muted">Email Address</label>
                                                 <input type="email"
                                                     class="form-control form-control-lg bg-light border-0" id="email"
-                                                    name="email" required placeholder="john@example.com">
+                                                    name="email" required placeholder="john@example.com"
+                                                    value="{{ form_data.get('email', '') if form_data else '' }}">
                                             </div>
                                             <div class="col-md-6">
                                                 <label class="form-label fw-bold small text-muted">Phone Number</label>
                                                 <input type="tel" class="form-control form-control-lg bg-light border-0"
-                                                    id="phone" name="phone" required placeholder="+91 9876543210">
+                                                    id="phone" name="phone" required placeholder="+91 9876543210"
+                                                    value="{{ form_data.get('phone', '') if form_data else '' }}">
+                                            </div>
+                                            <div class="col-md-6">
+                                                <!-- Empty column for alignment -->
                                             </div>
                                             <div class="col-md-6">
                                                 <label class="form-label fw-bold small text-muted">Password</label>
@@ -165,18 +250,28 @@
                                                     class="form-control form-control-lg bg-light border-0" id="password"
                                                     name="password" required placeholder="••••••••">
                                             </div>
+                                            <div class="col-md-6">
+                                                <label class="form-label fw-bold small text-muted">Confirm
+                                                    Password</label>
+                                                <input type="password"
+                                                    class="form-control form-control-lg bg-light border-0"
+                                                    id="confirm_password" name="confirm_password" required
+                                                    placeholder="••••••••">
+                                            </div>
                                         </div>
                                     </div>
 
                                     <!-- Dynamic Fields (Hidden by default) -->
-                                    <div id="studentFields" style="display: none;" class="mb-5 animate-slide-down">
+                                    <div id="studentFields" class="mb-5 animate-slide-down">
                                         <h5 class="fw-bold text-primary mb-4 pb-2 border-bottom">Student Details</h5>
                                         <div class="row g-4">
                                             <div class="col-md-6"><label
                                                     class="form-label small fw-bold text-muted">Enrollment
                                                     No</label><input type="text" class="form-control bg-light border-0"
-                                                    name="enrollment_no"></div>
-                                            <!-- Additional fields layout similar to basic info, using standard labels and inputs -->
+                                                    id="enrollment_no" name="enrollment_no"
+                                                    value="{{ form_data.get('enrollment_no', '') if form_data else '' }}">
+                                            </div>
+
                                             <div class="col-md-6">
                                                 <label class="form-label small fw-bold text-muted">Category</label>
                                                 <select class="form-select bg-light border-0" id="category"
@@ -184,10 +279,15 @@
                                                     <option value="">Select Category</option>
                                                     <option value="IT">IT / Technology</option>
                                                     <option value="Engineering">Engineering</option>
-                                                    <!-- ... options ... -->
+                                                    <!-- Add other options as needed in JS or static -->
+                                                    <option value="Science">Science</option>
+                                                    <option value="Commerce">Commerce</option>
+                                                    <option value="Arts">Arts</option>
+                                                    <option value="Medical">Medical</option>
+                                                    <option value="Law">Law</option>
                                                 </select>
                                             </div>
-                                            <!-- ... Repeat for other dropdowns styling ... -->
+
                                             <div class="col-md-6">
                                                 <label class="form-label small fw-bold text-muted">Level</label>
                                                 <select class="form-select bg-light border-0" id="level" name="level"
@@ -219,7 +319,8 @@
                                             </div>
                                             <div class="col-md-6">
                                                 <label class="form-label small fw-bold text-muted">Semester</label>
-                                                <select class="form-select bg-light border-0" name="semester">
+                                                <select class="form-select bg-light border-0" id="semester"
+                                                    name="semester">
                                                     <option value="">Select Semester</option>
                                                     <option value="1">1</option>
                                                     <option value="2">2</option>
@@ -240,11 +341,57 @@
                                             <div class="col-md-6"><label
                                                     class="form-label small fw-bold text-muted">Enrollment
                                                     No</label><input type="text" class="form-control bg-light border-0"
-                                                    name="enrollment_no"></div>
-                                            <!-- Alumni specific fields -->
+                                                    id="alum_enrollment_no" name="enrollment_no"
+                                                    value="{{ form_data.get('enrollment_no', '') if form_data else '' }}">
+                                            </div>
+
+                                            <!-- Alumni Education Fields (Mirrors Student) -->
+                                            <div class="col-md-6">
+                                                <label class="form-label small fw-bold text-muted">Category</label>
+                                                <select class="form-select bg-light border-0" id="alum_category"
+                                                    name="category" onchange="updateAlumniCourseDropdown()">
+                                                    <option value="">Select Category</option>
+                                                    <option value="IT">IT / Technology</option>
+                                                    <option value="Engineering">Engineering</option>
+                                                    <option value="Science">Science</option>
+                                                    <option value="Commerce">Commerce</option>
+                                                    <option value="Arts">Arts</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label class="form-label small fw-bold text-muted">Level</label>
+                                                <select class="form-select bg-light border-0" id="alum_level"
+                                                    name="level" onchange="updateAlumniCourseDropdown()">
+                                                    <option value="">Select Level</option>
+                                                    <option value="UG">Undergraduate</option>
+                                                    <option value="PG">Postgraduate</option>
+                                                    <option value="Diploma">Diploma</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label class="form-label small fw-bold text-muted">Course</label>
+                                                <select class="form-select bg-light border-0" id="alum_degree"
+                                                    name="degree">
+                                                    <option value="">Select Course</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label class="form-label small fw-bold text-muted">Department</label>
+                                                <select class="form-select bg-light border-0" id="alum_department"
+                                                    name="department">
+                                                    <option value="">Select Department</option>
+                                                    <option value="Information Technology">IT</option>
+                                                    <option value="Computer Science">CS</option>
+                                                    <option value="Mechanical Engineering">Mechanical</option>
+                                                    <option value="Civil Engineering">Civil</option>
+                                                </select>
+                                            </div>
+
                                             <div class="col-md-6"><label
-                                                    class="form-label small fw-bold text-muted">Passing Year</label>
-                                                <select class="form-select bg-light border-0" name="pass_year">
+                                                    class="form-label small fw-bold text-muted">Passing
+                                                    Year</label>
+                                                <select class="form-select bg-light border-0" id="pass_year"
+                                                    name="pass_year">
                                                     {% for year in range(2024, 1999, -1) %}<option value="{{ year }}">{{
                                                         year }}</option>{% endfor %}
                                                 </select>
@@ -252,11 +399,14 @@
                                             <div class="col-md-6"><label
                                                     class="form-label small fw-bold text-muted">Current
                                                     Company</label><input type="text"
-                                                    class="form-control bg-light border-0" name="company_name"></div>
+                                                    class="form-control bg-light border-0" id="company_name"
+                                                    name="company_name"
+                                                    value="{{ form_data.get('company_name', '') if form_data else '' }}">
+                                            </div>
                                             <div class="col-md-6"><label
                                                     class="form-label small fw-bold text-muted">Designation</label><input
                                                     type="text" class="form-control bg-light border-0"
-                                                    name="designation"></div>
+                                                    id="alum_designation" name="designation"></div>
                                         </div>
                                     </div>
 
@@ -266,10 +416,13 @@
                                             <div class="col-md-6"><label
                                                     class="form-label small fw-bold text-muted">Employee
                                                     ID</label><input type="text" class="form-control bg-light border-0"
-                                                    name="employee_id"></div>
+                                                    id="fac_employee_id" name="employee_id"
+                                                    value="{{ form_data.get('employee_id', '') if form_data else '' }}">
+                                            </div>
                                             <div class="col-md-6"><label
                                                     class="form-label small fw-bold text-muted">Department</label>
-                                                <select class="form-select bg-light border-0" name="department">
+                                                <select class="form-select bg-light border-0" id="fac_department"
+                                                    name="department">
                                                     <option value="">Select Department</option>
                                                     <option value="Information Technology">IT</option>
                                                     <option value="Computer Science">CS</option>
@@ -277,12 +430,22 @@
                                             </div>
                                             <div class="col-md-6"><label
                                                     class="form-label small fw-bold text-muted">Designation</label>
-                                                <select class="form-select bg-light border-0" name="designation">
+                                                <select class="form-select bg-light border-0" id="fac_designation"
+                                                    name="designation">
                                                     <option value="Professor">Professor</option>
                                                     <option value="Assistant Professor">Assistant Professor</option>
                                                 </select>
                                             </div>
                                         </div>
+                                    </div>
+
+                                    <div class="mb-4 form-check">
+                                        <input type="checkbox" class="form-check-input" id="terms" required>
+                                        <label class="form-check-label text-muted small" for="terms">I agree to the <a
+                                                href="#" class="text-primary text-decoration-none">Terms &
+                                                Conditions</a> and <a href="#"
+                                                class="text-primary text-decoration-none">Privacy
+                                                Policy</a>.</label>
                                     </div>
 
                                     <button type="submit"
@@ -746,16 +909,26 @@
 
         setTimeout(() => {
             formInputs.forEach(updateLabel);
-        }, 500);
+            updateFormFields(); // Initialize form visibility
+        }, 100);
     });
 
     // Form Validation Function
     function validateRegisterForm() {
         const role = document.querySelector('input[name="role"]:checked')?.value;
-        const name = document.getElementById('name').value.trim();
-        const email = document.getElementById('email').value.trim();
-        const phone = document.getElementById('phone').value.trim();
-        const password = document.getElementById('password').value;
+        const name = document.getElementById('name');
+        const email = document.getElementById('email');
+        const phone = document.getElementById('phone');
+        const password = document.getElementById('password');
+        const confirmPassword = document.getElementById('confirm_password');
+        const terms = document.getElementById('terms');
+
+        function showError(element, message) {
+            alert(message);
+            element.focus();
+            element.classList.add('is-invalid');
+            return false;
+        }
 
         // Check common fields
         if (!role) {
@@ -763,52 +936,103 @@
             return false;
         }
 
-        if (!name || !email || !phone || !password) {
-            alert('Please fill in all basic fields (Name, Email, Phone, Password)');
+        if (!name.value.trim()) return showError(name, 'Full Name details are incomplete!');
+        if (!email.value.trim()) return showError(email, 'Email Address details are incomplete!');
+        if (!phone.value.trim()) return showError(phone, 'Phone Number details are incomplete!');
+        if (!password.value) return showError(password, 'Password details are incomplete!');
+        if (!confirmPassword.value) return showError(confirmPassword, 'Confirm Password details are incomplete!');
+
+        if (password.value !== confirmPassword.value) {
+            return showError(confirmPassword, 'Passwords do not match!');
+        }
+
+        if (!terms.checked) {
+            alert('You must agree to the Terms & Conditions');
+            terms.focus();
             return false;
         }
 
         // Check role-specific required fields
         if (role === 'student') {
-            const enrollment_no = document.getElementById('enrollment_no').value.trim();
-            const category = document.getElementById('category').value;
-            const level = document.getElementById('level').value;
-            const degree = document.getElementById('degree').value;
-            const department = document.getElementById('department').value;
+            const enrollment_no = document.getElementById('enrollment_no');
+            const category = document.getElementById('category');
+            const level = document.getElementById('level');
+            const degree = document.getElementById('degree');
+            const department = document.getElementById('department');
 
-            if (!enrollment_no || !category || !level || !degree || !department) {
-                alert('Please fill in all Student required fields');
-                return false;
-            }
+            if (!enrollment_no.value.trim()) return showError(enrollment_no, 'Enrollment No details are incomplete!');
+            if (!category.value) return showError(category, 'Category details are incomplete!');
+            if (!level.value) return showError(level, 'Level details are incomplete!');
+            if (!degree.value) return showError(degree, 'Course/Degree details are incomplete!');
+            if (!department.value) return showError(department, 'Department details are incomplete!');
         }
         else if (role === 'alumni') {
-            const enrollment_no = document.getElementById('alum_enrollment_no').value.trim();
-            const category = document.getElementById('alum_category').value;
-            const level = document.getElementById('alum_level').value;
-            const degree = document.getElementById('alum_degree').value;
-            const department = document.getElementById('alum_department').value;
-            const pass_year = document.getElementById('pass_year').value;
+            const enrollment_no = document.getElementById('alum_enrollment_no');
+            const category = document.getElementById('alum_category');
+            const level = document.getElementById('alum_level');
+            const degree = document.getElementById('alum_degree');
+            const department = document.getElementById('alum_department');
+            const pass_year = document.getElementById('pass_year');
 
-            if (!enrollment_no || !category || !level || !degree || !department || !pass_year) {
-                alert('Please fill in all Alumni required fields');
-                return false;
-            }
+            if (!enrollment_no.value.trim()) return showError(enrollment_no, 'Enrollment No details are incomplete!');
+            if (!category.value) return showError(category, 'Category details are incomplete!');
+            if (!level.value) return showError(level, 'Level details are incomplete!');
+            if (!degree.value) return showError(degree, 'Course/Degree details are incomplete!');
+            if (!department.value) return showError(department, 'Department details are incomplete!');
+            if (!pass_year.value) return showError(pass_year, 'Passing Year details are incomplete!');
         }
         else if (role === 'faculty') {
-            const employee_id = document.getElementById('employee_id').value.trim();
-            const department = document.getElementById('fac_department').value;
-            const designation = document.getElementById('fac_designation').value;
-            const qualification = document.getElementById('qualification').value.trim();
+            const employee_id = document.getElementById('fac_employee_id');
+            const department = document.getElementById('fac_department');
+            const designation = document.getElementById('fac_designation');
 
-            if (!employee_id || !department || !designation || !qualification) {
-                alert('Please fill in all Faculty required fields');
-                return false;
-            }
+            if (!employee_id.value.trim()) return showError(employee_id, 'Employee ID details are incomplete!');
+            if (!department.value) return showError(department, 'Department details are incomplete!');
+            if (!designation.value) return showError(designation, 'Designation details are incomplete!');
         }
 
-        // Form is valid, allow submission
+        // Strict Gmail Validation
+        const gmailRegex = /^[a-zA-Z0-9._%+-]+@gmail\.com$/;
+        if (!gmailRegex.test(email.value.trim())) {
+            return showError(email, 'Please enter a valid Gmail address (ending in @gmail.com)');
+        }
+
+        // Password Strength Validation
+        if (password.value.length < 8) {
+            return showError(password, 'Password must be at least 8 characters long!');
+        }
+
+        // Show Loading State
+        const submitBtn = document.querySelector('button[type="submit"]');
+        if (submitBtn) {
+            submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Sending OTP...';
+            submitBtn.disabled = true;
+        }
+
         return true;
     }
+
+    // Real-time Password Match visual
+    document.getElementById('confirm_password').addEventListener('input', function () {
+        const password = document.getElementById('password').value;
+        if (this.value === password && this.value !== '') {
+            this.classList.remove('is-invalid');
+            this.classList.add('is-valid');
+        } else {
+            this.classList.remove('is-valid');
+            this.classList.add('is-invalid');
+        }
+    });
+
+    // Remove is-invalid on input
+    document.querySelectorAll('.form-control, .form-select').forEach(input => {
+        input.addEventListener('input', function () {
+            if (this.value.trim() !== '') {
+                this.classList.remove('is-invalid');
+            }
+        });
+    });
+
 
     // Add CSS for 3D logic dynamically
     const style = document.createElement('style');
@@ -821,4 +1045,63 @@
 `;
     document.head.appendChild(style);
 </script>
+
+<style>
+    /* New Branding Section Styles */
+    .blob-1 {
+        animation: float 10s infinite ease-in-out;
+    }
+
+    .blob-2 {
+        animation: float 12s infinite ease-in-out reverse;
+    }
+
+    @keyframes float {
+
+        0%,
+        100% {
+            transform: translate(0px, 0px);
+        }
+
+        33% {
+            transform: translate(30px, -50px);
+        }
+
+        66% {
+            transform: translate(-20px, 20px);
+        }
+    }
+
+    .glass-card {
+        backdrop-filter: blur(4px);
+        -webkit-backdrop-filter: blur(4px);
+        transition: transform 0.3s ease, background 0.3s ease;
+    }
+
+    .glass-card:hover {
+        transform: translateY(-2px);
+        background: rgba(255, 255, 255, 0.08) !important;
+    }
+
+    .text-gradient-primary {
+        background-clip: text;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    .carousel-indicators button {
+        opacity: 0.5;
+        transition: all 0.2s ease;
+    }
+
+    .carousel-indicators button.active {
+        opacity: 1;
+        transform: scale(1.2);
+    }
+
+    .backdrop-blur-sm {
+        backdrop-filter: blur(4px);
+        -webkit-backdrop-filter: blur(4px);
+    }
+</style>
 {% endblock %}

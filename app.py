@@ -620,7 +620,17 @@ def register():
 
             if not name or not email or not phone or not password:
                 flash('Name, Email, Phone, and Password are required!', 'warning')
-                return redirect(url_for('register', role=role))
+                return render_template('register.html', role=role, form_data=request.form)
+
+            # Strict Gmail Validation
+            if not email.endswith('@gmail.com'):
+                flash('Only Gmail addresses (ending in @gmail.com) are allowed.', 'warning')
+                return render_template('register.html', role=role, form_data=request.form)
+
+            # Password Strength Validation
+            if len(password) < 8:
+                flash('Password must be at least 8 characters long.', 'warning')
+                return render_template('register.html', role=role, form_data=request.form)
 
             # Check if email already exists
             conn = get_db_connection()
@@ -641,7 +651,7 @@ def register():
                 
                 if not all([profile_data['enrollment_no'], profile_data['department'], profile_data['degree']]):
                     flash('Student details are incomplete!', 'warning')
-                    return redirect(url_for('register', role='student'))
+                    return render_template('register.html', role='student', form_data=request.form)
 
             elif role == 'alumni':
                 profile_data['enrollment_no'] = request.form.get('enrollment_no', '').strip()
@@ -654,7 +664,7 @@ def register():
 
                 if not all([profile_data['enrollment_no'], profile_data['department'], profile_data['degree'], profile_data['pass_year']]):
                     flash('Alumni details are incomplete!', 'warning')
-                    return redirect(url_for('register', role='alumni'))
+                    return render_template('register.html', role='alumni', form_data=request.form)
 
             elif role == 'faculty':
                 profile_data['employee_id'] = request.form.get('employee_id', '').strip()
@@ -665,7 +675,7 @@ def register():
 
                 if not all([profile_data['employee_id'], profile_data['department'], profile_data['designation'], profile_data['qualification']]):
                     flash('Faculty details are incomplete!', 'warning')
-                    return redirect(url_for('register', role='faculty'))
+                    return render_template('register.html', role='faculty', form_data=request.form)
 
             # Generate Secure 6-digit OTP
             otp = ''.join(secrets.choice(string.digits) for _ in range(6))
