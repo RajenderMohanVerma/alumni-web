@@ -84,6 +84,18 @@
             align-items: center;
             gap: 8px;
         }
+
+        /* Global Network Animation */
+        .network-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.6;
+        }
     </style>
 </head>
 
@@ -776,13 +788,16 @@
                                 <i class="fas fa-map-location-dot"></i> Our Location
                             </h5>
                             <div class="map-container" id="mapContainer" title="Click to open in Google Maps">
-                                <img src="{{ url_for('static', filename='images/location_img.png') }}"
-                                    alt="DBIT Alumni Hub Location">
-                                <div class="map-overlay">
-                                    <div class="map-overlay-text">
-                                        <i class="fas fa-arrow-up-right-from-square"></i> View on Maps
+                                <a href="https://www.google.com/maps/search/?api=1&query=Don+Bosco+Institute+of+Technology,+Okhla,+New+Delhi"
+                                    target="_blank" class="d-block w-100 h-100 text-decoration-none">
+                                    <img src="{{ url_for('static', filename='images/location_img.png') }}"
+                                        alt="DBIT Alumni Hub Location">
+                                    <div class="map-overlay">
+                                        <div class="map-overlay-text text-black">
+                                            <i class="fas fa-arrow-up-right-from-square"></i> View on Maps
+                                        </div>
                                     </div>
-                                </div>
+                                </a>
                             </div>
                             <p class="footer-text mt-3" style="font-size: 0.9rem;">
                                 <i class="fas fa-map-marker-alt text-danger"></i> 2, Okhla Rd, near Escort Hospital,
@@ -983,6 +998,7 @@
     <script src="{{ url_for('static', filename='js/custom_cursor.js') }}"></script>
     <!-- Bootstrap 5 Bundle (includes Popper) (Local) -->
     <script src="{{ url_for('static', filename='js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/network-animation.js') }}"></script>
 </body>
 
 </html>

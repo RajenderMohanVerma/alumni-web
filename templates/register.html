@@ -29,16 +29,21 @@
                     <div class="row g-0 h-100">
 
                         <!-- LEFT SIDE: Branding (Sticky) -->
-                        <div class="col-lg-4 d-none d-lg-flex flex-column position-relative overflow-hidden text-dark"
-                            style="background: linear-gradient(135deg, #f0fdf4 0%, #ecfeff 100%);">
+                        <div class="col-lg-4 d-none d-lg-flex flex-column position-relative overflow-hidden text-white branding-sidebar"
+                            style="background: #0f172a !important; background: radial-gradient(circle at top right, #1e293b 0%, #0f172a 100%) !important;">
 
                             <!-- Animated Background Elements -->
-                            <div class="position-absolute top-0 start-0 w-100 h-100 overflow-hidden">
-                                <div class="blob-1 position-absolute rounded-circle filter-blur"
-                                    style="width: 300px; height: 300px; background: #86efac; opacity: 0.3; top: -100px; left: -100px; filter: blur(60px); animation: float 10s infinite ease-in-out;">
+                            <canvas class="network-canvas position-absolute top-0 start-0 w-100 h-100"
+                                style="opacity: 0.6; pointer-events: none;"></canvas>
+
+                            <!-- Glowing Orbs (Subtle) -->
+                            <div class="position-absolute top-0 start-0 w-100 h-100 overflow-hidden"
+                                style="pointer-events: none;">
+                                <div class="position-absolute rounded-circle"
+                                    style="width: 400px; height: 400px; background: #3b82f6; opacity: 0.05; top: -100px; left: -100px; filter: blur(80px);">
                                 </div>
-                                <div class="blob-2 position-absolute rounded-circle filter-blur"
-                                    style="width: 250px; height: 250px; background: #bae6fd; opacity: 0.3; bottom: -50px; right: -50px; filter: blur(50px); animation: float 12s infinite ease-in-out reverse;">
+                                <div class="position-absolute rounded-circle"
+                                    style="width: 300px; height: 300px; background: #8b5cf6; opacity: 0.05; bottom: -50px; right: -50px; filter: blur(60px);">
                                 </div>
                             </div>
 
@@ -46,94 +51,127 @@
                                 <!-- Logo AREA -->
                                 <div class="mb-4">
                                     <div
-                                        class="d-inline-flex align-items-center gap-2 bg-white bg-opacity-50 px-3 py-2 rounded-pill backdrop-blur-sm border border-secondary border-opacity-10 shadow-sm">
+                                        class="d-inline-flex align-items-center gap-2 bg-white bg-opacity-10 px-3 py-2 rounded-pill backdrop-blur-sm border border-white border-opacity-10 shadow-sm">
                                         <div class="bg-primary rounded-circle d-flex align-items-center justify-content-center"
                                             style="width: 24px; height: 24px;">
                                             <i class="fas fa-graduation-cap text-white" style="font-size: 12px;"></i>
                                         </div>
-                                        <span class="small fw-bold tracking-wide text-uppercase text-dark">DBIT Alumni
+                                        <span class="small fw-bold tracking-wide text-uppercase text-white">DBIT Alumni
                                             Hub</span>
                                     </div>
                                 </div>
 
                                 <!-- Main Content with Carousel -->
                                 <div class="my-auto py-3">
-                                    <h1 class="display-6 fw-bold mb-4 leading-tight text-dark">Your gateway to
-                                        a<br><span id="typing-text" class="text-gradient-primary fs-4"
-                                            style="background: linear-gradient(to right, #0ea5e9, #10b981); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Global
-                                            Network</span><span class="cursor-blink text-primary">|</span></h1>
+                                    <h1
+                                        class="display-6 fw-bold mb-4 leading-tight text-white d-flex flex-wrap align-items-center justify-content-center gap-2">
+                                        <span>Elevate Your</span>
+                                        <div class="marquee-wrapper">
+                                            <div class="marquee-content shadow-text">
+                                                <span class="text-gradient-cyan">Professional Path</span>
+                                                <span class="text-gradient-cyan">Global Network</span>
+                                                <span class="text-gradient-cyan">Career Potential</span>
+                                                <span class="text-gradient-cyan">Future Legacy</span>
+                                                <!-- Duplicate for infinite loop -->
+                                                <span class="text-gradient-cyan">Professional Path</span>
+                                            </div>
+                                        </div>
+                                    </h1>
 
                                     <!-- Testimonial/Benefit Carousel -->
                                     <div id="brandingCarousel" class="carousel slide carousel-fade"
                                         data-bs-ride="carousel" data-bs-interval="4000">
                                         <div class="carousel-inner">
-                                            <!-- Slide 1 -->
+                                            <!-- Slide 1: Networking -->
                                             <div class="carousel-item active">
-                                                <div class="glass-card p-4 rounded-3 border border-secondary border-opacity-10 bg-white bg-opacity-60 shadow-sm"
-                                                    data-tilt data-tilt-max="10" data-tilt-speed="400" data-tilt-glare
-                                                    data-tilt-max-glare="0.2">
-                                                    <i class="fas fa-users mb-3 text-info fs-4"></i>
-                                                    <h5 class="fw-bold mb-2 text-dark">Build Connections</h5>
-                                                    <p class="text-muted small mb-0">Reconnect with batchmates and
+                                                <div class="glass-card p-4 rounded-4 border border-white border-opacity-10 bg-white bg-opacity-5 shadow-lg transition-all"
+                                                    style="backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);">
+                                                    <div class="d-inline-flex align-items-center justify-content-center bg-cyan bg-opacity-10 rounded-pill mb-3 px-3 py-1"
+                                                        style="border: 1px solid rgba(34, 211, 238, 0.2);">
+                                                        <i class="fas fa-users fs-6" style="color: #22d3ee;"></i>
+                                                        <span class="ms-2 small fw-bold text-cyan"
+                                                            style="color: #22d3ee;">Networking</span>
+                                                    </div>
+                                                    <h5 class="fw-bold mb-2 text-white">Build Connections</h5>
+                                                    <p class="text-white-50 small mb-0 lh-base">Reconnect with
+                                                        batchmates and
                                                         expand your professional network across industries.</p>
                                                 </div>
                                             </div>
-                                            <!-- Slide 2 -->
+                                            <!-- Slide 2: Careers -->
                                             <div class="carousel-item">
-                                                <div class="glass-card p-4 rounded-3 border border-secondary border-opacity-10 bg-white bg-opacity-60 shadow-sm"
-                                                    data-tilt data-tilt-max="10" data-tilt-speed="400" data-tilt-glare
-                                                    data-tilt-max-glare="0.2">
-                                                    <i class="fas fa-briefcase mb-3 text-warning fs-4"></i>
-                                                    <h5 class="fw-bold mb-2 text-dark">Career Growth</h5>
-                                                    <p class="text-muted small mb-0">Discover job opportunities,
+                                                <div class="glass-card p-4 rounded-4 border border-white border-opacity-10 bg-white bg-opacity-5 shadow-lg transition-all"
+                                                    style="backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);">
+                                                    <div class="d-inline-flex align-items-center justify-content-center bg-purple bg-opacity-10 rounded-pill mb-3 px-3 py-1"
+                                                        style="border: 1px solid rgba(167, 139, 250, 0.2);">
+                                                        <i class="fas fa-briefcase fs-6" style="color: #a78bfa;"></i>
+                                                        <span class="ms-2 small fw-bold text-purple"
+                                                            style="color: #a78bfa;">Careers</span>
+                                                    </div>
+                                                    <h5 class="fw-bold mb-2 text-white">Career Growth</h5>
+                                                    <p class="text-white-50 small mb-0 lh-base">Discover job
+                                                        opportunities,
                                                         mentorship programs, and exclusive career events.</p>
                                                 </div>
                                             </div>
-                                            <!-- Slide 3 -->
+                                            <!-- Slide 3: Community -->
                                             <div class="carousel-item">
-                                                <div class="glass-card p-4 rounded-3 border border-secondary border-opacity-10 bg-white bg-opacity-60 shadow-sm"
-                                                    data-tilt data-tilt-max="10" data-tilt-speed="400" data-tilt-glare
-                                                    data-tilt-max-glare="0.2">
-                                                    <i class="fas fa-university mb-3 text-success fs-4"></i>
-                                                    <h5 class="fw-bold mb-2 text-dark">Give Back</h5>
-                                                    <p class="text-muted small mb-0">Share your expertise, mentor
+                                                <div class="glass-card p-4 rounded-4 border border-white border-opacity-10 bg-white bg-opacity-5 shadow-lg transition-all"
+                                                    style="backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);">
+                                                    <div class="d-inline-flex align-items-center justify-content-center bg-emerald bg-opacity-10 rounded-pill mb-3 px-3 py-1"
+                                                        style="border: 1px solid rgba(52, 211, 153, 0.2);">
+                                                        <i class="fas fa-university fs-6" style="color: #34d399;"></i>
+                                                        <span class="ms-2 small fw-bold text-emerald"
+                                                            style="color: #34d399;">Community</span>
+                                                    </div>
+                                                    <h5 class="fw-bold mb-2 text-white">Give Back</h5>
+                                                    <p class="text-white-50 small mb-0 lh-base">Share your expertise,
+                                                        mentor
                                                         students, and contribute to your alma mater's legacy.</p>
                                                 </div>
+                                            </div>
+                                        </div>
+                                        <!-- Carousel Progress Bar -->
+                                        <div class="carousel-progress-container mt-4 mb-2"
+                                            style="height: 2px; background: rgba(255,255,255,0.05); border-radius: 2px; overflow: hidden;">
+                                            <div class="carousel-progress-bar"
+                                                style="width: 0%; height: 100%; background: linear-gradient(90deg, #22d3ee, #818cf8); transition: none;">
                                             </div>
                                         </div>
                                         <!-- Indicators -->
                                         <div
                                             class="carousel-indicators position-static justify-content-start mt-4 px-0 mx-0">
                                             <button type="button" data-bs-target="#brandingCarousel"
-                                                data-bs-slide-to="0" class="active rounded-circle bg-secondary"
-                                                style="width: 8px; height: 8px;"></button>
+                                                data-bs-slide-to="0" class="active rounded-circle bg-white"
+                                                style="width: 8px; height: 8px; opacity: 1;"></button>
                                             <button type="button" data-bs-target="#brandingCarousel"
-                                                data-bs-slide-to="1" class="rounded-circle bg-secondary"
-                                                style="width: 8px; height: 8px;"></button>
+                                                data-bs-slide-to="1" class="rounded-circle bg-white"
+                                                style="width: 8px; height: 8px; opacity: 0.3;"></button>
                                             <button type="button" data-bs-target="#brandingCarousel"
-                                                data-bs-slide-to="2" class="rounded-circle bg-secondary"
-                                                style="width: 8px; height: 8px;"></button>
+                                                data-bs-slide-to="2" class="rounded-circle bg-white"
+                                                style="width: 8px; height: 8px; opacity: 0.3;"></button>
                                         </div>
                                     </div>
                                 </div>
 
                                 <!-- Footer / Stats -->
-                                <div class="mt-4 pt-3 border-top border-secondary border-opacity-10">
-                                    <div class="row g-3">
+                                <div class="mt-4 pt-3 border-top border-white border-opacity-10">
+                                    <div
+                                        class="row g-3 p-3 rounded-4 bg-blue bg-opacity-5 border border-white border-opacity-10 shadow-sm">
                                         <div class="col-6">
-                                            <h4 class="fw-bold mb-0 text-dark"><span class="counter"
+                                            <h4 class="fw-bold mb-0 text-white"><span class="counter"
                                                     data-target="5000">0</span>+</h4>
-                                            <span class="text-muted small">Alumni Connected</span>
+                                            <span class="text-white-50 small">Alumni Connected</span>
                                         </div>
                                         <div class="col-6">
-                                            <h4 class="fw-bold mb-0 text-dark"><span class="counter"
+                                            <h4 class="fw-bold mb-0 text-white"><span class="counter"
                                                     data-target="100">0</span>+</h4>
-                                            <span class="text-muted small">Partner Companies</span>
+                                            <span class="text-white-50 small">Partner Companies</span>
                                         </div>
                                     </div>
                                     <div class="mt-4">
                                         <a href="/"
-                                            class="text-muted text-decoration-none hover-dark small transition-all">
+                                            class="text-white-50 text-decoration-none hover-white small transition-all">
                                             <i class="fas fa-arrow-left me-2"></i> Back to Home
                                         </a>
                                     </div>
@@ -1066,45 +1104,8 @@
 
     document.addEventListener('DOMContentLoaded', () => {
 
-        // 1. Typing Text Animation
-        const typingElement = document.getElementById('typing-text');
-        const phrases = ["Global Network", "Thriving Community", "Lifelong Connections", "Successful Career"];
-
-        // Initial State: Start fully typed to match HTML ("Global Network")
-        let phraseIndex = 0;
-        let charIndex = phrases[0].length;
-        let isDeleting = true; // Next action is deleting, but we wait first
-
-        function type() {
-            const currentPhrase = phrases[phraseIndex];
-            let typeSpeed = 100;
-
-            if (isDeleting) {
-                typingElement.textContent = currentPhrase.substring(0, charIndex - 1);
-                charIndex--;
-                typeSpeed = 175; // Deletion speed
-            } else {
-                typingElement.textContent = currentPhrase.substring(0, charIndex + 1);
-                charIndex++;
-                typeSpeed = 150; // Typing speed
-            }
-
-            if (!isDeleting && charIndex === currentPhrase.length) {
-                // Typed full phrase -> Wait 4s
-                isDeleting = true;
-                typeSpeed = 4000;
-            } else if (isDeleting && charIndex === 0) {
-                // Deleted full phrase -> Wait 0.5s then start typing next
-                isDeleting = false;
-                phraseIndex = (phraseIndex + 1) % phrases.length;
-                typeSpeed = 500;
-            }
-
-            setTimeout(type, typeSpeed);
-        }
-
-        // Start logic: Wait 4s before the first delete action
-        if (typingElement) setTimeout(type, 4500);
+        // 1. Sliding Marquee logic is now CSS-only for performance.
+        // Legacy typing script removed.
 
 
         // 2. Animated Number Counters
@@ -1139,15 +1140,48 @@
             });
         });
 
-        if (document.querySelector('.mt-5')) {
-            observer.observe(document.querySelector('.mt-5')); // Observe the footer stats section
+        if (document.querySelector('.mt-4.pt-3')) {
+            observer.observe(document.querySelector('.mt-4.pt-3')); // Observe the stats section
         }
 
+        // --- Carousel Advanced Logic ---
+        const carousel = document.querySelector('#brandingCarousel');
+        const progressBar = document.querySelector('.carousel-progress-bar');
+        const interval = 4000; // Match data-bs-interval
+        let progressStart = Date.now();
+        let progressTimer;
 
-        // 3. 3D Tilt Effect (Vanilla JS)
-        const cards = document.querySelectorAll('[data-tilt]');
+        function updateProgress() {
+            const elapsed = Date.now() - progressStart;
+            const percentage = Math.min((elapsed / interval) * 100, 100);
+            progressBar.style.width = percentage + '%';
 
-        cards.forEach(card => {
+            if (percentage < 100) {
+                progressTimer = requestAnimationFrame(updateProgress);
+            }
+        }
+
+        carousel.addEventListener('slide.bs.carousel', () => {
+            cancelAnimationFrame(progressTimer);
+            progressBar.style.width = '0%';
+            progressBar.style.transition = 'none';
+        });
+
+        carousel.addEventListener('slid.bs.carousel', () => {
+            progressStart = Date.now();
+            updateProgress();
+        });
+
+        // Start initial progress
+        updateProgress();
+
+
+        // 3. 3D Tilt Effect with Parallax
+        const cardTilts = document.querySelectorAll('[data-tilt], .glass-card');
+
+        cardTilts.forEach(card => {
+            const innerIcon = card.querySelector('i');
+
             card.addEventListener('mousemove', (e) => {
                 const rect = card.getBoundingClientRect();
                 const x = e.clientX - rect.left;
@@ -1156,14 +1190,24 @@
                 const centerX = rect.width / 2;
                 const centerY = rect.height / 2;
 
-                const rotateX = ((y - centerY) / centerY) * -10; // Max tilt 10deg
-                const rotateY = ((x - centerX) / centerX) * 10;
+                const rotateX = ((y - centerY) / centerY) * -12; // Max tilt 12deg
+                const rotateY = ((x - centerX) / centerX) * 12;
 
                 card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.02)`;
+
+                // Parallax depth for the icon inside
+                if (innerIcon) {
+                    const moveX = ((x - centerX) / centerX) * 15; // Move icon opposite
+                    const moveY = ((y - centerY) / centerY) * 15;
+                    innerIcon.style.transform = `translateZ(50px) translateX(${moveX}px) translateY(${moveY}px)`;
+                }
             });
 
             card.addEventListener('mouseleave', () => {
                 card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale(1)';
+                if (innerIcon) {
+                    innerIcon.style.transform = 'translateZ(0) translateX(0) translateY(0)';
+                }
             });
         });
 
@@ -1218,42 +1262,75 @@
         }
     }
 
-    /* Glass Card Enhancements */
-    .glass-card {
-        backdrop-filter: blur(10px);
-        -webkit-backdrop-filter: blur(10px);
-        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        border: 1px solid rgba(255, 255, 255, 0.4);
+    /* Neon Pulse for Badges */
+    .bg-cyan.bg-opacity-10,
+    .bg-purple.bg-opacity-10,
+    .bg-emerald.bg-opacity-10 {
+        animation: neonPulse 3s infinite ease-in-out;
     }
 
-    .glass-card:hover {
-        transform: translateY(-8px) scale(1.02);
-        background: rgba(255, 255, 255, 0.85) !important;
-        /* Brighter on hover */
-        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
-        border-color: rgba(16, 185, 129, 0.3);
-        /* Subtle green border on hover */
+    @keyframes neonPulse {
+
+        0%,
+        100% {
+            box-shadow: 0 0 5px rgba(255, 255, 255, 0.05);
+        }
+
+        50% {
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+        }
     }
 
-    /* Carousel Entry Animations */
-    /* Only animate when the slide is ACTIVE */
-    .carousel-item.active .glass-card {
-        animation: fadeInUp 0.8s ease-out forwards;
-    }
+    /* Glass Card Enhancements moved to end for consistency */
 
-    .carousel-item.active .glass-card i {
-        animation: zoomIn 0.6s ease-out 0.2s forwards;
+    /* Carousel Entry Animations - Unified Horizontal Slide */
+    .carousel-item.active .glass-card,
+    .carousel-item-next .glass-card,
+    .carousel-item-prev .glass-card {
         opacity: 0;
+        animation: slideInFromRight 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        position: relative;
+        overflow: hidden;
     }
 
-    .carousel-item.active .glass-card h5 {
-        animation: fadeInUp 0.6s ease-out 0.3s forwards;
-        opacity: 0;
+    /* Swipe Shine Effect */
+    .carousel-item.active .glass-card::after {
+        content: "";
+        position: absolute;
+        top: -100%;
+        left: -100%;
+        width: 300%;
+        height: 300%;
+        background: linear-gradient(45deg, transparent 45%, rgba(255, 255, 255, 0.1) 50%, transparent 55%);
+        animation: shineSweep 2s ease-in-out forwards;
+        pointer-events: none;
     }
 
-    .carousel-item.active .glass-card p {
-        animation: fadeInUp 0.6s ease-out 0.4s forwards;
-        opacity: 0;
+    /* Staggered Content Removed for premium unified feel */
+
+    /* New Keyframes - Premium Right-to-Left */
+    @keyframes slideInFromRight {
+        from {
+            opacity: 0;
+            transform: translateX(120px) scale(0.9) skewX(6deg);
+            filter: blur(8px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateX(0) scale(1) skewX(0);
+            filter: blur(0);
+        }
+    }
+
+    @keyframes shineSweep {
+        0% {
+            transform: translateX(-100%) translateY(-100%) rotate(0deg);
+        }
+
+        100% {
+            transform: translateX(100%) translateY(100%) rotate(0deg);
+        }
     }
 
     /* Keyframes */
@@ -1358,5 +1435,110 @@
     .blob-2 {
         transition: transform 0.1s ease-out;
     }
+
+    /* Network Theme Specifics */
+    .text-gradient-cyan {
+        background: linear-gradient(to right, #22d3ee, #818cf8);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        background-size: 200% auto;
+        animation: gradientFlow 5s ease infinite;
+    }
+
+    .glass-card {
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        backdrop-filter: blur(25px);
+        -webkit-backdrop-filter: blur(25px);
+        background: rgba(255, 255, 255, 0.03) !important;
+        border: 1px solid rgba(255, 255, 255, 0.1) !important;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+    }
+
+    .glass-card:hover {
+        transform: translateY(-8px) scale(1.02);
+        background: rgba(255, 255, 255, 0.08) !important;
+        box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+        border-color: rgba(34, 211, 238, 0.4) !important;
+    }
+
+    /* Force visibility for Carousel Text */
+    .branding-sidebar .glass-card h5,
+    .branding-sidebar h1,
+    .branding-sidebar h4 {
+        color: #ffffff !important;
+        text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    }
+
+    .branding-sidebar .glass-card p,
+    .branding-sidebar .text-white-50 {
+        color: rgba(255, 255, 255, 0.8) !important;
+        /* Brighter than default 50 */
+        text-shadow: 0 1px 5px rgba(0, 0, 0, 0.2);
+    }
+
+    .hover-white:hover {
+        color: #fff !important;
+    }
+
+    /* Marquee Animation */
+    .marquee-wrapper {
+        height: 1.6rem;
+        overflow: hidden;
+        position: relative;
+        display: inline-block;
+        vertical-align: middle;
+        margin-left: 2px;
+    }
+
+    .marquee-content {
+        display: flex;
+        flex-direction: column;
+        animation: marqueeVertical 16s cubic-bezier(0.76, 0, 0.24, 1) infinite;
+    }
+
+    .marquee-content span {
+        height: 1.6rem;
+        line-height: 1.6rem;
+        display: flex;
+        align-items: center;
+        font-size: 1.1rem;
+        font-weight: 800;
+        letter-spacing: -0.5px;
+        white-space: nowrap;
+    }
+
+    @keyframes marqueeVertical {
+
+        0%,
+        20% {
+            transform: translateY(0);
+        }
+
+        25%,
+        45% {
+            transform: translateY(-1.6rem);
+        }
+
+        50%,
+        70% {
+            transform: translateY(-3.2rem);
+        }
+
+        75%,
+        95% {
+            transform: translateY(-4.8rem);
+        }
+
+        100% {
+            transform: translateY(-6.4rem);
+        }
+    }
+
+    .shadow-text {
+        text-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+    }
 </style>
+
+</script>
 {% endblock %}
