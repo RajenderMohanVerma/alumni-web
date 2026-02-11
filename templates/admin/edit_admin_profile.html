@@ -6,133 +6,131 @@
     href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap"
     rel="stylesheet">
 
+
 <div class="profile-wrapper">
     <!-- Animated Mesh Background -->
-    <div class="mesh-background">
-        <div class="mesh-ball ball-royal-1"></div>
-        <div class="mesh-ball ball-royal-2"></div>
-        <div class="mesh-ball ball-royal-3"></div>
-    </div>
+    <div class="mesh-background"></div>
 
-    <!-- Header Section -->
-    <div class="profile-hero glass-hero hero-royal">
-        <div class="hero-particles"></div>
-        <div class="hero-glow-point"></div>
-        <div class="container" style="position: relative; z-index: 2;">
-            <div class="row align-items-center">
-                <div class="col-lg-8">
-                    <div class="hero-content">
-                        <div class="badge rounded-pill bg-white text-primary px-3 py-2 mb-3 shadow-sm reveal-fade"
-                            style="font-weight: 700; letter-spacing: 0.5px;">
-                            <i class="fas fa-shield-alt me-2"></i> SYSTEM ADMINISTRATION
-                        </div>
-                        <h1 class="text-white display-4 fw-bold mb-3 reveal-text">
-                            Admin <span class="text-holographic">Configuration</span>
-                        </h1>
-                        <p class="text-white-50 lead mb-0 reveal-fade" style="font-size: 1.25rem;">
-                            Manage your administrative credentials and security settings.
-                        </p>
-                    </div>
+    <!-- Modern Hero Section -->
+    <div class="container pt-5 pb-5" style="margin-top: 100px;">
+        <div class="row justify-content-center fade-in-up">
+            <div class="col-lg-8 text-center">
+                <div
+                    class="d-inline-flex align-items-center justify-content-center px-4 py-2 mb-4 rounded-pill border border-dark border-opacity-10 bg-white bg-opacity-50 blur-sm shadow-sm">
+                    <i class="fas fa-shield-alt text-primary me-2"></i>
+                    <span class="fw-bold text-primary small tracking-wider">SYSTEM ADMINISTRATION</span>
                 </div>
+                <h1 class="display-4 fw-800 mb-3 text-dark">
+                    Edit Admin <span class="text-primary">Profile</span>
+                </h1>
+                <p class="lead text-secondary mb-0">
+                    Manage your administrative identity and security privileges.
+                </p>
             </div>
         </div>
     </div>
 
-    <div class="container mt-n5 mb-5" style="position: relative; z-index: 5; margin-top: -60px;">
+    <!-- Main Content -->
+    <div class="container pb-5">
         <div class="row justify-content-center">
-            <div class="col-lg-8">
-                <form id="editForm" method="POST" enctype="multipart/form-data" class="needs-validation">
-                    <div class="card border-0 glass-card holographic-border mb-5 reveal-fade">
-                        <div class="card-body p-4 p-md-5">
+            <div class="col-lg-7">
+                <form id="editForm" method="POST" enctype="multipart/form-data" class="needs-validation" novalidate>
 
-                            <!-- Photo Section -->
-                            <div class="text-center mb-5 section-reveal">
-                                <div class="avatar-edit-container mb-4">
+                    <div class="glass-card p-4 p-md-5 fade-in-up delay-1">
+
+                        <!-- Photo Upload Section -->
+                        <div class="text-center mb-5">
+                            <div class="profile-photo-wrapper mb-4 shadow-lg">
+                                <div class="profile-photo-inner">
                                     <img id="photoPreview"
-                                        src="{{ user['profile_pic'] if user['profile_pic'] and user['profile_pic'].startswith('/') else 'https://ui-avatars.com/api/?name=' + user['name'] + '&size=200&background=4f46e5&color=fff' }}"
-                                        alt="Profile Photo" class="avatar-img shadow-lg">
-                                    <label for="profile_pic" class="avatar-upload-badge shadow-lg">
-                                        <i class="fas fa-camera"></i>
+                                        src="{{ user['profile_pic'] if user['profile_pic'] else 'https://ui-avatars.com/api/?name=' + user['name'] + '&background=0D6EFD&color=fff' }}"
+                                        alt="Admin Profile">
+                                    <label for="profile_pic" class="photo-overlay">
+                                        <i class="fas fa-camera text-white fs-2"></i>
                                     </label>
                                 </div>
-                                <input type="file" id="profile_pic" name="profile_pic" class="d-none" accept="image/*"
-                                    onchange="previewPhoto(this)">
-                                <h4 class="fw-bold text-dark mb-1">{{ user['name'] }}</h4>
-                                <div
-                                    class="badge bg-primary-subtle text-primary border border-primary-subtle rounded-pill px-3 py-1 mt-2">
-                                    Full Administrator Access
-                                </div>
+                            </div>
+                            <input type="file" id="profile_pic" name="profile_pic" class="d-none" accept="image/*"
+                                onchange="previewPhoto(this)">
+
+                            <h3 class="fw-bold text-dark mb-1">{{ user['name'] }}</h3>
+                            <p class="text-secondary small mb-3">{{ user['email'] }}</p>
+                            <span class="badge bg-primary bg-opacity-10 text-primary px-3 py-2 rounded-pill">
+                                <i class="fas fa-check-circle me-1"></i> Verified Administrator
+                            </span>
+                        </div>
+
+                        <!-- Form Fields with "Massive" Spacing -->
+                        <div class="form-gap mb-5">
+
+                            <!-- Full Name -->
+                            <div class="input-group-premium">
+                                <input type="text" class="form-control-premium" id="name" name="name"
+                                    value="{{ user['name'] }}" placeholder=" " required>
+                                <label for="name" class="form-label-premium">
+                                    <i class="fas fa-user me-2 text-primary opacity-50"></i> Full Name
+                                </label>
                             </div>
 
-                            <!-- Admin Details -->
-                            <div class="premium-form-section mb-5">
-                                <h5 class="section-title mb-4 reveal-text">
-                                    <span class="title-icon icon-royal"><i class="fas fa-user-shield"></i></span>
-                                    Identity & Access
-                                </h5>
-                                <div class="row g-4">
-                                    <div class="col-12 reveal-fade">
-                                        <div class="form-floating-premium">
-                                            <input type="text" class="form-control" id="name" name="name"
-                                                value="{{ user['name'] }}" required placeholder="Full Name">
-                                            <label for="name">Admin Full Name</label>
-                                            <div class="focus-border"></div>
-                                        </div>
-                                    </div>
-                                    <div class="col-12 reveal-fade">
-                                        <div class="form-floating-premium">
-                                            <input type="email" class="form-control" id="email" name="email"
-                                                value="{{ user['email'] }}" required placeholder="Email">
-                                            <label for="email">Administrative Email</label>
-                                            <div class="focus-border"></div>
-                                        </div>
-                                    </div>
-                                    <div class="col-12 reveal-fade">
-                                        <div class="form-floating-premium">
-                                            <input type="tel" class="form-control" id="phone" name="phone"
-                                                value="{{ user['phone'] or '' }}" required placeholder="Phone">
-                                            <label for="phone">Security Contact Number</label>
-                                            <div class="focus-border"></div>
-                                        </div>
-                                    </div>
-                                </div>
+                            <!-- Email Address -->
+                            <div class="input-group-premium">
+                                <input type="email" class="form-control-premium" id="email" name="email"
+                                    value="{{ user['email'] }}" placeholder=" " required>
+                                <label for="email" class="form-label-premium">
+                                    <i class="fas fa-envelope me-2 text-primary opacity-50"></i> Email Address
+                                </label>
                             </div>
 
-                            <!-- Security Note -->
-                            <div class="alert alert-royal border-0 reveal-fade mb-5"
-                                style="border-radius: 20px; background: rgba(79, 70, 229, 0.05); border-left: 4px solid #4f46e5 !important;">
-                                <div class="d-flex align-items-center p-2">
-                                    <div class="me-3">
-                                        <i class="fas fa-info-circle text-primary" style="font-size: 1.5rem;"></i>
-                                    </div>
-                                    <div>
-                                        <p class="mb-0 fw-bold text-dark">Security Protocol</p>
-                                        <p class="mb-0 text-muted small">Any changes to identity records are logged for
-                                            system integrity audit purposes.</p>
-                                    </div>
-                                </div>
+                            <!-- Phone Number -->
+                            <div class="input-group-premium">
+                                <input type="tel" class="form-control-premium" id="phone" name="phone"
+                                    value="{{ user['phone'] }}" placeholder=" " required>
+                                <label for="phone" class="form-label-premium">
+                                    <i class="fas fa-phone me-2 text-primary opacity-50"></i> Phone Number
+                                </label>
                             </div>
 
-                            <!-- Actions -->
-                            <div class="d-grid gap-3 pt-2 reveal-fade">
-                                <button type="submit" class="btn btn-royal-gradient">
-                                    <i class="fas fa-save me-2"></i> Update Admin Profile
-                                </button>
-                                <div class="row g-2">
-                                    <div class="col-6">
-                                        <a href="{{ url_for('admin_profile', user_id=user['id']) }}"
-                                            class="btn btn-glass-outline w-100">
-                                            Back
-                                        </a>
-                                    </div>
-                                    <div class="col-6">
-                                        <a href="{{ url_for('change_password') }}" class="btn btn-glass-info w-100">
-                                            Password
-                                        </a>
-                                    </div>
+                        </div>
+
+                        <!-- Security Notice Premium -->
+                        <div class="security-card glass-card-danger p-4 mb-5 fade-in-up delay-2">
+                            <div class="d-flex align-items-center">
+                                <div class="icon-box-lg bg-danger-soft text-danger me-4">
+                                    <i class="fas fa-shield-virus fa-lg"></i>
+                                </div>
+                                <div>
+                                    <h6 class="fw-bold text-dark mb-1">Security Audit Log active</h6>
+                                    <p class="text-dark-emphasis small mb-0 opacity-75">
+                                        All modifications are encrypted, timestamped, and logged for strict security
+                                        compliance.
+                                    </p>
                                 </div>
                             </div>
                         </div>
+
+                        <!-- Actions Premium -->
+                        <div class="d-grid gap-3 fade-in-up delay-3">
+                            <button type="submit" class="btn btn-premium-main shadow-lg-hover">
+                                <span class="btn-text fw-bold"><i class="fas fa-save me-2"></i> Save Changes</span>
+                                <div class="btn-shimmer"></div>
+                            </button>
+
+                            <div class="row g-3">
+                                <div class="col-6">
+                                    <a href="{{ url_for('admin_profile', user_id=user['id']) }}"
+                                        class="btn btn-glass-secondary w-100 py-3 fw-bold text-dark-emphasis">
+                                        Cancel
+                                    </a>
+                                </div>
+                                <div class="col-6">
+                                    <a href="{{ url_for('change_password') }}"
+                                        class="btn btn-glass-primary w-100 py-3 fw-bold text-primary">
+                                        <i class="fas fa-key me-2"></i> Security
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
                 </form>
             </div>
@@ -140,316 +138,428 @@
     </div>
 </div>
 
+
 <style>
-    /* Global Styles & Mesh */
+    /* Premium Global Styles */
+    :root {
+        --glass-surface: rgba(255, 255, 255, 0.7);
+        --glass-border: rgba(255, 255, 255, 0.6);
+        --glass-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.07);
+        --primary-gradient: linear-gradient(135deg, #4f46e5 0%, #312e81 100%);
+        --input-bg: rgba(255, 255, 255, 0.9);
+        --input-focus-shadow: 0 0 0 4px rgba(79, 70, 229, 0.15);
+    }
+
+    /* Navbar Override for Light Theme Page */
+    #mainNavbar.nav-dark-mode .navbar-container {
+        background: rgba(255, 255, 255, 0.8) !important;
+        backdrop-filter: blur(20px) !important;
+        border: 1px solid rgba(255, 255, 255, 0.5) !important;
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05) !important;
+    }
+
+    #mainNavbar.nav-dark-mode .brand-text {
+        background: linear-gradient(135deg, #1e293b 0%, #6366f1 100%) !important;
+        background-clip: text !important;
+        -webkit-background-clip: text !important;
+        -webkit-text-fill-color: transparent !important;
+    }
+
+    #mainNavbar.nav-dark-mode .nav-pill-link {
+        color: #64748b !important;
+    }
+
+    #mainNavbar.nav-dark-mode .nav-pill-link:hover,
+    #mainNavbar.nav-dark-mode .nav-pill-link.active {
+        color: #6366f1 !important;
+        background: rgba(99, 102, 241, 0.1) !important;
+    }
+
+    #mainNavbar.nav-dark-mode .user-name {
+        color: #1e293b !important;
+    }
+
+    #mainNavbar.nav-dark-mode .custom-toggler {
+        border-color: rgba(0, 0, 0, 0.1) !important;
+    }
+
+    #mainNavbar.nav-dark-mode .custom-toggler .line {
+        background: #1e293b !important;
+    }
+
+    /* User Pill Visibility on Light Navbar */
+    #mainNavbar.nav-dark-mode .user-pill {
+        background: #f8fafc !important;
+        border: 1px solid #e2e8f0 !important;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05) !important;
+    }
+
     body {
         font-family: 'Outfit', sans-serif;
-        background-color: #f5f3ff;
+        background: #f8fafc;
         overflow-x: hidden;
+        color: #1e293b;
     }
 
-    h1,
-    h2,
-    h3,
-    h4,
-    h5,
-    h6 {
-        font-family: 'Plus Jakarta Sans', sans-serif;
-    }
-
-    .profile-wrapper {
-        position: relative;
-        overflow: hidden;
-        min-height: 100vh;
-    }
-
+    /* Animated Mesh Background - Slower & Smoother */
     .mesh-background {
         position: fixed;
+        width: 100vw;
+        height: 100vh;
         top: 0;
         left: 0;
-        width: 100%;
-        height: 100%;
         z-index: -1;
-        overflow: hidden;
-        background: #f5f3ff;
-        pointer-events: none;
+        background: radial-gradient(at 0% 0%, hsla(253, 16%, 7%, 1) 0, transparent 50%),
+            radial-gradient(at 50% 0%, hsla(225, 39%, 30%, 1) 0, transparent 50%),
+            radial-gradient(at 100% 0%, hsla(339, 49%, 30%, 1) 0, transparent 50%);
+        background-size: 200% 200%;
+        animation: gradient-move 20s ease infinite;
     }
 
-    .mesh-ball {
-        position: absolute;
-        border-radius: 50%;
-        filter: blur(100px);
-        opacity: 0.15;
-        animation: mesh-float 25s infinite alternate ease-in-out;
-    }
-
-    .ball-royal-1 {
-        width: 700px;
-        height: 700px;
-        background: #4f46e5;
-        top: -15%;
-        left: -10%;
-    }
-
-    .ball-royal-2 {
-        width: 600px;
-        height: 600px;
-        background: #7c3aed;
-        bottom: 5%;
-        right: -10%;
-    }
-
-    .ball-royal-3 {
-        width: 500px;
-        height: 500px;
-        background: #6366f1;
-        top: 30%;
-        left: 40%;
-    }
-
-    @keyframes mesh-float {
-        0% {
-            transform: translate(0, 0);
-        }
-
-        100% {
-            transform: translate(120px, 80px);
-        }
-    }
-
-    /* Hero Section */
-    .profile-hero {
-        padding: 120px 0 100px;
-        background: linear-gradient(135deg, #1e1b4b 0%, #312e81 100%);
-        position: relative;
-        overflow: hidden;
-    }
-
-    .text-holographic {
-        background: linear-gradient(90deg, #818cf8, #a78bfa, #c084fc, #818cf8);
-        background-size: 300% 100%;
-        -webkit-background-clip: text;
-        background-clip: text;
-        -webkit-text-fill-color: transparent;
-        animation: holographic-move 8s linear infinite;
-    }
-
-    @keyframes holographic-move {
+    @keyframes gradient-move {
         0% {
             background-position: 0% 50%;
         }
 
+        50% {
+            background-position: 100% 50%;
+        }
+
         100% {
-            background-position: 300% 50%;
+            background-position: 0% 50%;
         }
     }
 
-    /* Glass Cards */
+    /* Glass Morphism Cards */
     .glass-card {
-        background: rgba(255, 255, 255, 0.9);
-        backdrop-filter: blur(25px);
-        -webkit-backdrop-filter: blur(25px);
-        border: 1px solid rgba(255, 255, 255, 0.6) !important;
-        border-radius: 40px !important;
-        box-shadow: 0 40px 80px rgba(30, 27, 75, 0.08) !important;
+        background: var(--glass-surface);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border: 1px solid var(--glass-border);
+        border-radius: 24px;
+        box-shadow: var(--glass-shadow);
+        transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.4s ease;
     }
 
-    .holographic-border {
+    .glass-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Spacing & Typography */
+    .section-spacing {
+        margin-bottom: 3.5rem;
+        /* Increased spacing */
+    }
+
+    .form-gap {
+        display: flex;
+        flex-direction: column;
+        gap: 2.5rem;
+        /* Massive gap between inputs as requested */
+    }
+
+    /* Interactive Inputs */
+    .input-group-premium {
         position: relative;
+        transition: all 0.3s ease;
     }
 
-    .holographic-border::after {
-        content: '';
+    .form-control-premium {
+        background: var(--input-bg);
+        border: 2px solid transparent;
+        border-radius: 16px;
+        padding: 1.25rem 1.5rem;
+        font-size: 1.1rem;
+        font-weight: 500;
+        color: #1e293b;
+        width: 100%;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    }
+
+    .form-control-premium:focus {
+        outline: none;
+        border-color: #6366f1;
+        box-shadow: var(--input-focus-shadow);
+        background: #ffffff;
+        transform: scale(1.01);
+    }
+
+    .form-label-premium {
         position: absolute;
-        inset: -2px;
-        z-index: -1;
-        background: linear-gradient(90deg, #4f46e5, #7c3aed, #6366f1, #4f46e5);
-        background-size: 300% 100%;
-        border-radius: 42px;
-        opacity: 0.2;
-        animation: holographic-move 8s linear infinite;
+        left: 1.5rem;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #64748b;
+        font-weight: 500;
+        pointer-events: none;
+        transition: all 0.3s ease;
+        background: transparent;
+        padding: 0 0.5rem;
     }
 
-    /* Photo Edit */
-    .avatar-edit-container {
+    .form-control-premium:focus~.form-label-premium,
+    .form-control-premium:not(:placeholder-shown)~.form-label-premium {
+        top: 0;
+        transform: translateY(-50%) scale(0.9);
+        background: #fff;
+        color: #4f46e5;
+        border-radius: 4px;
+        font-weight: 600;
+        margin-left: -0.5rem;
+    }
+
+    /* Profile Photo Interaction */
+    .profile-photo-wrapper {
         position: relative;
-        width: 160px;
-        height: 160px;
+        width: 180px;
+        height: 180px;
         margin: 0 auto;
+        border-radius: 50%;
+        padding: 6px;
+        background: linear-gradient(135deg, #6366f1, #ec4899);
+        animation: spin-glow 4s linear infinite;
     }
 
-    .avatar-img {
+    @keyframes spin-glow {
+        0% {
+            filter: hue-rotate(0deg);
+        }
+
+        100% {
+            filter: hue-rotate(360deg);
+        }
+    }
+
+    .profile-photo-inner {
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        overflow: hidden;
+        border: 4px solid #fff;
+        position: relative;
+        background: #fff;
+    }
+
+    .profile-photo-inner img {
         width: 100%;
         height: 100%;
         object-fit: cover;
-        border-radius: 50%;
-        border: 4px solid #fff;
+        transition: transform 0.5s ease;
     }
 
-    .avatar-upload-badge {
+    .profile-photo-wrapper:hover img {
+        transform: scale(1.1);
+    }
+
+    .photo-overlay {
         position: absolute;
-        bottom: 8px;
-        right: 8px;
-        width: 44px;
-        height: 44px;
-        background: #4f46e5;
-        color: white;
-        border-radius: 50%;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.4);
         display: flex;
         align-items: center;
         justify-content: center;
+        opacity: 0;
+        transition: 0.3s;
         cursor: pointer;
-        transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     }
 
-    .avatar-upload-badge:hover {
-        transform: scale(1.1) rotate(10deg);
-        background: #312e81;
-    }
-
-    /* Form Inputs */
-    .premium-form-section .section-title {
-        font-size: 1.15rem;
-        font-weight: 800;
-        color: #1e1b4b;
-        display: flex;
-        align-items: center;
-        gap: 12px;
-    }
-
-    .title-icon {
-        width: 38px;
-        height: 38px;
-        border-radius: 12px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-
-    .icon-royal {
-        background: rgba(79, 70, 229, 0.1);
-        color: #4f46e5;
-    }
-
-    .form-floating-premium {
-        position: relative;
-    }
-
-    .form-floating-premium .form-control {
-        height: 62px;
-        padding: 1.6rem 1rem 0.4rem;
-        border: 1px solid #e2e8f0;
-        border-radius: 18px;
-        font-weight: 600;
-        color: #1e1b4b;
-        background: #fff;
-        transition: 0.3s;
-    }
-
-    .form-floating-premium .form-control:focus {
-        border-color: #4f46e5;
-        box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.1);
-        outline: none;
-    }
-
-    .form-floating-premium label {
-        position: absolute;
-        top: 0;
-        left: 0;
-        padding: 1rem;
-        font-size: 0.85rem;
-        font-weight: 700;
-        color: #6366f1;
-        pointer-events: none;
-        transition: 0.3s;
-        opacity: 0.6;
-    }
-
-    .form-floating-premium .form-control:focus~label,
-    .form-floating-premium .form-control:not(:placeholder-shown)~label {
-        transform: translateY(-8px) scale(0.8);
-        color: #4f46e5;
+    .profile-photo-wrapper:hover .photo-overlay {
         opacity: 1;
     }
 
     /* Buttons */
-    .btn-royal-gradient {
+    .btn-action {
+        padding: 1rem 2rem;
+        border-radius: 16px;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+        transition: all 0.3s;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .btn-action::after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 300%;
+        height: 300%;
+        background: rgba(255, 255, 255, 0.2);
+        transform: translate(-50%, -50%) rotate(35deg) scale(0);
+        transition: transform 0.6s;
+        border-radius: 50%;
+    }
+
+    .btn-action:hover::after {
+        transform: translate(-50%, -50%) rotate(35deg) scale(1);
+    }
+
+    .btn-primary-glass {
+        background: var(--primary-gradient);
+        color: white;
+        border: none;
+        box-shadow: 0 10px 20px -10px rgba(79, 70, 229, 0.5);
+    }
+
+    .btn-primary-glass:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 15px 30px -10px rgba(79, 70, 229, 0.6);
+        color: white;
+    }
+
+    /* Security Card Premium */
+    .glass-card-danger {
+        background: rgba(254, 242, 242, 0.6);
+        border: 1px solid rgba(252, 165, 165, 0.3);
+        border-left: 4px solid #ef4444 !important;
+        border-radius: 20px;
+        backdrop-filter: blur(10px);
+        transition: transform 0.3s ease;
+    }
+
+    .glass-card-danger:hover {
+        transform: translateY(-3px);
+        background: rgba(254, 242, 242, 0.8);
+    }
+
+    .icon-box-lg {
+        width: 56px;
+        height: 56px;
+        border-radius: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+        flex-shrink: 0;
+    }
+
+    .bg-danger-soft {
+        background: rgba(239, 68, 68, 0.1);
+        border: 1px solid rgba(239, 68, 68, 0.2);
+    }
+
+    /* Premium Save Button with Shimmer */
+    .btn-premium-main {
+        position: relative;
         background: linear-gradient(135deg, #4f46e5 0%, #312e81 100%);
         color: white;
-        padding: 16px 32px;
-        border-radius: 18px;
-        font-weight: 700;
         border: none;
-        transition: 0.3s;
-        box-shadow: 0 10px 20px rgba(79, 70, 229, 0.2);
+        padding: 1.25rem;
+        border-radius: 18px;
+        font-size: 1.1rem;
+        overflow: hidden;
+        transition: all 0.3s ease;
     }
 
-    .btn-royal-gradient:hover {
+    .btn-premium-main:hover {
         transform: translateY(-3px);
-        box-shadow: 0 15px 30px rgba(79, 70, 229, 0.3);
+        box-shadow: 0 15px 35px -5px rgba(79, 70, 229, 0.4);
         color: white;
     }
 
-    .btn-glass-outline {
-        padding: 14px 28px;
-        border-radius: 18px;
-        border: 1px solid #e2e8f0;
-        font-weight: 700;
-        transition: 0.3s;
-        color: #475569;
+    .btn-shimmer {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(to right, transparent 0%, rgba(255, 255, 255, 0.4) 50%, transparent 100%);
+        transform: skewX(-20deg) translateX(-150%);
+        transition: transform 0.5s;
     }
 
-    .btn-glass-info {
-        background: rgba(14, 165, 233, 0.1);
-        color: #0ea5e9;
-        padding: 14px 28px;
-        border-radius: 18px;
-        border: 1px solid rgba(14, 165, 233, 0.2);
-        font-weight: 700;
-        transition: 0.3s;
+    .btn-premium-main:hover .btn-shimmer {
+        transform: skewX(-20deg) translateX(150%);
+        transition: transform 0.7s ease-in-out;
     }
 
-    /* Reveal */
-    .reveal-text {
+    /* Glass Buttons */
+    .btn-glass-secondary {
+        background: rgba(255, 255, 255, 0.6);
+        border: 1px solid rgba(203, 213, 225, 0.6);
+        backdrop-filter: blur(10px);
+        border-radius: 16px;
+        transition: all 0.3s;
+    }
+
+    .btn-glass-secondary:hover {
+        background: white;
+        border-color: #94a3b8;
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    }
+
+    .btn-glass-primary {
+        background: rgba(79, 70, 229, 0.05);
+        border: 1px solid rgba(79, 70, 229, 0.2);
+        backdrop-filter: blur(10px);
+        border-radius: 16px;
+        transition: all 0.3s;
+    }
+
+    .btn-glass-primary:hover {
+        background: rgba(79, 70, 229, 0.1);
+        border-color: #4f46e5;
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(79, 70, 229, 0.15);
+        color: #312e81 !important;
+    }
+
+    /* Animations */
+    .fade-in-up {
+        animation: fadeInUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
         opacity: 0;
         transform: translateY(20px);
-        transition: 1s;
     }
 
-    .reveal-fade {
-        opacity: 0;
-        transform: scale(0.98);
-        transition: 1s;
+    .delay-1 {
+        animation-delay: 0.1s;
     }
 
-    .revealed {
-        opacity: 1 !important;
-        transform: translate(0, 0) scale(1) !important;
+    .delay-2 {
+        animation-delay: 0.2s;
+    }
+
+    .delay-3 {
+        animation-delay: 0.3s;
+    }
+
+    @keyframes fadeInUp {
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
     }
 </style>
 
 <script>
-    document.addEventListener('DOMContentLoaded', () => {
-        const observer = new IntersectionObserver(entries => {
-            entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('revealed'); });
-        }, { threshold: 0.1 });
-        document.querySelectorAll('.reveal-text, .reveal-fade').forEach(el => observer.observe(el));
-
-        // Typing Effect
-        const title = document.querySelector('.text-holographic');
-        if (title) {
-            const txt = title.innerHTML; title.innerHTML = ''; let i = 0;
-            const type = () => { if (i < txt.length) { title.innerHTML += txt.charAt(i++); setTimeout(type, 100); } };
-            setTimeout(type, 800);
-        }
-    });
-
+    // Live Image Preview
     function previewPhoto(input) {
         if (input.files && input.files[0]) {
             const reader = new FileReader();
-            reader.onload = e => { document.getElementById('photoPreview').src = e.target.result; };
+            reader.onload = function (e) {
+                const img = document.getElementById('photoPreview');
+                img.style.opacity = '0';
+                setTimeout(() => {
+                    img.src = e.target.result;
+                    img.style.opacity = '1';
+                }, 200);
+            }
             reader.readAsDataURL(input.files[0]);
         }
     }
+
+    // Input Focus Decoration
+    document.querySelectorAll('.form-control-premium').forEach(input => {
+        input.addEventListener('focus', () => {
+            input.parentElement.classList.add('focused');
+        });
+        input.addEventListener('blur', () => {
+            if (!input.value) input.parentElement.classList.remove('focused');
+        });
+    });
 </script>
 {% endblock %}
