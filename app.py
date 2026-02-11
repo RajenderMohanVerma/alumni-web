@@ -30,7 +30,7 @@ app.config['MAIL_USE_TLS'] = os.getenv('MAIL_USE_TLS', 'True') == 'True'
 app.config['MAIL_USERNAME'] = os.getenv('MAIL_USERNAME')
 app.config['MAIL_PASSWORD'] = os.getenv('MAIL_PASSWORD')
 # Set sender name as "Alumni Hub" with email
-app.config['MAIL_DEFAULT_SENDER'] = ('Alumni Hub', os.getenv('MAIL_USERNAME', 'alumnihub26@gmail.com'))
+app.config['MAIL_DEFAULT_SENDER'] = ('DBIT ALUMNI HUB', os.getenv('MAIL_USERNAME', 'alumnihub26@gmail.com'))
 
 # Initialize SocketIO for real-time messaging
 socketio = SocketIO(app, cors_allowed_origins="*", ping_timeout=60, ping_interval=25, async_mode='threading')
@@ -93,7 +93,7 @@ def send_email(to_email, subject, html_content):
         # Create message
         msg = MIMEMultipart('alternative')
         msg['Subject'] = subject
-        msg['From'] = f'Alumni Hub <{sender_email}>'
+        msg['From'] = f'DBIT ALUMNI HUB <{sender_email}>'
         msg['To'] = to_email
         
         # Attach HTML
@@ -501,7 +501,7 @@ def contact():
     </div>
     <div style="background: white; padding: 20px; border-radius: 12px; margin-bottom: 15px; box-shadow: 0 3px 10px rgba(0,0,0,0.08);">
         <p style="color: #333; line-height: 1.8; margin: 0 0 15px 0;">Dear <strong>{name}</strong>,</p>
-        <p style="color: #333; line-height: 1.8; margin: 0;">Thank you for reaching out to us through the Alumni Hub contact form! We have successfully received your message and appreciate you taking the time to get in touch with us.</p>
+        <p style="color: #333; line-height: 1.8; margin: 0;">Thank you for reaching out to us through the Dbit Alumni Hub contact form! We have successfully received your message and appreciate you taking the time to get in touch with us.</p>
     </div>
     <div style="background: linear-gradient(135deg, rgba(16, 185, 129, 0.08) 0%, rgba(10, 150, 105, 0.08) 100%); padding: 20px; border-radius: 12px; margin-bottom: 15px; border-left: 4px solid #10b981; box-shadow: 0 3px 10px rgba(0,0,0,0.08);">
         <h3 style="color: #1e3a8a; margin: 0 0 15px 0; font-size: 1.1rem;">📋 Your Submission Details</h3>
@@ -708,7 +708,7 @@ def register():
                 <body style="font-family: Arial, sans-serif; padding: 20px; background-color: #f4f4f4;">
                     <div style="background-color: white; padding: 30px; border-radius: 10px; max-width: 600px; margin: 0 auto; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
                         <div style="text-align: center; margin-bottom: 30px;">
-                            <h2 style="color: #1e3a8a; margin: 0; font-size: 28px;">Alumni Hub</h2>
+                            <h2 style="color: #1e3a8a; margin: 0; font-size: 28px;">DBIT ALUMNI HUB</h2>
                             <p style="color: #666; font-size: 14px; margin: 5px 0 0 0;">Email Verification</p>
                         </div>
                         
@@ -726,16 +726,16 @@ def register():
                         
                         <div style="background-color: #fff3cd; border-left: 4px solid #ffc107; padding: 15px; border-radius: 5px; margin: 20px 0;">
                             <p style="color: #856404; font-size: 13px; margin: 0;">
-                                <strong>Security Note:</strong> Never share this OTP with anyone. Alumni Hub staff will never ask for your OTP.
+                                <strong>Security Note:</strong> Never share this OTP with anyone. DBIT ALUMNI HUB staff will never ask for your OTP.
                             </p>
                         </div>
                         
                         <p style="color: #666; font-size: 14px; line-height: 1.6;">
-                            If you did not create an Alumni Hub account, please ignore this email.
+                            If you did not create a DBIT ALUMNI HUB account, please ignore this email.
                         </p>
                         
                         <div style="border-top: 1px solid #eee; margin-top: 30px; padding-top: 20px; text-align: center; color: #999; font-size: 12px;">
-                            <p style="margin: 0;">© 2024 Alumni Hub. All rights reserved.</p>
+                            <p style="margin: 0;">© 2024 DBIT ALUMNI HUB. All rights reserved.</p>
                         </div>
                     </div>
                 </body>
@@ -743,7 +743,7 @@ def register():
             '''
             
             # Send email using new function
-            email_sent, email_message = send_email(email, 'Verify Your Email - Alumni Hub', html_content)
+            email_sent, email_message = send_email(email, 'Verify Your Email - DBIT ALUMNI HUB', html_content)
             
             if email_sent:
                 flash(f'✓ Verification code sent to {email}. Please check your email and enter the OTP.', 'success')
@@ -3440,7 +3440,8 @@ def admin_stats():
     return render_template('admin/admin_stats.html')
 
 if __name__ == '__main__':
-    init_db()
+    with app.app_context():
+        init_db()
 
     # Import and register messaging blueprint
     from routes.messaging_routes import messaging_bp

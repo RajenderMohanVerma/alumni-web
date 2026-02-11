@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% block title %}Login - Alumni Hub{% endblock %}
+{% block title %}Login - DBIT Alumni Hub{% endblock %}
 
 {% block content %}
 <!-- Premium Fonts -->
@@ -22,82 +22,63 @@
     <!-- Login Container -->
     <div class="container position-relative z-2">
         <div class="row justify-content-center">
-            <div class="col-xl-9 col-lg-10">
+            <div class="col-xl-10 col-lg-11">
 
                 <!-- Glassmorphic Login Card -->
-                <div class="card-modern glass-panel reveal-fade"
-                    style="border-radius: 24px; overflow: hidden; min-height: 600px;">
+                <div class="card-modern glass-panel reveal-fade shadow-2xl"
+                    style="border-radius: 30px; overflow: hidden; min-height: 650px; border: 1px solid rgba(255,255,255,0.4);">
 
                     <div class="row g-0 h-100">
 
-                        <!-- LEFT SIDE: Branding -->
+                        <!-- LEFT SIDE: Branding (Visual) -->
                         <div
-                            class="col-lg-6 d-none d-lg-flex flex-column justify-content-center align-items-center text-center p-5 position-relative overflow-hidden">
-                            <!-- Animated Gradient Overlay -->
-                            <div class="position-absolute top-0 start-0 w-100 h-100"
-                                style="background: linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(168, 85, 247, 0.1) 100%); z-index: 0;">
-                            </div>
-
-                            <!-- Decorative Circle -->
-                            <div class="position-absolute"
-                                style="width: 300px; height: 300px; background: radial-gradient(circle, rgba(99,102,241,0.2) 0%, transparent 70%); top: -50px; left: -50px; filter: blur(40px);">
-                            </div>
+                            class="col-lg-6 d-none d-lg-flex flex-column justify-content-center align-items-center text-center p-5 position-relative overflow-hidden bg-gradient-premium">
+                            <!-- Animated Background Elements -->
+                            <div class="absolute-bg-animation"></div>
 
                             <div class="position-relative z-1 reveal-fade" style="transition-delay: 0.2s;">
-                                <div class="mb-4">
+                                <div class="mb-5">
                                     <div class="icon-circle bg-white text-primary rounded-circle d-flex align-items-center justify-content-center mx-auto shadow-lg"
-                                        style="width: 100px; height: 100px; font-size: 2.5rem;">
+                                        style="width: 120px; height: 120px; font-size: 3rem; animation: float 6s ease-in-out infinite;">
                                         <i class="fas fa-university"></i>
                                     </div>
                                 </div>
-                                <h1 class="fw-bold display-5 mb-2 text-dark">Alumni <span
-                                        class="text-primary">Hub</span></h1>
-                                <p class="lead text-muted mb-4">Connecting Generations, Inspiring Futures.</p>
+                                <h1 class="fw-bold display-5 mb-3 text-white">DBIT Alumni <span
+                                        class="text-warning">Hub</span></h1>
+                                <p class="lead text-white-50 mb-5 px-4">Bridge the gap between campus and career.
+                                    Connect, mentor, and grow.</p>
 
-                                <div class="mt-4">
-                                    <div class="d-flex justify-content-center gap-3">
-                                        <div class="badge bg-primary-subtle text-primary p-2 rounded-pill px-3">
-                                            <i class="fas fa-user-graduate me-2"></i> Students
-                                        </div>
-                                        <div class="badge bg-success-subtle text-success p-2 rounded-pill px-3">
-                                            <i class="fas fa-users me-2"></i> Alumni
-                                        </div>
-                                        <div class="badge bg-warning-subtle text-warning p-2 rounded-pill px-3">
-                                            <i class="fas fa-chalkboard-user me-2"></i> Faculty
-                                        </div>
+                                <div class="d-flex justify-content-center gap-3">
+                                    <div class="glass-pill text-white px-4 py-2 rounded-pill">
+                                        <i class="fas fa-user-graduate me-2"></i> Students
+                                    </div>
+                                    <div class="glass-pill text-white px-4 py-2 rounded-pill">
+                                        <i class="fas fa-users me-2"></i> Alumni
                                     </div>
                                 </div>
                             </div>
                         </div>
 
                         <!-- RIGHT SIDE: Login Form -->
-                        <div
-                            class="col-lg-6 p-4 p-md-5 bg-white bg-opacity-10 d-flex flex-column justify-content-center">
+                        <div class="col-lg-6 p-5 bg-white d-flex flex-column justify-content-center position-relative">
 
-                            <!-- Mobile Branding (Visible only on XS/SM/MD) -->
-                            <div class="text-center d-lg-none mb-4">
-                                <h3 class="fw-bold text-dark">Alumni <span class="text-primary">Hub</span></h3>
+                            <!-- Mobile Branding -->
+                            <div class="text-center d-lg-none mb-5">
+                                <h3 class="fw-bold text-dark">DBIT Alumni <span class="text-primary">Hub</span></h3>
                             </div>
 
-                            <!-- Header -->
-                            <div class="text-center mb-4">
-                                <h2 class="fw-bold mb-2 reveal-text">
-                                    Welcome <span class="text-holographic">Back</span>
-                                </h2>
-                                <p class="text-muted text-sm reveal-fade" style="transition-delay: 0.2s;">
-                                    Sign in to access your professional network
-                                </p>
+                            <div class="login-header mb-5">
+                                <h2 class="fw-bold mb-2 text-dark font-heading">Welcome Back!</h2>
+                                <p class="text-muted">Please enter your details to sign in.</p>
                             </div>
 
                             <!-- Flash Messages -->
                             {% with messages = get_flashed_messages(with_categories=true) %}
                             {% if messages %}
                             {% for category, message in messages %}
-                            <div class="alert alert-modern alert-{{ category }} alert-dismissible fade show reveal-fade"
-                                role="alert">
-                                <i
-                                    class="fas fa-{{ 'check-circle' if category == 'success' else 'exclamation-circle' }}"></i>
-                                <span>{{ message }}</span>
+                            <div class="alert alert-{{ category }} alert-dismissible fade show shadow-sm border-0 mb-4"
+                                role="alert" style="border-radius: 12px;">
+                                <i class="fas fa-info-circle me-2"></i> {{ message }}
                                 <button type="button" class="btn-close" data-bs-dismiss="alert"
                                     aria-label="Close"></button>
                             </div>
@@ -105,68 +86,57 @@
                             {% endif %}
                             {% endwith %}
 
-                            <!-- Login Form -->
                             <form method="POST" action="/login" class="needs-validation">
-
                                 <!-- Email Input -->
-                                <div class="form-floating-premium mb-4 reveal-fade" style="transition-delay: 0.3s;">
-                                    <input type="email" class="form-control form-control-modern ps-5" id="email"
-                                        name="email" placeholder="" required>
-                                    <label for="email" class="ps-5">Email Address</label>
-                                    <i
-                                        class="fas fa-envelope position-absolute top-50 start-0 translate-middle-y ms-3 text-muted"></i>
-                                    <div class="liquid-focus-border"></div>
+                                <div class="form-group mb-4 position-relative">
+                                    <label for="email"
+                                        class="form-label fw-bold small text-uppercase text-muted tracking-wide">Email
+                                        Address</label>
+                                    <div class="input-group input-group-lg">
+                                        <span class="input-group-text bg-light border-0 text-primary ps-3"><i
+                                                class="fas fa-envelope"></i></span>
+                                        <input type="email" class="form-control bg-light border-0 ps-3" id="email"
+                                            name="email" placeholder="name@example.com" required
+                                            style="border-radius: 0 12px 12px 0;">
+                                    </div>
                                 </div>
 
                                 <!-- Password Input -->
-                                <div class="form-floating-premium mb-4 reveal-fade" style="transition-delay: 0.4s;">
-                                    <input type="password" class="form-control form-control-modern ps-5" id="password"
-                                        name="password" placeholder="" required>
-                                    <label for="password" class="ps-5">Password</label>
-                                    <i
-                                        class="fas fa-lock position-absolute top-50 start-0 translate-middle-y ms-3 text-muted"></i>
-                                    <div class="liquid-focus-border"></div>
+                                <div class="form-group mb-4 position-relative">
+                                    <div class="d-flex justify-content-between align-items-center mb-1">
+                                        <label for="password"
+                                            class="form-label fw-bold small text-uppercase text-muted tracking-wide">Password</label>
+                                        <a href="{{ url_for('forgot_password') }}"
+                                            class="text-primary small text-decoration-none fw-semibold">Forgot
+                                            Password?</a>
+                                    </div>
+                                    <div class="input-group input-group-lg">
+                                        <span class="input-group-text bg-light border-0 text-primary ps-3"><i
+                                                class="fas fa-lock"></i></span>
+                                        <input type="password" class="form-control bg-light border-0 ps-3" id="password"
+                                            name="password" placeholder="••••••••" required
+                                            style="border-radius: 0 12px 12px 0;">
+                                    </div>
                                 </div>
 
-                                <!-- Actions -->
-                                <div class="d-flex justify-content-between align-items-center mb-4 reveal-fade"
-                                    style="transition-delay: 0.5s;">
+                                <div class="d-flex align-items-center mb-4">
                                     <div class="form-check">
                                         <input class="form-check-input" type="checkbox" id="rememberMe">
-                                        <label class="form-check-label text-sm text-muted" for="rememberMe">Remember
-                                            me</label>
+                                        <label class="form-check-label text-muted small" for="rememberMe">Keep me logged
+                                            in</label>
                                     </div>
-                                    <a href="{{ url_for('forgot_password') }}"
-                                        class="text-primary text-decoration-none text-sm fw-semibold hover-liquid">Forgot
-                                        Password?</a>
                                 </div>
 
-                                <!-- Submit Button -->
                                 <button type="submit"
-                                    class="btn btn-premium-gradient w-100 py-3 magnetic-button reveal-fade"
-                                    style="transition-delay: 0.6s; font-size: 1.1rem;">
-                                    <span class="position-relative z-2">Sign In</span>
-                                    <div class="btn-glow"></div>
+                                    class="btn btn-primary btn-lg w-100 py-3 fw-bold shadow-lg hover-lift"
+                                    style="border-radius: 12px; background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%); border: none;">
+                                    Sign In <i class="fas fa-arrow-right ms-2"></i>
                                 </button>
-
                             </form>
 
-                            <!-- Footer -->
-                            <div class="text-center mt-4 pt-4 border-top border-light-subtle reveal-fade"
-                                style="transition-delay: 0.7s;">
-                                <p class="text-muted mb-0">
-                                    Don't have an account?
-                                    <a href="/register"
-                                        class="text-primary fw-bold text-decoration-none hover-scale d-inline-block">Create
-                                        one now</a>
-                                </p>
-                            </div>
-
-                            <!-- Back Link -->
-                            <div class="text-center mt-3 reveal-fade" style="transition-delay: 0.8s;">
-                                <a href="/" class="text-muted text-sm text-decoration-none hover-item">
-                                    <i class="fas fa-arrow-left me-1"></i> Back to Home
-                                </a>
+                            <div class="text-center mt-5">
+                                <p class="text-muted mb-0">Don't have an account? <a href="/register"
+                                        class="fw-bold text-primary text-decoration-none">Create Account</a></p>
                             </div>
 
                         </div>
@@ -180,94 +150,42 @@
 
 </div>
 
+<style>
+    .bg-gradient-premium {
+        background: linear-gradient(135deg, #4f46e5 0%, #ec4899 100%);
+    }
+
+    .hover-lift {
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .hover-lift:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 25px -5px rgba(79, 70, 229, 0.4), 0 8px 10px -6px rgba(79, 70, 229, 0.4);
+    }
+
+    .glass-pill {
+        background: rgba(255, 255, 255, 0.2);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .form-control:focus {
+        box-shadow: none;
+        background-color: #fff !important;
+        border: 1px solid #4f46e5 !important;
+    }
+
+    .input-group-text {
+        border-radius: 12px 0 0 12px !important;
+    }
+</style>
+
 <script>
     document.addEventListener('DOMContentLoaded', () => {
-        // Trigger Reveals
         setTimeout(() => {
             document.querySelectorAll('.reveal-fade').forEach(el => el.classList.add('revealed'));
         }, 100);
-
-        // Magnetic Button Logic
-        const magneticBtns = document.querySelectorAll('.magnetic-button');
-        magneticBtns.forEach(btn => {
-            btn.addEventListener('mousemove', (e) => {
-                const { left, top, width, height } = btn.getBoundingClientRect();
-                const x = (e.clientX - left - width / 2) * 0.3;
-                const y = (e.clientY - top - height / 2) * 0.3;
-                const glow = btn.querySelector('.btn-glow');
-
-                btn.style.transform = `translate(${x}px, ${y}px)`;
-                if (glow) {
-                    glow.style.left = `${e.clientX - left}px`;
-                    glow.style.top = `${e.clientY - top}px`;
-                }
-            });
-            btn.addEventListener('mouseleave', () => {
-                btn.style.transform = 'translate(0, 0)';
-            });
-        });
-
-        // 3D Parallax Tilt & Glow for Login Card
-        const loginCard = document.querySelector('.card-modern');
-        if (loginCard) {
-            loginCard.addEventListener('mousemove', (e) => {
-                const rect = loginCard.getBoundingClientRect();
-                const x = e.clientX - rect.left;
-                const y = e.clientY - rect.top;
-
-                const centerX = rect.width / 2;
-                const centerY = rect.height / 2;
-
-                // Subtle tilt
-                const rotateX = (y - centerY) / 40; // Reduced tilt for larger card
-                const rotateY = (centerX - x) / 40;
-
-                loginCard.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.01)`;
-            });
-
-            loginCard.addEventListener('mouseleave', () => {
-                loginCard.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale(1)';
-            });
-        }
-
-        // Typewriter Effect for "Back"
-        const typeWriterElement = document.querySelector('.text-holographic');
-        if (typeWriterElement) {
-            const text = typeWriterElement.textContent;
-            typeWriterElement.textContent = '';
-            typeWriterElement.style.borderRight = '3px solid transparent';
-
-            // Delay start slightly to match reveals
-            setTimeout(() => {
-                let i = 0;
-                typeWriterElement.style.borderRight = '3px solid #6366f1'; // Cursor start
-
-                function type() {
-                    if (i < text.length) {
-                        typeWriterElement.textContent += text.charAt(i);
-                        i++;
-                        setTimeout(type, 150); // Typing speed
-                    } else {
-                        // Blink cursor then remove
-                        setTimeout(() => {
-                            typeWriterElement.style.borderRight = '3px solid transparent';
-                        }, 2000);
-                    }
-                }
-                type();
-            }, 800);
-        }
     });
-
-    // Add CSS for 3D logic dynamically
-    const style = document.createElement('style');
-    style.textContent = `
-        .card-modern {
-            transform-style: preserve-3d;
-            will-change: transform;
-            transition: transform 0.1s ease-out; /* Smooth follow */
-        }
-    `;
-    document.head.appendChild(style);
 </script>
 {% endblock %}

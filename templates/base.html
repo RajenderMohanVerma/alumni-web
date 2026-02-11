@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}Alumni Management System{% endblock %}</title>
+    <title>{% block title %}DBIT Alumni Hub{% endblock %}</title>
 
     <!-- Premium Fonts -->
     <link
@@ -103,7 +103,7 @@
                 <div class="brand-logo-container">
                     <i class="fas fa-graduation-cap"></i>
                 </div>
-                <span class="brand-text">Alumni Hub</span>
+                <strong style="color: #1e3a8a;">DBIT ALUMNI HUB</strong><br>
             </a>
 
             <!-- Open Button -->
@@ -483,36 +483,35 @@
                                 <strong>{{ current_user.name }}</strong>
                             </div>
                             <li><a class="dropdown-item" href="/profile"><i class="fas fa-user"></i> My Profile</a></li>
-                            {% if current_user.role == 'student' %}
-                            <li><a class="dropdown-item" href="/upgrade"><i class="fas fa-crown"></i> Upgrade to Pro</a>
-                            </li>
-                            {% endif %}
-                            {% if current_user.role == 'student' %}
-                            <li><a class="dropdown-item" href="{{ url_for('settings') }}"><i class="fas fa-cog"></i>
-                                    Settings</a></li>
-                            {% elif current_user.role == 'admin' %}
-                            <li><a class="dropdown-item"
-                                    href="{{ url_for('edit_admin_profile', user_id=current_user.id) }}"><i
-                                        class="fas fa-cog"></i> Settings</a></li>
-                            {% elif current_user.role == 'alumni' %}
-                            <li><a class="dropdown-item"
-                                    href="{{ url_for('edit_alumni_profile', user_id=current_user.id) }}"><i
-                                        class="fas fa-cog"></i> Settings</a></li>
-                            {% elif current_user.role == 'faculty' %}
-                            <li><a class="dropdown-item"
-                                    href="{{ url_for('edit_faculty_profile', user_id=current_user.id) }}"><i
-                                        class="fas fa-cog"></i> Settings</a></li>
-                            {% endif %}
-                            <li><a class="dropdown-item" href="/change_password"><i class="fas fa-lock"></i> Change
-                                    Password</a></li>
-                            <li>
-                                <hr class="dropdown-divider">
-                            </li>
-                            <li><a class="dropdown-item text-danger" href="/logout"><i class="fas fa-sign-out-alt"></i>
-                                    Logout</a></li>
-                        </ul>
+                    </li>
+                    {% if current_user.role == 'student' %}
+                    <li><a class="dropdown-item" href="/upgrade"><i class="fas fa-crown"></i> Upgrade to Pro</a>
                     </li>
                     {% endif %}
+                    {% if current_user.role == 'student' %}
+                    <li><a class="dropdown-item" href="{{ url_for('settings') }}"><i class="fas fa-cog"></i>
+                            Settings</a></li>
+                    {% elif current_user.role == 'admin' %}
+                    <li><a class="dropdown-item" href="{{ url_for('edit_admin_profile', user_id=current_user.id) }}"><i
+                                class="fas fa-cog"></i> Settings</a></li>
+                    {% elif current_user.role == 'alumni' %}
+                    <li><a class="dropdown-item" href="{{ url_for('edit_alumni_profile', user_id=current_user.id) }}"><i
+                                class="fas fa-cog"></i> Settings</a></li>
+                    {% elif current_user.role == 'faculty' %}
+                    <li><a class="dropdown-item"
+                            href="{{ url_for('edit_faculty_profile', user_id=current_user.id) }}"><i
+                                class="fas fa-cog"></i> Settings</a></li>
+                    {% endif %}
+                    <li><a class="dropdown-item" href="/change_password"><i class="fas fa-lock"></i> Change
+                            Password</a></li>
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
+                    <li><a class="dropdown-item text-danger" href="/logout"><i class="fas fa-sign-out-alt"></i>
+                            Logout</a></li>
+                </ul>
+                </li>
+                {% endif %}
                 </ul>
             </div>
         </div>
@@ -660,7 +659,6 @@
                 <div class="blob blob-1"></div>
                 <div class="blob blob-2"></div>
             </div>
-        </div>
     </nav>
 
     <!-- ===== ALERTS ===== -->
@@ -708,11 +706,11 @@
         <div class="footer-content">
             <div class="container">
                 <div class="row g-4">
-                    <!-- Alumni Hub Info -->
+                    <!-- DBIT Alumni Hub Info -->
                     <div class="col-md-6 col-lg-4" data-aos="fade-up">
                         <div class="footer-section px-lg-4">
                             <h5 class="footer-title">
-                                <i class="fas fa-graduation-cap"></i> Alumni Hub
+                                <i class="fas fa-graduation-cap"></i> DBIT Alumni Hub
                             </h5>
                             <p class="footer-text">
                                 We are the definitive bridge between university excellence and industry leadership.
@@ -794,12 +792,12 @@
                 <div class="row align-items-center">
                     <div class="col-md-6">
                         <p class="footer-bottom-text">
-                            &copy; 2024 DBIT Alumni Management System. All rights reserved.
+                            &copy; 2026 DBIT Alumni Hub. All rights reserved.
                         </p>
                     </div>
                     <div class="col-md-6 text-md-end">
                         <p class="footer-bottom-text">
-                            Designed & Developed with <i class="fas fa-heart text-danger"></i> by Alumni Hub Team
+                            Designed & Developed with <i class="fas fa-heart text-danger"></i> by DBIT Alumni Hub Team
                         </p>
                     </div>
                 </div>

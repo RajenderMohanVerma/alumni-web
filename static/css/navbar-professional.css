@@ -85,16 +85,16 @@
 }
 
 .brand-logo-container {
-    width: 45px;
-    height: 45px;
-    background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
-    border-radius: 14px;
+    width: 48px;
+    height: 48px;
+    background: linear-gradient(135deg, #4f46e5 0%, #8b5cf6 100%);
+    border-radius: 12px;
     display: flex;
     align-items: center;
     justify-content: center;
     color: white;
-    font-size: 1.4rem;
-    box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4);
+    font-size: 1.5rem;
+    box-shadow: 0 4px 15px rgba(79, 70, 229, 0.4);
     transition: all 0.3s ease;
 }
 
@@ -103,15 +103,41 @@
     box-shadow: 0 6px 20px rgba(99, 102, 241, 0.6);
 }
 
-.brand-text {
-    font-family: 'Plus Jakarta Sans', 'Outfit', sans-serif;
+.brand-text-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    line-height: 1;
+    margin-left: 12px;
+}
+
+.brand-prefix {
+    font-family: 'Outfit', sans-serif;
     font-weight: 800;
-    font-size: 1.5rem;
-    background: linear-gradient(135deg, #1e293b 0%, #6366f1 100%);
+    font-size: 1.4rem;
+    color: #1e293b;
+    letter-spacing: 1px;
+}
+
+.brand-suffix {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-weight: 600;
+    font-size: 0.85rem;
+    background: linear-gradient(90deg, #6366f1, #ec4899);
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
-    letter-spacing: -0.5px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.navbar-brand:hover .brand-prefix {
+    color: #4f46e5;
+    transition: color 0.3s ease;
+}
+
+.nav-dark-mode .brand-prefix {
+    color: white;
 }
 
 /* ===== NAVIGATION LINKS ===== */
@@ -294,7 +320,7 @@
     height: 2.5px;
     width: 100%;
     border-radius: 10px;
-    background: white;
+    background: #1e293b;
     transition: all 0.4s cubic-bezier(0.68, -0.6, 0.32, 1.6);
 }
 
@@ -826,6 +852,7 @@
 .smart-scroll-nav.scrolled-up {
     transform: translateY(0);
 }
+
 /* ===== SCROLL TO TOP BUTTON ===== */
 .scroll-to-top-btn {
     position: fixed;
@@ -877,9 +904,12 @@
 }
 
 @keyframes pulse-glow {
-    0%, 100% {
+
+    0%,
+    100% {
         box-shadow: 0 4px 20px rgba(99, 102, 241, 0.4);
     }
+
     50% {
         box-shadow: 0 4px 30px rgba(168, 85, 247, 0.6);
     }
