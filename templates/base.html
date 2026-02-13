@@ -995,6 +995,23 @@
                 });
             });
         }
+
+        // 6. AUTO-DISMISS ALERTS (5 SECONDS)
+        document.addEventListener("DOMContentLoaded", function() {
+            const alerts = document.querySelectorAll('.alert-modern');
+            alerts.forEach(function(alert) {
+                setTimeout(function() {
+                    const closeButton = alert.querySelector('.btn-close');
+                    if (closeButton) {
+                        closeButton.click();
+                    } else {
+                        // Fallback if close button not found
+                        alert.classList.remove('show');
+                        setTimeout(() => alert.remove(), 150);
+                    }
+                }, 5000); // 5 seconds
+            });
+        });
     </script>
 
     <!-- Advanced Animations Library -->

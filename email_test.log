@@ -1,9 +1,9 @@
 Mail Server: smtp.gmail.com
 Mail Port: 587
 Mail Username: alumnihub26@gmail.com
-Error: (535, b'5.7.8 Username and Password not accepted. For more information, go to\n5.7.8  https://support.google.com/mail/?p=BadCredentials 41be03b00d2f7-c6dcb3cb742sm10851856a12.0 - gsmtp')
+Error: (535, b'5.7.8 Username and Password not accepted. For more information, go to\n5.7.8  https://support.google.com/mail/?p=BadCredentials d9443c01a7336-2ab29999ce2sm85471615ad.92 - gsmtp')
 Traceback (most recent call last):
-  File "D:\RajenderMohan_BCA\RajenderMohan_Projects\6_Semester\Major Project\Alumni App\alumni-web\test_email.py", line 33, in <module>
+  File "D:\RajenderMohan_BCA\RajenderMohan_Projects\6_Semester\Major Project\Alumni App\dbit-alumni-hub\test_email.py", line 33, in <module>
     mail.send(msg)
     ~~~~~~~~~^^^^^
   File "C:\Users\vkver\AppData\Local\Programs\Python\Python313\Lib\site-packages\flask_mail.py", line 491, in send
@@ -26,4 +26,4 @@ Traceback (most recent call last):
         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
   File "C:\Users\vkver\AppData\Local\Programs\Python\Python313\Lib\smtplib.py", line 662, in auth
     raise SMTPAuthenticationError(code, resp)
-smtplib.SMTPAuthenticationError: (535, b'5.7.8 Username and Password not accepted. For more information, go to\n5.7.8  https://support.google.com/mail/?p=BadCredentials 41be03b00d2f7-c6dcb3cb742sm10851856a12.0 - gsmtp')
+smtplib.SMTPAuthenticationError: (535, b'5.7.8 Username and Password not accepted. For more information, go to\n5.7.8  https://support.google.com/mail/?p=BadCredentials d9443c01a7336-2ab29999ce2sm85471615ad.92 - gsmtp')

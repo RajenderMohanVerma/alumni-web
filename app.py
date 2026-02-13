@@ -18,6 +18,7 @@ from db_utils import get_db_connection
 from datetime import datetime, timedelta
 from dotenv import load_dotenv
 
+
 # Load environment variables
 load_dotenv()
 
@@ -27,8 +28,9 @@ app.config.from_object(config[env])
 app.config['MAIL_SERVER'] = os.getenv('MAIL_SERVER', 'smtp.gmail.com')
 app.config['MAIL_PORT'] = int(os.getenv('MAIL_PORT', 587))
 app.config['MAIL_USE_TLS'] = os.getenv('MAIL_USE_TLS', 'True') == 'True'
-app.config['MAIL_USERNAME'] = os.getenv('MAIL_USERNAME')
-app.config['MAIL_PASSWORD'] = os.getenv('MAIL_PASSWORD')
+app.config['MAIL_USE_SSL'] = False
+app.config['MAIL_USERNAME'] = os.getenv('MAIL_USERNAME', 'alumnihub26@gmail.com')
+app.config['MAIL_PASSWORD'] = os.getenv('MAIL_PASSWORD', 'jxrp rghf qcow xfne')
 # Set sender name as "Alumni Hub" with email
 app.config['MAIL_DEFAULT_SENDER'] = ('DBIT ALUMNI HUB', os.getenv('MAIL_USERNAME', 'alumnihub26@gmail.com'))
 
@@ -102,7 +104,7 @@ def send_email(to_email, subject, html_content):
         # Create message
         msg = MIMEMultipart('alternative')
         msg['Subject'] = subject
-        msg['From'] = f'DBIT ALUMNI HUB <{sender_email}>'
+        msg['From'] = f'DBIT ALUMNI HUB <{app.config["MAIL_USERNAME"]}>'
         msg['To'] = to_email
         
         # Attach HTML
@@ -540,7 +542,7 @@ def contact():
     </div>
     <div style="background: linear-gradient(135deg, #1e3a8a 0%, #0ea5e9 100%); padding: 20px; border-radius: 12px; margin-bottom: 15px; color: white; text-align: center;">
         <p style="margin: 0; font-size: 0.95rem; font-weight: 600;">Contact Information</p>
-        <p style="margin: 10px 0 0 0; font-size: 0.9rem; opacity: 0.95;">📧 support@alumnihub.com | 📞 +91-9876-543-210</p>
+        <p style="margin: 10px 0 0 0; font-size: 0.9rem; opacity: 0.95;">📧 alumnihubdbit195@outlook.com | 📞 +91-9876-543-210</p>
     </div>
     <div style="background: #f0f4ff; padding: 15px; border-radius: 8px; text-align: center;">
         <p style="color: #333; margin: 0; line-height: 1.6; font-size: 0.95rem;">
@@ -712,7 +714,7 @@ def register():
             conn.commit()
 
             # Insert temporary user
-            otp_expires = datetime.utcnow() + timedelta(minutes=10)
+            otp_expires = datetime.utcnow() + timedelta(minutes=2)
             import json
             conn.execute(
                 '''INSERT INTO temp_users (name, email, password, phone, role, otp, profile_data, otp_expires_at)
@@ -740,7 +742,7 @@ def register():
                         <div style="background-color: #f0f9ff; padding: 20px; border-radius: 5px; text-align: center; margin: 30px 0; border-left: 4px solid #0ea5e9;">
                             <p style="margin: 0; color: #666; font-size: 14px;">Your OTP Code:</p>
                             <h1 style="color: #0ea5e9; letter-spacing: 5px; margin: 10px 0; font-size: 32px; font-family: 'Courier New', monospace;">{otp}</h1>
-                            <p style="margin: 0; color: #999; font-size: 12px;">This code is valid for 10 minutes.</p>
+                            <p style="margin: 0; color: #999; font-size: 12px;">This code is valid for 2 minutes.</p>
                         </div>
                         
                         <div style="background-color: #fff3cd; border-left: 4px solid #ffc107; padding: 15px; border-radius: 5px; margin: 20px 0;">
@@ -829,24 +831,37 @@ def verify_otp():
                 try:
                     c = conn.cursor()
                     
-                    # Insert user into main users table
-                    c.execute('''INSERT INTO users (name, email, password, phone, role, is_verified, is_approved, otp_code)
-                                 VALUES (?, ?, ?, ?, ?, 1, ?, NULL)''',
-                             (temp_user['name'], temp_user['email'], temp_user['password'], 
-                              temp_user['phone'], temp_user['role'], is_approved))
+                    # Double check if user already exists (to prevent race conditions)
+                    existing_user = conn.execute('SELECT id FROM users WHERE email = ?', (temp_user['email'],)).fetchone()
+                    
+                    if existing_user:
+                        user_id = existing_user['id']
+                        # User exists, maybe from a previous interrupted registration. 
+                        # Just update password and verified status if needed.
+                        c.execute('''UPDATE users SET password = ?, is_verified = 1, is_approved = ? 
+                                     WHERE id = ?''', 
+                                  (temp_user['password'], is_approved, user_id))
+                    else:
+                        # Insert user into main users table
+                        c.execute('''INSERT INTO users (name, email, password, phone, role, is_verified, is_approved, otp_code)
+                                     VALUES (?, ?, ?, ?, ?, 1, ?, NULL)''',
+                                 (temp_user['name'], temp_user['email'], temp_user['password'], 
+                                  temp_user['phone'], temp_user['role'], is_approved))
+                        user_id = c.lastrowid
+                    
                     conn.commit()
-                    user_id = c.lastrowid
                     
                     # Insert role-specific profile data
                     if temp_user['role'] == 'student':
-                        c.execute('''INSERT INTO student_profile
+                        # Use INSERT OR REPLACE to handle cases where profile might already exist
+                        c.execute('''INSERT OR REPLACE INTO student_profile 
                                     (user_id, enrollment_no, department, degree, semester)
                                     VALUES (?, ?, ?, ?, ?)''',
                                 (user_id, profile_data.get('enrollment_no'), profile_data.get('department'),
                                  profile_data.get('degree'), profile_data.get('semester')))
                         
                     elif temp_user['role'] == 'alumni':
-                        c.execute('''INSERT INTO alumni_profile
+                        c.execute('''INSERT OR REPLACE INTO alumni_profile
                                     (user_id, enrollment_no, department, degree, pass_year, company_name, designation)
                                     VALUES (?, ?, ?, ?, ?, ?, ?)''',
                                 (user_id, profile_data.get('enrollment_no'), profile_data.get('department'),
@@ -854,7 +869,7 @@ def verify_otp():
                                  profile_data.get('company_name'), profile_data.get('designation')))
                         
                     elif temp_user['role'] == 'faculty':
-                        c.execute('''INSERT INTO faculty_profile
+                        c.execute('''INSERT OR REPLACE INTO faculty_profile
                                     (user_id, employee_id, department, designation, qualification)
                                     VALUES (?, ?, ?, ?, ?)''',
                                 (user_id, profile_data.get('employee_id'), profile_data.get('department'),
@@ -917,7 +932,7 @@ def resend_otp():
         if temp_user:
             # Generate new OTP for temporary registration
             new_otp = ''.join(secrets.choice(string.digits) for _ in range(6))
-            otp_expires = datetime.utcnow() + timedelta(minutes=10)
+            otp_expires = datetime.utcnow() + timedelta(minutes=2)
             
             conn.execute('UPDATE temp_users SET otp = ?, otp_expires_at = ? WHERE email = ?',
                         (new_otp, otp_expires, email))
@@ -931,7 +946,7 @@ def resend_otp():
                         <p style="font-size: 16px; color: #333;">Here is your new One-Time Password (OTP):</p>
                         <div style="background-color: #f0f9ff; padding: 20px; border-radius: 5px; text-align: center; margin: 20px 0; border-left: 4px solid #0ea5e9;">
                             <h1 style="color: #0ea5e9; letter-spacing: 5px; margin: 0; font-family: 'Courier New', monospace; font-size: 32px;">{new_otp}</h1>
-                            <p style="margin: 10px 0 0 0; color: #999; font-size: 12px;">Valid for 10 minutes.</p>
+                            <p style="margin: 10px 0 0 0; color: #999; font-size: 12px;">Valid for 2 minutes.</p>
                         </div>
                     </div>
                 </body>
