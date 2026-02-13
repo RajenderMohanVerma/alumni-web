@@ -823,8 +823,9 @@
                                     <i class="fas fa-crosshairs"></i>
                                 </a>
                                 <button class="action-btn delete-btn btn-delete-user"
-                                    onclick="confirmDelete('{{ user.id }}', '{{ user.name }}')" title="Purge Node">
-                                    <i class="fas fa-skull-crossbones"></i>
+                                    onclick="confirmDelete('{{ user.id }}', '{{ user.name }}', this)"
+                                    title="Delete User">
+                                    <i class="fas fa-trash-alt"></i>
                                 </button>
                                 {% endif %}
                             </div>
@@ -1030,46 +1031,10 @@
     </div>
 </div>
 
-<!-- Custom Confirmation Modal -->
-<div class="modal fade" id="confirmDeleteModal" tabindex="-1">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content border-0 shadow-2xl" style="border-radius: 28px; background: white;">
-            <div class="modal-body p-5 text-center">
-                <div class="mb-4">
-                    <div class="d-inline-flex p-4 bg-red-50 text-red-500 rounded-full mb-3" style="font-size: 3rem;">
-                        <i class="fas fa-radiation"></i>
-                    </div>
-                </div>
-                <h3 class="fw-800 mb-2 text-slate-900" style="font-size: 1.8rem; letter-spacing: -0.5px;">
-                    PROTOCOL_OVERRIDE?</h3>
-                <p class="text-dim mb-4 fw-bold">PURGE CONFIRMATION REQUIRED FOR: <br><span id="deleteUserName"
-                        class="text-red-500 fw-800"></span></p>
 
-                <div class="alert alert-warning border-0 rounded-2xl p-4 text-start mb-4"
-                    style="background: rgba(245, 158, 11, 0.05);">
-                    <div class="d-flex gap-3">
-                        <i class="fas fa-info-circle mt-1 text-warning"></i>
-                        <p class="small mb-0 text-amber-900"><strong>DANGER:</strong> This action permanently purges the
-                            identity node from the core registry. Data extraction will be impossible after execution.
-                        </p>
-                    </div>
-                </div>
-
-                <div class="d-grid gap-3">
-                    <button class="btn btn-danger btn-lg py-3 fw-800" style="border-radius: 16px; font-size: 0.9rem;"
-                        id="finalDeleteBtn">EXECUTE_PURGE</button>
-                    <button class="btn btn-light btn-lg py-3 fw-800"
-                        style="border-radius: 16px; font-size: 0.9rem; background: #f1f5f9; border: none;"
-                        data-bs-dismiss="modal">ABORT_OPERATION</button>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 
 <script>
-    // --- Global Matrix State ---
-    let userIdToDelete = null;
+
 
     // --- Premium Interactive Controllers ---
     document.addEventListener('DOMContentLoaded', function () {
@@ -1272,43 +1237,33 @@
         roleFilter.addEventListener('change', filterNodes);
     });
 
-    // 6. Secure Deletion Protocol (Custom Modal)
-    const deleteModal = new bootstrap.Modal(document.getElementById('confirmDeleteModal'));
-    const finalDeleteBtn = document.getElementById('finalDeleteBtn');
-    const deleteUserNameSpan = document.getElementById('deleteUserName');
+    function confirmDelete(id, name, btn) {
+        if (confirm(`Are you sure you want to delete user: ${name}? This action cannot be undone.`)) {
+            const originalHtml = btn.innerHTML;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+            btn.disabled = true;
 
-    function confirmDelete(id, name) {
-        userIdToDelete = id;
-        deleteUserNameSpan.textContent = name;
-        deleteModal.show();
+            fetch(`/api/delete-user/${id}`, { method: 'POST' })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.success) {
+                        btn.innerHTML = '<i class="fas fa-check"></i>';
+                        btn.style.background = '#10b981';
+                        btn.style.color = 'white';
+                        setTimeout(() => location.reload(), 1000);
+                    } else {
+                        alert('❌ Delete failed: ' + data.error);
+                        btn.innerHTML = originalHtml;
+                        btn.disabled = false;
+                    }
+                })
+                .catch(err => {
+                    alert('❌ Connection Error: Delete Failed');
+                    btn.innerHTML = originalHtml;
+                    btn.disabled = false;
+                });
+        }
     }
-
-    finalDeleteBtn.addEventListener('click', function () {
-        if (!userIdToDelete) return;
-
-        const originalBtnText = finalDeleteBtn.innerHTML;
-        finalDeleteBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i> PURGING...';
-        finalDeleteBtn.disabled = true;
-
-        fetch(`/api/delete-user/${userIdToDelete}`, { method: 'POST' })
-            .then(res => res.json())
-            .then(data => {
-                if (data.success) {
-                    finalDeleteBtn.innerHTML = '<i class="fas fa-check me-2"></i> PURGED';
-                    finalDeleteBtn.classList.replace('btn-danger', 'btn-success');
-                    setTimeout(() => location.reload(), 1000);
-                } else {
-                    alert('❌ Purge failed: ' + data.error);
-                    finalDeleteBtn.innerHTML = originalBtnText;
-                    finalDeleteBtn.disabled = false;
-                }
-            })
-            .catch(err => {
-                alert('❌ Connection Error: Protocol Failed');
-                finalDeleteBtn.innerHTML = originalBtnText;
-                finalDeleteBtn.disabled = false;
-            });
-    });
 
     // 7. Matrix Data Export
     function downloadData(category, type) {

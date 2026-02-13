@@ -2017,6 +2017,84 @@
     .btn-close-white:focus {
         box-shadow: 0 0 0 0.25rem rgba(255, 255, 255, 0.25);
     }
+
+    /* ===== RESPONSIVE MEDIA QUERIES ===== */
+    @media (max-width: 991px) {
+        .hero-section {
+            padding: 80px 0 !important;
+        }
+
+        .hero-section h1 {
+            font-size: 2.8rem !important;
+        }
+
+        .stats-container {
+            margin: 20px 0;
+            padding: 20px 0;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .hero-section {
+            text-align: center;
+            padding: 60px 0 !important;
+        }
+
+        .hero-section h1 {
+            font-size: 2.2rem !important;
+        }
+
+        .hero-section .lead {
+            font-size: 1.1rem !important;
+            margin: 0 auto 1.5rem !important;
+        }
+
+        .profile-completeness-wrapper {
+            min-width: 100% !important;
+            margin-top: 1.5rem;
+        }
+
+        .category-tabs .nav-pills {
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .category-btn {
+            width: 100%;
+            padding: 10px 15px;
+        }
+
+        .filter-section {
+            padding: 2rem !important;
+        }
+    }
+
+    @media (max-width: 576px) {
+        .hero-section h1 {
+            font-size: 1.8rem !important;
+        }
+
+        .stat-card {
+            flex-direction: column;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .stat-icon {
+            margin-right: 0;
+            margin-bottom: 15px;
+        }
+
+        .avatar-img {
+            width: 140px;
+            height: 140px;
+        }
+
+        .hero-visual-container {
+            min-height: 300px;
+            padding: 20px;
+        }
+    }
 </style>
 
 <script>

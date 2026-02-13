@@ -100,7 +100,7 @@ def send_connection_request():
                     subject=subject,
                     recipients=[receiver['email']],
                     html=html_body,
-                    sender=("Alumni Hub", current_app.config['MAIL_DEFAULT_SENDER'])
+                    sender=("DBIT ALUMNI HUB", current_app.config['MAIL_DEFAULT_SENDER'])
                 )
                 try:
                     mail.send(msg)
@@ -179,7 +179,7 @@ def accept_connection_request(request_id):
                 subject=subject,
                 recipients=[sender['email']],
                 html=html_body,
-                sender=("Alumni Hub", current_app.config['MAIL_DEFAULT_SENDER'])
+                sender=("DBIT ALUMNI HUB", current_app.config['MAIL_DEFAULT_SENDER'])
             )
             try:
                 mail.send(msg)
@@ -233,7 +233,7 @@ def reject_connection_request(request_id):
             You can try connecting with other professionals on the platform.
             
             Best regards,
-            Alumni Hub Team
+            DBIT ALUMNI HUB
             """
             
             msg = Message(subject=subject, recipients=[sender['email']], body=body)

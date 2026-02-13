@@ -12,15 +12,19 @@ A comprehensive, professional Flask-based Alumni Management System with modern d
 - **1-to-1 Private Chat**: Secure messaging with typing indicators and read receipts.
 - **WhatsApp Integration**: Direct "💬 WhatsApp" buttons on profiles for seamless external connection.
 
-### 🛡️ Enhanced Security & Authentication
-- **Gmail SMTP Integration**: Reliable email delivery for OTPs and notifications using Gmail App Passwords.
-- **Professional OTP Redesign**: Premium glassmorphic verification page (`verify_otp.html`) with a 120s countdown progress bar.
-- **Smart Registration**: Robust checks for existing emails with graceful error handling.
+### 📧 Reliable Communication System
+- **Gmail SMTP Integration**: High-reliability email delivery for OTPs and notifications using Gmail App Passwords (`smtp.gmail.com`).
+- **Professional OTP Redesign**: Premium glassmorphic verification page with a 2-minute (120s) countdown bar and automatic backspace/focus handling.
+- **Smart Registration**: Added conflict resolution for existing email records to prevent `UNIQUE constraint` errors.
 
 ### 🎨 UI/UX Excellence
-- **Optimized Counters**: High-performance numerical counters on dashboards with persistent guards to prevent re-animation on scroll.
-- **Toast Notifications**: Modern auto-dismissing (5s) notifications in `base.html`.
-- **Premium Glassmorphism**: Multi-layered blurs, 3D interactive tilt effects (Tilt.js), and liquid wave transitions.
+- **Global Responsiveness**: Fully optimized for Laptop, Tablet, and Mobile.
+  - Form split layouts stack vertically on small screens.
+  - Dashboard grids adapt from multi-column to single-column automatically.
+  - Hero sections and font sizes scale gracefully for readability on all devices.
+- **High-Performance Counters**: Stabilized numerical counters with persistent `dataset` guards to prevent re-triggering during scroll-up.
+- **Toast Notifications**: Interactive notification system in `base.html` with a 5-second auto-dismiss timeout.
+- **Premium Aesthetics**: Liquid wave transitions, 3D interactive tilt effects (Tilt.js), and animated mesh backgrounds.
 - **Ambient Visuals**: Floating glow orbs, aurora hero effects, and staggered entrance animations.
 
 ---

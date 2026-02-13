@@ -287,13 +287,25 @@
         }
 
         /* Responsive */
-        @media (max-width: 768px) {
-            .hero {
-                min-height: 500px;
+        @media (max-width: 991px) {
+            .hero-premium h1 {
+                font-size: 3rem;
+                white-space: normal;
             }
 
-            .hero h1 {
-                font-size: 2.5rem;
+            .hero-content p {
+                font-size: 1.2rem !important;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero-premium {
+                padding: 120px 0 60px;
+                min-height: auto;
+            }
+
+            .hero-premium h1 {
+                font-size: 2.2rem;
             }
 
             .guide-container {
@@ -310,11 +322,31 @@
             }
 
             .section-header h2 {
-                font-size: 2rem;
+                font-size: 1.8rem;
             }
 
             .cta-content h2 {
-                font-size: 2rem;
+                font-size: 1.8rem;
+            }
+
+            .d-flex.justify-content-center.gap-3 {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .btn-premium {
+                width: 100%;
+                max-width: 300px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-premium h1 {
+                font-size: 1.8rem;
             }
         }
     </style>
