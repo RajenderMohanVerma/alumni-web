@@ -447,7 +447,8 @@
     width: 100%;
     height: 100%;
     pointer-events: none;
-    z-index: 99999; /* Above everything except maybe very specific modals */
+    z-index: 99999;
+    /* Above everything except maybe very specific modals */
 }
 
 /* Reduced Motion Support */
