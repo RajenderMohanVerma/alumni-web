@@ -1,6 +1,6 @@
 
 
-from flask import Flask, render_template, request, redirect, url_for, flash, jsonify, session
+from flask import Flask, render_template, request, redirect, url_for, flash, jsonify, session, send_from_directory
 from flask_socketio import SocketIO
 import random
 import secrets
@@ -2725,6 +2725,18 @@ def search_network():
     finally:
         if conn:
             conn.close()
+
+# --- SEO ROUTES ---
+
+@app.route('/robots.txt')
+def robots_txt():
+    """Serve robots.txt from static folder"""
+    return send_from_directory(app.static_folder, 'robots.txt')
+
+@app.route('/sitemap.xml')
+def sitemap_xml():
+    """Serve sitemap.xml from static folder"""
+    return send_from_directory(app.static_folder, 'sitemap.xml')
 
 # --- NOTIFICATIONS & UPDATES ---
 

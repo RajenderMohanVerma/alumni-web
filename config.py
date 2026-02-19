@@ -7,7 +7,7 @@ class Config:
     """Base configuration"""
     SECRET_KEY = os.getenv('SECRET_KEY', 'dev-key-change-in-production')
     DEBUG = False
-    DB_NAME = os.getenv('DB_NAME', 'college_pro.db')
+    DB_NAME = os.getenv('DB_NAME', 'data/college_pro.db')
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     SESSION_COOKIE_SECURE = True
     SESSION_COOKIE_HTTPONLY = True
@@ -21,7 +21,7 @@ class DevelopmentConfig(Config):
     """Development configuration"""
     DEBUG = True
     SECRET_KEY = os.getenv('SECRET_KEY', 'dev-key-change-in-production')
-    SQLALCHEMY_DATABASE_URI = 'sqlite:///alumni.db'
+    SQLALCHEMY_DATABASE_URI = 'sqlite:///data/alumni.db'
     SESSION_COOKIE_SECURE = False
 
 class ProductionConfig(Config):

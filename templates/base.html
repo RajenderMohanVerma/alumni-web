@@ -4,6 +4,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- SEO Meta Tags -->
+    <meta name="description"
+        content="Official DBIT Alumni Hub - Connect, network, and grow with the Don Bosco Institute of Technology alumni community. Post jobs, find mentors, and stay updated with college events.">
+    <meta name="keywords"
+        content="DBIT Alumni, Don Bosco Institute of Technology, Alumni Network, Mentorship, Job Portal, College Networking, Mumbai Engineering Alumni">
+    <meta name="author" content="DBIT Alumni Association">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="{{ request.url }}">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{ request.url }}">
+    <meta property="og:title" content="DBIT Alumni Hub - Connect & Grow">
+    <meta property="og:description"
+        content="The official platform for DBIT alumni to connect with students and grow professionally.">
+    <meta property="og:image" content="{{ url_for('static', filename='img/og-image.jpg', _external=True) }}">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="{{ request.url }}">
+    <meta property="twitter:title" content="DBIT Alumni Hub - Connect & Grow">
+    <meta property="twitter:description"
+        content="The official platform for DBIT alumni to connect with students and grow professionally.">
+    <meta property="twitter:image" content="{{ url_for('static', filename='img/og-image.jpg', _external=True) }}">
+
     <title>{% block title %}DBIT Alumni Hub{% endblock %}</title>
 
     <!-- Premium Fonts -->

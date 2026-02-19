@@ -7,7 +7,7 @@ import sqlite3
 from datetime import datetime
 import os
 
-DB_NAME = 'college_pro.db'
+DB_NAME = os.path.join('data', 'college_pro.db')
 
 
 def init_messaging_db():

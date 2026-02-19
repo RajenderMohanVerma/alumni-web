@@ -2,13 +2,20 @@ import sqlite3
 import os
 from werkzeug.security import generate_password_hash
 
+# Database path
+DB_PATH = os.path.join('data', 'college_pro.db')
+
+# Ensure data directory exists
+if not os.path.exists('data'):
+    os.makedirs('data')
+
 # Delete old database if exists
-if os.path.exists('college_pro.db'):
-    os.remove('college_pro.db')
-    print("Old database deleted")
+if os.path.exists(DB_PATH):
+    os.remove(DB_PATH)
+    print(f"Old database deleted at {DB_PATH}")
 
 # Create new database
-conn = sqlite3.connect('college_pro.db')
+conn = sqlite3.connect(DB_PATH)
 c = conn.cursor()
 
 print("Creating database tables...")
