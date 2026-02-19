@@ -17,7 +17,7 @@ from extensions import mail
 from db_utils import get_db_connection
 from datetime import datetime, timedelta
 from dotenv import load_dotenv
-from models.recommendation import get_recommended_users
+from models.recommendation import get_recommended_users, get_recommended_jobs
 
 
 # Load environment variables
@@ -170,7 +170,7 @@ login_manager.login_view = 'login'
 class User(UserMixin):
     def __init__(self, id, name, email, role, profile_pic, phone=None, is_verified=1, is_suspended=0, 
                  branch=None, passing_year=None, current_domain=None, skills=None, 
-                 interests=None, city=None, company=None):
+                 interests=None, city=None, company=None, bio=None):
         self.id = id
         self.name = name
         self.email = email
@@ -186,6 +186,7 @@ class User(UserMixin):
         self.interests = interests
         self.city = city
         self.company = company
+        self.bio = bio
 
     @property
     def is_active(self):
@@ -213,7 +214,8 @@ def load_user(user_id):
             user['id'], user['name'], user['email'], user['role'], avatar, user['phone'], is_verified,
             get_field('is_suspended') or 0,
             get_field('branch'), get_field('passing_year'), get_field('current_domain'),
-            get_field('skills'), get_field('interests'), get_field('city'), get_field('company')
+            get_field('skills'), get_field('interests'), get_field('city'), get_field('company'),
+            get_field('bio')
         )
 
 # --- DATABASE SETUP ---
@@ -245,6 +247,7 @@ def init_db():
                 interests TEXT,
                 city TEXT,
                 company TEXT,
+                bio TEXT,
                 created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
             )
         ''')
@@ -261,7 +264,8 @@ def init_db():
             ("skills", "TEXT", None),
             ("interests", "TEXT", None),
             ("city", "TEXT", None),
-            ("company", "TEXT", None)
+            ("company", "TEXT", None),
+            ("bio", "TEXT", None)
         ]
 
         for col_name, col_def, update_sql in columns_to_add:
@@ -3669,13 +3673,51 @@ def settings():
 
 # --- ALUMNI ROUTES ---
 
-@app.route('/post-job')
+@app.route('/post-job', methods=['GET', 'POST'])
 @login_required
 def post_job():
     if current_user.role != 'alumni':
+        flash('Only Alumni can post jobs!', 'danger')
+        return redirect(url_for('home'))
+        
+    if request.method == 'POST':
+        title = request.form.get('title')
+        company = request.form.get('company')
+        description = request.form.get('description')
+        skills = request.form.get('skills')
+        
+        if not title or not company:
+            flash('Title and Company are required!', 'warning')
+            return redirect(url_for('post_job'))
+            
+        conn = get_db_connection()
+        c = conn.cursor()
+        c.execute('INSERT INTO jobs (title, company, description, required_skills, posted_by) VALUES (?, ?, ?, ?, ?)',
+                  (title, company, description, skills, current_user.id))
+        conn.commit()
+        conn.close()
+        
+        flash('Job posted successfully! It will now be recommended to relevant students.', 'success')
+        return redirect(url_for('alumni_dashboard'))
+        
+    return render_template('post_job.html')
+
+@app.route('/jobs')
+@login_required
+def list_jobs():
+    if current_user.role != 'student':
         flash('Access denied!', 'danger')
         return redirect(url_for('home'))
-    return render_template('post_job.html')
+        
+    conn = get_db_connection()
+    c = conn.cursor()
+    all_jobs = c.execute('SELECT j.*, u.name as posted_by_name FROM jobs j JOIN users u ON j.posted_by = u.id ORDER BY j.created_at DESC').fetchall()
+    conn.close()
+    
+    # Use modular recommendation logic
+    recommended = get_recommended_jobs(current_user)
+    
+    return render_template('student/jobs.html', jobs=all_jobs, recommended=recommended)
 
 @app.route('/spotlight')
 @login_required
@@ -3775,14 +3817,18 @@ if __name__ == '__main__':
     app.register_blueprint(messaging_bp, url_prefix='/api')
     setup_websocket_handlers(socketio)
 
-    # Register Connection Routes
+    # Register Connection and Discovery Routes
     try:
         from routes.connection_routes import connection_bp
-        app.register_blueprint(connection_bp)
-        
-        # Register Recommendation Routes
         from routes.recommendation_routes import recommendation_bp
-        app.register_blueprint(recommendation_bp)
+        
+        # Expert safety: Check if blueprint is already in app.blueprints before registering
+        if connection_bp.name not in app.blueprints:
+            app.register_blueprint(connection_bp)
+            
+        if recommendation_bp.name not in app.blueprints:
+            app.register_blueprint(recommendation_bp)
+            
     except Exception as e:
         print(f"Warning: routes blueprint error: {e}")
 

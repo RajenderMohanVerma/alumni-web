@@ -23,6 +23,12 @@ A comprehensive, professional Flask-based Alumni Management System with modern d
 - **Professional OTP Redesign**: Premium glassmorphic verification page with a 2-minute (120s) countdown bar and automatic backspace/focus handling.
 - **Smart Registration**: Added conflict resolution for existing email records to prevent `UNIQUE constraint` errors.
 
+### 💼 Career Board & Job Ecosystem
+- **Alumni Job Postings**: A dedicated interface for Alumni to share industry opportunities and internships.
+- **Student Job Board**: A specialized feed for students to explore and apply for relevant roles.
+- **Smart Job Matching**: Initial skill-based matching between student profiles and job requirements (Full AI upgrade in progress).
+- **Premium Glassmorphic UI**: High-end templates with interactive cards and 3D effects for an elite career-seeking experience.
+
 ### 🎨 UI/UX Excellence
 - **Global Responsiveness**: Fully optimized for Laptop, Tablet, and Mobile.
   - Form split layouts stack vertically on small screens.
@@ -170,4 +176,39 @@ dbit-alumni-hub/
 
 ---
 
-**Status**: ✅ Production Ready | **Version**: 2.5 | **Last Updated**: February 2026
+---
+
+## 🧠 Smart Recommendation System (Architecture & Logic)
+
+The DBIT Alumni Hub features a multi-tiered recommendation engine designed for high professional relevance.
+
+### **1. Rule-Based Scoring Engine**
+The platform uses a deterministic scoring system (+5 to +2 points) based on profile similarity:
+- **Branch Match (+5)**: Students/Alumni from the same department.
+- **Skill Overlap (+5 per skill)**: Direct technical compatibility.
+- **Mutual Connections (+2 per connection)**: Social graph proximity (Collaborative Filtering).
+- **Domain Match (+3)**: Shared professional fields (e.g., AI, Web Dev).
+- **City Match (+2)**: Geographic proximity for offline networking.
+
+### **2. AI Semantic Matching (In-Progress)**
+We use **SentenceTransformer (all-MiniLM-L6-v2)** to calculate cosine similarity between bios and interests. This allows the system to understand that a student interested in "UI Design" is a match for a "Product Designer" mentor, even without direct keyword matches.
+
+### **3. Data Infrastructure**
+The system relies on structured metadata from the `Users` table: `branch`, `skills`, `current_domain`, `interests`, and `city`. Logic is centralized in `models/recommendation.py` for maximum performance.
+
+---
+
+## 💼 Career Board & Job Matching Ecosystem
+
+The platform features a robust Job Board designed to bridge the gap between Alumni professional networks and Student career aspirations.
+
+### **Functional Components**
+1.  **Job Posting Hub (Alumni)**: A secure form capturing title, company, description, and required skill tags.
+2.  **Recommendation Grid (Student)**: A personalized view highlighting jobs matching user skills.
+3.  **Job-to-Student Scoring**: 
+    - **Skill Match**: Set-intersection analysis on `required_skills` vs `user_skills`.
+    - **Semantic Boost**: AI matching between Student bio and Job description.
+
+---
+
+**Status**: ✅ Production Ready | **Version**: 3.0 | **Last Updated**: February 19, 2026

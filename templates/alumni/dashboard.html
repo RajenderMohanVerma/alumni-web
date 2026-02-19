@@ -28,6 +28,18 @@
                             Inspire the next generation. Connect with students and fellow alumni to share your success.
                         </p>
 
+                        <div class="hero-actions mb-4" style="animation: fadeInUp 0.8s ease 0.4s both;">
+                            <a href="{{ url_for('post_job') }}"
+                                class="btn btn-lg rounded-pill px-4 text-white shadow-lg"
+                                style="background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%); border: none;">
+                                <i class="fas fa-plus-circle me-2"></i> Post a Job
+                            </a>
+                            <a href="{{ url_for('connections') }}" class="btn btn-lg rounded-pill px-4 text-white ms-2"
+                                style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); backdrop-filter: blur(10px);">
+                                <i class="fas fa-users me-2"></i> My Network
+                            </a>
+                        </div>
+
                         <!-- Profile Completeness -->
                         <div class="profile-completeness-wrapper glass-card p-3 d-inline-block"
                             style="min-width: 320px;">
@@ -138,9 +150,11 @@
                                 </div>
                                 <div class="d-flex gap-2">
                                     <button class="btn btn-sm btn-primary rounded-pill px-3 fw-bold"
-                                        onclick="handleConnection('{{ req['id'] }}', 'accept')">Accept</button>
+                                        data-sender-id="{{ req['id'] }}"
+                                        onclick="handleConnection(this.dataset.senderId, 'accept')">Accept</button>
                                     <button class="btn btn-sm btn-outline-danger rounded-circle shadow-sm"
-                                        onclick="handleConnection('{{ req['id'] }}', 'reject')"><i
+                                        data-sender-id="{{ req['id'] }}"
+                                        onclick="handleConnection(this.dataset.senderId, 'reject')"><i
                                             class="fas fa-times"></i></button>
                                 </div>
                             </div>
@@ -365,6 +379,7 @@
     .text-gradient-purple {
         background: linear-gradient(45deg, #a78bfa, #c084fc);
         -webkit-background-clip: text;
+        background-clip: text;
         -webkit-text-fill-color: transparent;
     }
 

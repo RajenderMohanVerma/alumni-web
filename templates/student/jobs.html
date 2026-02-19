@@ -1,136 +1,125 @@
 {% extends "base.html" %}
 
-{% block title %}Jobs & Internships - DBIT Alumni Hub{% endblock %}
-
 {% block content %}
-<div class="container py-5" style="margin-top: 80px;">
-    <div class="row mb-5 align-items-center animate__animated animate__fadeInDown">
-        <div class="col-md-8">
-            <h1 class="fw-bold display-5 mb-3"
-                style="background: linear-gradient(90deg, #6366f1, #a855f7, #ec4899); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; animation: gradient-shift 3s ease infinite; background-size: 200% auto;">
-                Career Opportunities</h1>
-            <p class="lead text-muted">Explore exclusive job openings and internships posted by our alumni network.</p>
+<div class="jobs-dashboard-wrapper py-5"
+    style="margin-top: 90px; min-height: 100vh; background: #0f172a; position: relative;">
+    <div class="container">
+        <!-- Header -->
+        <div class="header-section mb-5" data-aos="fade-down">
+            <h1 class="text-white fw-bold">Career <span class="text-primary-gradient">Opportunities</span></h1>
+            <p class="text-slate-400">Discover jobs and internships posted by your DBIT Alumni network.</p>
         </div>
-        <div class="col-md-4 text-md-end">
-            <a href="/post-job" class="btn btn-premium-gradient btn-lg shadow-premium">
-                <i class="fas fa-plus-circle me-2"></i> Post a Job
-            </a>
-        </div>
-    </div>
 
-    <!-- Search/Filter -->
-    <div class="glass-card p-4 mb-5 animate__animated animate__fadeInUp" style="--delay: 0.1s">
-        <div class="row g-3">
-            <div class="col-md-5">
-                <div class="input-group">
-                    <span class="input-group-text bg-transparent border-end-0"><i
-                            class="fas fa-search text-muted"></i></span>
-                    <input type="text" class="form-control border-start-0 ps-0"
-                        placeholder="Search jobs, skills, or companies...">
+        {% if recommended %}
+        <!-- Recommended Section -->
+        <section class="recommended-jobs mb-5">
+            <div class="section-title d-flex align-items-center mb-4">
+                <div class="title-icon me-3 p-2"
+                    style="background: rgba(99, 102, 241, 0.2); border-radius: 12px; border: 1px solid rgba(99, 102, 241, 0.3);">
+                    <i class="fas fa-star text-indigo-400"></i>
                 </div>
+                <h4 class="text-white fw-bold mb-0">Recommended for You</h4>
             </div>
-            <div class="col-md-3">
-                <select class="form-select">
-                    <option selected>Job Type</option>
-                    <option>Full Time</option>
-                    <option>Part Time</option>
-                    <option>Internship</option>
-                    <option>Freelance</option>
-                </select>
-            </div>
-            <div class="col-md-2">
-                <select class="form-select">
-                    <option selected>Location</option>
-                    <option>Remote</option>
-                    <option>On-site</option>
-                    <option>Hybrid</option>
-                </select>
-            </div>
-            <div class="col-md-2">
-                <button class="btn btn-primary w-100">Find Jobs</button>
-            </div>
-        </div>
-    </div>
 
-    <!-- Job Listings -->
-    <div class="row g-4">
-        <!-- Job Card 1 -->
-        <div class="col-12 animate__animated animate__fadeInUp" style="--delay: 0.2s">
-            <div
-                class="glass-card p-4 hover-card transition-transform d-flex flex-column flex-md-row align-items-center gap-4">
-                <div class="job-company-logo bg-light rounded p-3 d-flex align-items-center justify-content-center"
-                    style="width: 80px; height: 80px;">
-                    <i class="fab fa-google fa-2x text-primary"></i>
-                </div>
-                <div class="flex-grow-1 text-center text-md-start">
-                    <h4 class="mb-1 fw-bold">Frontend Developer</h4>
-                    <p class="mb-2 text-muted">Google • Bangalore • <span
-                            class="badge bg-light text-success border border-success">Full Time</span></p>
-                    <div class="d-flex justify-content-center justify-content-md-start gap-2">
-                        <span class="badge bg-secondary-subtle text-secondary-emphasis">React</span>
-                        <span class="badge bg-secondary-subtle text-secondary-emphasis">TypeScript</span>
-                        <span class="badge bg-secondary-subtle text-secondary-emphasis">3+ Years</span>
+            <div class="row g-4">
+                {% for job in recommended %}
+                <div class="col-lg-4 col-md-6" data-aos="zoom-in" data-aos-delay="{{ loop.index * 100 }}">
+                    <div class="job-card-premium p-4"
+                        style="background: rgba(30, 41, 59, 0.4); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 20px; height: 100%; transition: 0.3s; position: relative; overflow: hidden;">
+                        <div class="ai-match-badge"
+                            style="position: absolute; top: 15px; right: 15px; background: rgba(16, 185, 129, 0.15); color: #10b981; padding: 4px 12px; border-radius: 20px; font-size: 0.75rem; border: 1px solid rgba(16, 185, 129, 0.2); font-weight: 700;">
+                            <i class="fas fa-microchip me-1"></i> AI Match
+                        </div>
+                        <h5 class="text-white fw-bold mt-3 mb-1">{{ job.title }}</h5>
+                        <p class="text-indigo-400 small fw-bold mb-3"><i class="fas fa-building me-1"></i> {{
+                            job.company }}</p>
+
+                        <div class="skills-tag-cloud mb-4">
+                            {% if job.required_skills %}
+                            {% for skill in job.required_skills.split(',') %}
+                            <span
+                                class="badge rounded-pill bg-slate-800 text-slate-300 border border-slate-700 me-1 mb-1">{{
+                                skill.strip() }}</span>
+                            {% endfor %}
+                            {% endif %}
+                        </div>
+
+                        <div class="job-meta text-slate-500 small mb-4">
+                            <i class="fas fa-user-tie me-1"></i> Posted by {{ job.posted_by_name }}
+                        </div>
+
+                        <button class="btn btn-outline-primary w-100 py-2 rounded-pill border-2 fw-bold"
+                            style="transition: 0.3s;">
+                            View Details
+                        </button>
                     </div>
                 </div>
-                <div class="text-center text-md-end">
-                    <h5 class="fw-bold text-success mb-1">₹18L - ₹25L</h5>
-                    <p class="text-muted small mb-3">Posted 2 days ago</p>
-                    <button class="btn btn-premium px-4">Apply Now</button>
-                </div>
+                {% endfor %}
             </div>
-        </div>
+        </section>
+        {% endif %}
 
-        <!-- Job Card 2 -->
-        <div class="col-12 animate__animated animate__fadeInUp" style="--delay: 0.3s">
-            <div
-                class="glass-card p-4 hover-card transition-transform d-flex flex-column flex-md-row align-items-center gap-4">
-                <div class="job-company-logo bg-light rounded p-3 d-flex align-items-center justify-content-center"
-                    style="width: 80px; height: 80px;">
-                    <i class="fab fa-amazon fa-2x text-warning"></i>
-                </div>
-                <div class="flex-grow-1 text-center text-md-start">
-                    <h4 class="mb-1 fw-bold">SDE Intern</h4>
-                    <p class="mb-2 text-muted">Amazon • Hyderabad • <span
-                            class="badge bg-light text-info border border-info">Internship</span></p>
-                    <div class="d-flex justify-content-center justify-content-md-start gap-2">
-                        <span class="badge bg-secondary-subtle text-secondary-emphasis">Java</span>
-                        <span class="badge bg-secondary-subtle text-secondary-emphasis">DSA</span>
-                        <span class="badge bg-secondary-subtle text-secondary-emphasis">Freshers</span>
+        <!-- All Jobs Section -->
+        <section class="all-jobs">
+            <div class="section-title mb-4">
+                <h4 class="text-white fw-bold">All Opportunities</h4>
+            </div>
+
+            <div class="row g-3">
+                {% for job in jobs %}
+                <div class="col-12" data-aos="fade-up">
+                    <div class="job-list-item p-3 d-flex align-items-center gap-4"
+                        style="background: rgba(30, 41, 59, 0.2); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 15px; transition: 0.3s;">
+                        <div class="company-logo-stub text-center"
+                            style="width: 50px; height: 50px; background: #1e293b; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-weight: bold; color: #6366f1;">
+                            {{ job.company[0] | upper }}
+                        </div>
+                        <div class="flex-grow-1">
+                            <h6 class="text-white mb-0 fw-bold">{{ job.title }}</h6>
+                            <span class="text-slate-400 small">{{ job.company }}</span>
+                        </div>
+                        <div class="d-none d-md-block text-slate-500 small">
+                            <i class="far fa-clock me-1"></i> {{ job.created_at[:10] }}
+                        </div>
+                        <div class="actions">
+                            <button class="btn btn-slate-700 text-white rounded-pill px-4 btn-sm">Details</button>
+                        </div>
                     </div>
                 </div>
-                <div class="text-center text-md-end">
-                    <h5 class="fw-bold text-success mb-1">₹45k / month</h5>
-                    <p class="text-muted small mb-3">Posted 5 days ago</p>
-                    <button class="btn btn-premium px-4">Apply Now</button>
-                </div>
+                {% endfor %}
             </div>
-        </div>
-
-        <!-- Job Card 3 -->
-        <div class="col-12 animate__animated animate__fadeInUp" style="--delay: 0.4s">
-            <div
-                class="glass-card p-4 hover-card transition-transform d-flex flex-column flex-md-row align-items-center gap-4">
-                <div class="job-company-logo bg-light rounded p-3 d-flex align-items-center justify-content-center"
-                    style="width: 80px; height: 80px;">
-                    <i class="fab fa-microsoft fa-2x text-info"></i>
-                </div>
-                <div class="flex-grow-1 text-center text-md-start">
-                    <h4 class="mb-1 fw-bold">DevOps Engineer</h4>
-                    <p class="mb-2 text-muted">Microsoft • Remote • <span
-                            class="badge bg-light text-success border border-success">Full Time</span></p>
-                    <div class="d-flex justify-content-center justify-content-md-start gap-2">
-                        <span class="badge bg-secondary-subtle text-secondary-emphasis">Azure</span>
-                        <span class="badge bg-secondary-subtle text-secondary-emphasis">Docker</span>
-                        <span class="badge bg-secondary-subtle text-secondary-emphasis">Kubernetes</span>
-                    </div>
-                </div>
-                <div class="text-center text-md-end">
-                    <h5 class="fw-bold text-success mb-1">₹12L - ₹18L</h5>
-                    <p class="text-muted small mb-3">Posted 1 week ago</p>
-                    <button class="btn btn-premium px-4">Apply Now</button>
-                </div>
-            </div>
-        </div>
+        </section>
     </div>
 </div>
+
+<style>
+    .text-primary-gradient {
+        background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    .job-card-premium:hover {
+        transform: translateY(-5px);
+        background: rgba(30, 41, 59, 0.6) !important;
+        border-color: rgba(99, 102, 241, 0.3) !important;
+        box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.5);
+    }
+
+    .job-list-item:hover {
+        background: rgba(30, 41, 59, 0.5) !important;
+        border-color: rgba(255, 255, 255, 0.1) !important;
+        transform: scale(1.01);
+    }
+
+    .btn-slate-700 {
+        background: #334155;
+        border: none;
+    }
+
+    .btn-slate-700:hover {
+        background: #475569;
+    }
+</style>
 {% endblock %}

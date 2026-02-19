@@ -6,7 +6,7 @@ from flask_mail import Message
 from datetime import datetime
 from db_utils import get_db_connection
 
-connection_bp = Blueprint('connection', __name__, url_prefix='/api/connection-request')
+connection_bp = Blueprint('connection_request_api', __name__, url_prefix='/api/connection-request')
 
 @connection_bp.route('/send', methods=['POST'])
 @login_required
