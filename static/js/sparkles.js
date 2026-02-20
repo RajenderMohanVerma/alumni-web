@@ -25,8 +25,8 @@ class SparkleSystem {
             this.mouseY = e.clientY;
             this.isMoving = true;
             
-            // Spawn particles on move
-            if (Math.random() > 0.75) {
+            // Reduced spawn rate significantly on move to save CPU
+            if (this.particles.length < 50 && Math.random() > 0.9) {
                 this.createParticle(this.mouseX, this.mouseY);
             }
         });

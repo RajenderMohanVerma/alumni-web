@@ -26,32 +26,66 @@
                 <div class="col-lg-4 col-md-6" data-aos="zoom-in" data-aos-delay="{{ loop.index * 100 }}">
                     <div class="job-card-premium p-4"
                         style="background: rgba(30, 41, 59, 0.4); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 20px; height: 100%; transition: 0.3s; position: relative; overflow: hidden;">
-                        <div class="ai-match-badge"
-                            style="position: absolute; top: 15px; right: 15px; background: rgba(16, 185, 129, 0.15); color: #10b981; padding: 4px 12px; border-radius: 20px; font-size: 0.75rem; border: 1px solid rgba(16, 185, 129, 0.2); font-weight: 700;">
-                            <i class="fas fa-microchip me-1"></i> AI Match
+
+                        <div class="d-flex align-items-center gap-3 mb-3">
+                            <div class="company-logo-container"
+                                style="width: 50px; height: 50px; background: white; border-radius: 12px; display: flex; align-items: center; justify-content: center; overflow: hidden; border: 1px solid rgba(255,255,255,0.1);">
+                                {% if job.company_logo %}
+                                <img src="{{ job.company_logo }}" alt="{{ job.company }}"
+                                    style="width: 100%; height: 100%; object-fit: contain;">
+                                {% else %}
+                                <span style="font-weight: 800; color: #6366f1;">{{ job.company[0] }}</span>
+                                {% endif %}
+                            </div>
+                            <div>
+                                <h5 class="text-white fw-bold mb-0" style="font-size: 1rem;">{{ job.title }}</h5>
+                                <p class="text-indigo-400 extra-small fw-bold mb-0">{{ job.company }}</p>
+                            </div>
                         </div>
-                        <h5 class="text-white fw-bold mt-3 mb-1">{{ job.title }}</h5>
-                        <p class="text-indigo-400 small fw-bold mb-3"><i class="fas fa-building me-1"></i> {{
-                            job.company }}</p>
+
+                        <div class="job-badges mb-3 d-flex flex-wrap gap-2">
+                            {% if job.category %}
+                            <span
+                                class="badge bg-indigo-500/10 text-indigo-300 border border-indigo-500/20 extra-small">
+                                <i class="fas fa-tag me-1"></i> {{ job.category }}
+                            </span>
+                            {% endif %}
+                            <span
+                                class="badge bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 extra-small">
+                                <i class="fas fa-briefcase me-1"></i> {{ job.job_type }}
+                            </span>
+                        </div>
+
+                        <div class="job-details-mini mb-3">
+                            {% if job.location %}
+                            <div class="text-slate-400 extra-small mb-1"><i class="fas fa-map-marker-alt me-1 w-15"></i>
+                                {{ job.location }}</div>
+                            {% endif %}
+                            {% if job.deadline %}
+                            <div class="text-rose-400 extra-small mb-1"><i class="fas fa-calendar-times me-1 w-15"></i>
+                                Deadine: {{ job.deadline }}</div>
+                            {% endif %}
+                        </div>
 
                         <div class="skills-tag-cloud mb-4">
                             {% if job.required_skills %}
                             {% for skill in job.required_skills.split(',') %}
                             <span
-                                class="badge rounded-pill bg-slate-800 text-slate-300 border border-slate-700 me-1 mb-1">{{
-                                skill.strip() }}</span>
+                                class="badge rounded-pill bg-slate-800/50 text-slate-300 border border-slate-700/50 me-1 mb-1"
+                                style="font-size: 0.65rem;">{{ skill.strip() }}</span>
                             {% endfor %}
                             {% endif %}
                         </div>
 
-                        <div class="job-meta text-slate-500 small mb-4">
-                            <i class="fas fa-user-tie me-1"></i> Posted by {{ job.posted_by_name }}
+                        <div class="d-flex justify-content-between align-items-center mt-auto">
+                            <div class="job-meta text-slate-500 small" style="font-size: 0.7rem;">
+                                Posted {{ job.created_at[:10] }}
+                            </div>
+                            {% if job.apply_link %}
+                            <a href="{{ job.apply_link if '://' in job.apply_link else 'mailto:' + job.apply_link }}"
+                                target="_blank" class="btn btn-primary btn-sm rounded-pill px-3 fw-bold">Apply</a>
+                            {% endif %}
                         </div>
-
-                        <button class="btn btn-outline-primary w-100 py-2 rounded-pill border-2 fw-bold"
-                            style="transition: 0.3s;">
-                            View Details
-                        </button>
                     </div>
                 </div>
                 {% endfor %}
@@ -70,19 +104,45 @@
                 <div class="col-12" data-aos="fade-up">
                     <div class="job-list-item p-3 d-flex align-items-center gap-4"
                         style="background: rgba(30, 41, 59, 0.2); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 15px; transition: 0.3s;">
-                        <div class="company-logo-stub text-center"
-                            style="width: 50px; height: 50px; background: #1e293b; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-weight: bold; color: #6366f1;">
-                            {{ job.company[0] | upper }}
+                        <div class="company-logo-container"
+                            style="width: 50px; height: 50px; background: white; border-radius: 10px; display: flex; align-items: center; justify-content: center; overflow: hidden; flex-shrink: 0;">
+                            {% if job.company_logo %}
+                            <img src="{{ job.company_logo }}" alt="{{ job.company }}"
+                                style="width: 100%; height: 100%; object-fit: contain;">
+                            {% else %}
+                            <span style="font-weight: 800; color: #6366f1;">{{ job.company[0] }}</span>
+                            {% endif %}
                         </div>
                         <div class="flex-grow-1">
-                            <h6 class="text-white mb-0 fw-bold">{{ job.title }}</h6>
-                            <span class="text-slate-400 small">{{ job.company }}</span>
+                            <h6 class="text-white mb-1 fw-bold">{{ job.title }}</h6>
+                            <div class="d-flex align-items-center flex-wrap gap-x-3 gap-y-1">
+                                <span class="text-indigo-400 small fw-bold">{{ job.company }}</span>
+                                {% if job.location %}
+                                <span class="text-slate-500 extra-small"><i class="fas fa-map-marker-alt me-1"></i> {{
+                                    job.location }}</span>
+                                {% endif %}
+                                {% if job.salary %}
+                                <span class="text-emerald-400 extra-small fw-bold"><i
+                                        class="fas fa-money-bill-wave me-1"></i> {{ job.salary }}</span>
+                                {% endif %}
+                                {% if job.category %}
+                                <span class="text-slate-500 extra-small"><i class="fas fa-tag me-1"></i> {{ job.category
+                                    }}</span>
+                                {% endif %}
+                            </div>
                         </div>
-                        <div class="d-none d-md-block text-slate-500 small">
-                            <i class="far fa-clock me-1"></i> {{ job.created_at[:10] }}
+                        <div class="d-none d-md-block text-slate-500 small text-end">
+                            <div class="mb-1"><i class="far fa-clock me-1"></i> {{ job.created_at[:10] }}</div>
+                            {% if job.deadline %}
+                            <div class="text-rose-400 extra-small">Ends: {{ job.deadline }}</div>
+                            {% endif %}
                         </div>
                         <div class="actions">
-                            <button class="btn btn-slate-700 text-white rounded-pill px-4 btn-sm">Details</button>
+                            {% if job.apply_link %}
+                            <a href="{{ job.apply_link if '://' in job.apply_link else 'mailto:' + job.apply_link }}"
+                                target="_blank"
+                                class="btn btn-primary text-white rounded-pill px-4 btn-sm fw-bold">Apply</a>
+                            {% endif %}
                         </div>
                     </div>
                 </div>
@@ -93,6 +153,14 @@
 </div>
 
 <style>
+    .extra-small {
+        font-size: 0.75rem;
+    }
+
+    .text-emerald-400 {
+        color: #34d399;
+    }
+
     .text-primary-gradient {
         background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
         -webkit-background-clip: text;

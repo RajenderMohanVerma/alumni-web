@@ -12,9 +12,9 @@
     }
 
     body {
-        background: #0f172a;
+        background: #f1f5f9;
         font-family: 'Outfit', sans-serif;
-        color: white;
+        color: var(--dark-slate);
     }
 
     .premium-form-container {
@@ -31,7 +31,7 @@
     .form-hero h1 {
         font-weight: 800;
         font-size: 3rem;
-        background: linear-gradient(135deg, white 0%, #94a3b8 100%);
+        background: linear-gradient(135deg, var(--primary-indigo), var(--primary-purple));
         -webkit-background-clip: text;
         background-clip: text;
         -webkit-text-fill-color: transparent;
@@ -39,12 +39,12 @@
     }
 
     .form-card-premium {
-        background: rgba(30, 41, 59, 0.7);
+        background: var(--glass-white);
         backdrop-filter: blur(20px);
-        border: 1px solid rgba(255, 255, 255, 0.05);
+        border: 1px solid var(--border-glass);
         border-radius: 32px;
         padding: 3.5rem;
-        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        box-shadow: 0 25px 50px -12px rgba(99, 102, 241, 0.1);
         position: relative;
         overflow: hidden;
     }
@@ -87,35 +87,34 @@
         font-size: 0.9rem;
         margin-bottom: 0.75rem;
         display: block;
-        color: #94a3b8;
+        color: #475569;
     }
 
     .form-control-premium {
         width: 100%;
         padding: 14px 20px;
         border-radius: 16px;
-        border: 2px solid rgba(255, 255, 255, 0.05);
-        background: rgba(15, 23, 42, 0.5);
+        border: 2px solid #e2e8f0;
+        background: #f8fafc;
         transition: 0.3s;
         font-weight: 500;
-        color: white;
     }
 
     .form-control-premium:focus {
         border-color: var(--primary-indigo);
-        background: rgba(15, 23, 42, 0.8);
+        background: white;
         box-shadow: 0 0 0 5px rgba(99, 102, 241, 0.08);
         outline: none;
     }
 
     .logo-upload-zone {
-        border: 2px dashed #334155;
+        border: 2px dashed #cbd5e1;
         border-radius: 20px;
         padding: 2rem;
         text-align: center;
         cursor: pointer;
         transition: 0.3s;
-        background: rgba(15, 23, 42, 0.5);
+        background: #f8fafc;
         position: relative;
     }
 
@@ -130,7 +129,7 @@
         border-radius: 16px;
         overflow: hidden;
         margin: 0 auto 1rem;
-        border: 1px solid #334155;
+        border: 1px solid #e2e8f0;
         background: white;
         display: flex;
         align-items: center;
@@ -143,7 +142,7 @@
         object-fit: contain;
     }
 
-    .btn-publish {
+    .btn-update {
         background: linear-gradient(135deg, var(--primary-indigo), var(--primary-purple));
         color: white;
         border: none;
@@ -157,7 +156,7 @@
         margin-top: 2rem;
     }
 
-    .btn-publish:hover {
+    .btn-update:hover {
         transform: translateY(-3px);
         box-shadow: 0 15px 30px rgba(99, 102, 241, 0.3);
         color: white;
@@ -167,7 +166,7 @@
         display: inline-flex;
         align-items: center;
         gap: 8px;
-        color: #94a3b8;
+        color: #64748b;
         text-decoration: none;
         font-weight: 600;
         transition: 0.3s;
@@ -180,14 +179,13 @@
 </style>
 
 <div class="premium-form-container">
-    <a href="{{ url_for('alumni_jobs') }}" class="back-btn">
-        <i class="fas fa-arrow-left"></i> Career Matrix Return
+    <a href="{{ url_for('admin_jobs') }}" class="back-btn">
+        <i class="fas fa-arrow-left"></i> Core Sync Return
     </a>
 
     <div class="form-hero">
-        <h1 data-aos="fade-down">Publish Career Node</h1>
-        <p class="text-slate-400 fs-5" data-aos="fade-up">Empower the next generation by sharing a professional
-            opportunity.</p>
+        <h1 data-aos="fade-down">Adjust Career Node</h1>
+        <p class="text-muted fs-5" data-aos="fade-up">Modify the parameters of this professional opportunity.</p>
     </div>
 
     <div class="form-card-premium animate__animated animate__fadeInUp">
@@ -198,26 +196,29 @@
                 <div class="col-md-12">
                     <div class="input-group-premium">
                         <label class="input-label-premium">Position Title</label>
-                        <input type="text" name="title" class="form-control-premium"
-                            placeholder="e.g. Senior Neural Engineer" required>
+                        <input type="text" name="title" class="form-control-premium" value="{{ job.title }}" required>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="input-group-premium">
                         <label class="input-label-premium">Corporate Entity</label>
-                        <input type="text" name="company" class="form-control-premium"
-                            placeholder="e.g. Cyberdyne Systems" required>
+                        <input type="text" name="company" class="form-control-premium" value="{{ job.company }}"
+                            required>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="input-group-premium">
                         <label class="input-label-premium">Job Classification</label>
                         <select name="category" class="form-control-premium">
-                            <option value="Technology">Technology & Engineering</option>
-                            <option value="Design">Design & Creative</option>
-                            <option value="Business">Business & Management</option>
-                            <option value="Marketing">Marketing & Sales</option>
-                            <option value="Other">Other Nodes</option>
+                            <option value="Technology" {% if job.category=='Technology' %}selected{% endif %}>Technology
+                                & Engineering</option>
+                            <option value="Design" {% if job.category=='Design' %}selected{% endif %}>Design & Creative
+                            </option>
+                            <option value="Business" {% if job.category=='Business' %}selected{% endif %}>Business &
+                                Management</option>
+                            <option value="Marketing" {% if job.category=='Marketing' %}selected{% endif %}>Marketing &
+                                Sales</option>
+                            <option value="Other" {% if job.category=='Other' %}selected{% endif %}>Other Nodes</option>
                         </select>
                     </div>
                 </div>
@@ -229,10 +230,14 @@
                 <div class="col-12">
                     <div class="logo-upload-zone" id="uploadZone">
                         <div class="logo-preview-box" id="previewBox">
-                            <i class="fas fa-building fa-2x text-slate-800"></i>
+                            {% if job.company_logo %}
+                            <img src="{{ job.company_logo }}" alt="Logo">
+                            {% else %}
+                            <i class="fas fa-building fa-2x text-slate-300"></i>
+                            {% endif %}
                         </div>
-                        <div class="fw-bold">Upload Company Logo</div>
-                        <div class="small text-slate-500">SVG, PNG, or JPG (Max 2MB)</div>
+                        <div class="fw-bold">Update Company Logo</div>
+                        <div class="small text-muted">SVG, PNG, or JPG (Max 2MB)</div>
                         <input type="file" name="company_logo" id="logoInput" hidden accept="image/*">
                     </div>
                 </div>
@@ -244,38 +249,49 @@
                 <div class="col-md-6">
                     <div class="input-group-premium">
                         <label class="input-label-premium">Nexus Location</label>
-                        <input type="text" name="location" class="form-control-premium"
-                            placeholder="e.g. Mumbai / Remote">
+                        <input type="text" name="location" class="form-control-premium" value="{{ job.location }}">
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="input-group-premium">
                         <label class="input-label-premium">Employment Protocol</label>
                         <select name="job_type" class="form-control-premium">
-                            <option value="Full-time">Full-time</option>
-                            <option value="Internship">Internship</option>
-                            <option value="Part-time">Part-time</option>
-                            <option value="Contract">Contract</option>
+                            <option value="Full-time" {% if job.job_type=='Full-time' %}selected{% endif %}>Full-time
+                            </option>
+                            <option value="Internship" {% if job.job_type=='Internship' %}selected{% endif %}>Internship
+                            </option>
+                            <option value="Part-time" {% if job.job_type=='Part-time' %}selected{% endif %}>Part-time
+                            </option>
+                            <option value="Contract" {% if job.job_type=='Contract' %}selected{% endif %}>Contract
+                            </option>
                         </select>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="input-group-premium">
                         <label class="input-label-premium">Compensation Bracket</label>
-                        <input type="text" name="salary" class="form-control-premium" placeholder="e.g. 12-15 LPA">
+                        <input type="text" name="salary" class="form-control-premium" value="{{ job.salary }}">
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="input-group-premium">
                         <label class="input-label-premium">Sync Deadline</label>
-                        <input type="date" name="deadline" class="form-control-premium">
+                        <input type="date" name="deadline" class="form-control-premium" value="{{ job.deadline }}">
                     </div>
                 </div>
                 <div class="col-12">
                     <div class="input-group-premium">
                         <label class="input-label-premium">Application Vector (URL or Email)</label>
-                        <input type="text" name="apply_link" class="form-control-premium"
-                            placeholder="https://careers.company.com/apply">
+                        <input type="text" name="apply_link" class="form-control-premium" value="{{ job.apply_link }}">
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="input-group-premium">
+                        <label class="input-label-premium">Operational Status</label>
+                        <select name="is_active" class="form-control-premium">
+                            <option value="1" {% if job.is_active==1 %}selected{% endif %}>Active / Online</option>
+                            <option value="0" {% if job.is_active==0 %}selected{% endif %}>Inactive / Offline</option>
+                        </select>
                     </div>
                 </div>
             </div>
@@ -286,21 +302,20 @@
                 <div class="col-12">
                     <div class="input-group-premium">
                         <label class="input-label-premium">Required Skill Matrix (Comma Separated)</label>
-                        <input type="text" name="skills" class="form-control-premium"
-                            placeholder="Python, TensorFlow, GraphQL">
+                        <input type="text" name="skills" class="form-control-premium" value="{{ job.required_skills }}">
                     </div>
                 </div>
                 <div class="col-12">
                     <div class="input-group-premium">
                         <label class="input-label-premium">Role Manifesto (Description)</label>
-                        <textarea name="description" class="form-control-premium" rows="6"
-                            placeholder="Define the impact of this role..."></textarea>
+                        <textarea name="description" class="form-control-premium"
+                            rows="6">{{ job.description }}</textarea>
                     </div>
                 </div>
             </div>
 
-            <button type="submit" class="btn btn-publish">
-                <i class="fas fa-rocket me-2"></i> Deploy to Network
+            <button type="submit" class="btn btn-update">
+                <i class="fas fa-save me-2"></i> Update Node Parameters
             </button>
         </form>
     </div>

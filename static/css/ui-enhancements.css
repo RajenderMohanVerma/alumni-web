@@ -96,8 +96,8 @@
 /* ===== GLASSMORPHISM UTILITIES ===== */
 .glass-panel {
     background: rgba(255, 255, 255, 0.7);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
     border: 1px solid rgba(255, 255, 255, 0.5);
     box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.07);
 }
@@ -151,8 +151,8 @@
 
 .navbar-container {
     background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
     border: 1px solid rgba(255, 255, 255, 0.2);
     border-radius: 24px;
     padding: 0.5rem 1.5rem;
@@ -754,8 +754,8 @@
 /* 3. ADVANCED GLASS DROPDOWN */
 .dropdown-menu.shadow-premium {
     background: rgba(255, 255, 255, 0.9);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
     border: 1px solid rgba(255, 255, 255, 0.6);
     border-radius: 16px;
     padding: 10px;

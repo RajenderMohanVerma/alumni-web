@@ -45,9 +45,12 @@ DB_NAME = app.config['DB_NAME']
 
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
 UPLOAD_FOLDER = 'static/uploads'
+COMPANY_LOGOS_FOLDER = 'static/uploads/company_logos'
 
 if not os.path.exists(UPLOAD_FOLDER):
     os.makedirs(UPLOAD_FOLDER)
+if not os.path.exists(COMPANY_LOGOS_FOLDER):
+    os.makedirs(COMPANY_LOGOS_FOLDER)
 
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16MB max file size
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
@@ -1629,7 +1632,17 @@ def alumni_post_job():
 @login_required
 def alumni_jobs():
     if current_user.role != 'alumni': return redirect(url_for('home'))
-    return render_template('alumni/jobs.html')
+    conn = get_db_connection()
+    c = conn.cursor()
+    jobs = c.execute('''
+        SELECT j.*, u.name as posted_by_name 
+        FROM jobs j 
+        LEFT JOIN users u ON j.posted_by = u.id 
+        WHERE j.is_active = 1
+        ORDER BY j.created_at DESC
+    ''').fetchall()
+    conn.close()
+    return render_template('alumni/jobs.html', jobs=jobs)
 
 @app.route('/alumni/spotlight')
 @login_required
@@ -2693,6 +2706,177 @@ def delete_user(user_id):
         traceback.print_exc()
         return jsonify({'error': f'Error deleting user: {str(e)}'}), 500
 
+# --- ADMIN JOB MANAGEMENT ---
+
+@app.route('/admin/jobs')
+@login_required
+def admin_jobs():
+    if current_user.role != 'admin':
+        return jsonify({'error': 'Unauthorized'}), 403
+    
+    conn = get_db_connection()
+    c = conn.cursor()
+    
+    # Fetch all jobs
+    jobs = c.execute('''
+        SELECT j.*, u.name as posted_by_name 
+        FROM jobs j 
+        LEFT JOIN users u ON j.posted_by = u.id 
+        ORDER BY j.created_at DESC
+    ''').fetchall()
+    
+    # Fetch Stats
+    total_jobs = c.execute('SELECT COUNT(*) FROM jobs').fetchone()[0]
+    active_jobs = c.execute('SELECT COUNT(*) FROM jobs WHERE is_active = 1').fetchone()[0]
+    
+    today = datetime.now().strftime('%Y-%m-%d')
+    expired_jobs = c.execute('SELECT COUNT(*) FROM jobs WHERE deadline < ? AND deadline != "" AND deadline IS NOT NULL', (today,)).fetchone()[0]
+    
+    stats = {
+        'total': total_jobs,
+        'active': active_jobs,
+        'expired': expired_jobs,
+        'inactive': total_jobs - active_jobs
+    }
+    
+    conn.close()
+    return render_template('admin/jobs.html', jobs=jobs, stats=stats)
+
+@app.route('/api/admin/jobs/toggle/<int:job_id>', methods=['POST'])
+@login_required
+def admin_toggle_job(job_id):
+    if current_user.role != 'admin':
+        return jsonify({'error': 'Unauthorized'}), 403
+        
+    conn = get_db_connection()
+    c = conn.cursor()
+    job = c.execute('SELECT is_active FROM jobs WHERE id = ?', (job_id,)).fetchone()
+    
+    if not job:
+        conn.close()
+        return jsonify({'error': 'Job not found'}), 404
+        
+    new_status = 1 if job['is_active'] == 0 else 0
+    c.execute('UPDATE jobs SET is_active = ? WHERE id = ?', (new_status, job_id))
+    conn.commit()
+    conn.close()
+    
+    return jsonify({'success': True, 'new_status': new_status})
+
+@app.route('/admin/jobs/add', methods=['GET', 'POST'])
+@login_required
+def admin_add_job():
+    if current_user.role != 'admin':
+        return jsonify({'error': 'Unauthorized'}), 403
+        
+    if request.method == 'POST':
+        title = request.form.get('title')
+        company = request.form.get('company')
+        location = request.form.get('location')
+        salary = request.form.get('salary')
+        job_type = request.form.get('job_type')
+        apply_link = request.form.get('apply_link')
+        description = request.form.get('description')
+        skills = request.form.get('skills')
+        category = request.form.get('category')
+        deadline = request.form.get('deadline')
+        
+        if not title or not company:
+            flash('Title and Company are required!', 'warning')
+            return redirect(url_for('admin_add_job'))
+            
+        # Handle Logo Upload
+        logo_path = None
+        if 'company_logo' in request.files:
+            file = request.files['company_logo']
+            if file and file.filename != '':
+                if allowed_file(file.filename):
+                    filename = secure_filename(f"{int(time.time())}_{file.filename}")
+                    logo_path = os.path.join('static/uploads/company_logos', filename)
+                    file.save(logo_path)
+                    logo_path = '/' + logo_path.replace('\\', '/') # Ensure browser format
+            
+        conn = get_db_connection()
+        c = conn.cursor()
+        c.execute('''
+            INSERT INTO jobs (title, company, location, salary, job_type, apply_link, description, required_skills, posted_by, company_logo, category, deadline) 
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        ''', (title, company, location, salary, job_type, apply_link, description, skills, current_user.id, logo_path, category, deadline))
+        conn.commit()
+        conn.close()
+        
+        flash('Job added successfully!', 'success')
+        return redirect(url_for('admin_jobs'))
+        
+    return render_template('admin/add_job.html')
+
+@app.route('/admin/jobs/edit/<int:job_id>', methods=['GET', 'POST'])
+@login_required
+def admin_edit_job(job_id):
+    if current_user.role != 'admin':
+        return jsonify({'error': 'Unauthorized'}), 403
+        
+    conn = get_db_connection()
+    c = conn.cursor()
+    job = c.execute('SELECT * FROM jobs WHERE id = ?', (job_id,)).fetchone()
+    
+    if not job:
+        conn.close()
+        flash('Job not found!', 'danger')
+        return redirect(url_for('admin_jobs'))
+        
+    if request.method == 'POST':
+        title = request.form.get('title')
+        company = request.form.get('company')
+        location = request.form.get('location')
+        salary = request.form.get('salary')
+        job_type = request.form.get('job_type')
+        apply_link = request.form.get('apply_link')
+        description = request.form.get('description')
+        skills = request.form.get('skills')
+        category = request.form.get('category')
+        deadline = request.form.get('deadline')
+        is_active = request.form.get('is_active', 1)
+        
+        # Handle Logo Upload
+        logo_path = job['company_logo'] # Keep old one by default
+        if 'company_logo' in request.files:
+            file = request.files['company_logo']
+            if file and file.filename != '':
+                if allowed_file(file.filename):
+                    filename = secure_filename(f"{int(time.time())}_{file.filename}")
+                    full_path = os.path.join('static/uploads/company_logos', filename)
+                    file.save(full_path)
+                    logo_path = '/' + full_path.replace('\\', '/')
+        
+        c.execute('''
+            UPDATE jobs SET title=?, company=?, location=?, salary=?, job_type=?, apply_link=?, description=?, required_skills=?, is_active=?, company_logo=?, category=?, deadline=?
+            WHERE id=?
+        ''', (title, company, location, salary, job_type, apply_link, description, skills, is_active, logo_path, category, deadline, job_id))
+        conn.commit()
+        conn.close()
+        
+        flash('Job updated successfully!', 'success')
+        return redirect(url_for('admin_jobs'))
+        
+    conn.close()
+    return render_template('admin/edit_job.html', job=job)
+
+@app.route('/admin/jobs/delete/<int:job_id>', methods=['POST'])
+@login_required
+def admin_delete_job(job_id):
+    if current_user.role != 'admin':
+        return jsonify({'error': 'Unauthorized'}), 403
+        
+    conn = get_db_connection()
+    c = conn.cursor()
+    c.execute('DELETE FROM jobs WHERE id = ?', (job_id,))
+    conn.commit()
+    conn.close()
+    
+    flash('Job deleted successfully!', 'success')
+    return redirect(url_for('admin_jobs'))
+
 # --- NETWORKING & CONNECTIONS ---
 
 @app.route('/network/search', methods=['GET', 'POST'])
@@ -3647,22 +3831,6 @@ def mentorship():
         return redirect(url_for('home'))
     return render_template('student/mentorship.html')
 
-@app.route('/jobs')
-@login_required
-def jobs():
-    if current_user.role != 'student':
-        flash('Access denied!', 'danger')
-        return redirect(url_for('home'))
-    return render_template('student/jobs.html')
-
-@app.route('/upgrade')
-@login_required
-def upgrade():
-    if current_user.role != 'student':
-        flash('Access denied!', 'danger')
-        return redirect(url_for('home'))
-    return render_template('student/upgrade.html')
-
 @app.route('/notifications')
 @login_required
 def notifications():
@@ -3695,40 +3863,67 @@ def post_job():
     if request.method == 'POST':
         title = request.form.get('title')
         company = request.form.get('company')
+        location = request.form.get('location')
+        salary = request.form.get('salary')
+        job_type = request.form.get('job_type')
+        apply_link = request.form.get('apply_link')
         description = request.form.get('description')
         skills = request.form.get('skills')
+        category = request.form.get('category')
+        deadline = request.form.get('deadline')
         
         if not title or not company:
             flash('Title and Company are required!', 'warning')
             return redirect(url_for('post_job'))
             
+        # Handle Logo Upload
+        logo_path = None
+        if 'company_logo' in request.files:
+            file = request.files['company_logo']
+            if file and file.filename != '':
+                if allowed_file(file.filename):
+                    filename = secure_filename(f"{int(time.time())}_{file.filename}")
+                    full_path = os.path.join('static/uploads/company_logos', filename)
+                    file.save(full_path)
+                    logo_path = '/' + full_path.replace('\\', '/')
+            
         conn = get_db_connection()
         c = conn.cursor()
-        c.execute('INSERT INTO jobs (title, company, description, required_skills, posted_by) VALUES (?, ?, ?, ?, ?)',
-                  (title, company, description, skills, current_user.id))
+        c.execute('''
+            INSERT INTO jobs (title, company, location, salary, job_type, apply_link, description, required_skills, posted_by, company_logo, category, deadline) 
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        ''', (title, company, location, salary, job_type, apply_link, description, skills, current_user.id, logo_path, category, deadline))
         conn.commit()
         conn.close()
         
         flash('Job posted successfully! It will now be recommended to relevant students.', 'success')
-        return redirect(url_for('alumni_dashboard'))
+        return redirect(url_for('dashboard_alumni'))
         
-    return render_template('post_job.html')
+    return render_template('alumni/post_job.html')
 
 @app.route('/jobs')
 @login_required
 def list_jobs():
-    if current_user.role != 'student':
+    if current_user.role not in ['student', 'alumni', 'faculty']:
         flash('Access denied!', 'danger')
         return redirect(url_for('home'))
         
     conn = get_db_connection()
     c = conn.cursor()
-    all_jobs = c.execute('SELECT j.*, u.name as posted_by_name FROM jobs j JOIN users u ON j.posted_by = u.id ORDER BY j.created_at DESC').fetchall()
-    conn.close()
+    all_jobs = c.execute('''
+        SELECT j.*, u.name as posted_by_name 
+        FROM jobs j 
+        LEFT JOIN users u ON j.posted_by = u.id 
+        WHERE j.is_active = 1
+        ORDER BY j.created_at DESC
+    ''').fetchall()
     
     # Use modular recommendation logic
-    recommended = get_recommended_jobs(current_user)
+    recommended = get_recommended_jobs(current_user.id)
+    conn.close()
     
+    if current_user.role == 'alumni':
+        return render_template('alumni/jobs.html', jobs=all_jobs)
     return render_template('student/jobs.html', jobs=all_jobs, recommended=recommended)
 
 @app.route('/spotlight')
