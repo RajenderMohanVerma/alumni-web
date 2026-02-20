@@ -407,8 +407,9 @@
                     <tr>
                         <th>Node Identity</th>
                         <th>Classification</th>
+                        <th>Protocol & Mode</th>
                         <th>Rewards & Area</th>
-                        <th>Publisher</th>
+                        <th>Eligibility</th>
                         <th>Operations</th>
                         <th>Control</th>
                     </tr>
@@ -437,18 +438,26 @@
                             <span class="category-badge">{{ job.category or 'General' }}</span>
                         </td>
                         <td>
+                            <div class="fw-bold">{{ job.employment_type or 'Full-time' }}</div>
+                            <span
+                                class="badge {{ 'bg-success-subtle text-success' if job.work_mode == 'Remote' else 'bg-primary-subtle text-primary' }} rounded-pill px-3 mt-1"
+                                style="font-size: 0.65rem;">
+                                {{ job.work_mode or 'Onsite' }}
+                            </span>
+                        </td>
+                        <td>
                             <div class="fw-bold text-success">{{ job.salary or 'Unspecified' }}</div>
                             <div class="text-muted extra-small"><i class="fas fa-map-marker-alt me-1"></i> {{
                                 job.location or 'Remote' }}</div>
                         </td>
                         <td>
-                            <div class="fw-bold">{{ job.posted_by_name or 'Admin' }}</div>
-                            <div class="text-muted extra-small">{{ job.created_at[:10] }}</div>
+                            <div class="fw-bold text-indigo">{{ job.eligible_branch or 'All' }}</div>
+                            <div class="text-muted small">{{ job.openings or '1' }} Openings</div>
                         </td>
                         <td>
                             <label class="toggle-switch">
-                                <input type="checkbox" {% if job.is_active %}checked{% endif %}
-                                    onchange="toggleJobStatus({{ job.id }}, this)">
+                                <input type="checkbox" class="status-toggle-input" data-job-id="{{ job.id }}" {% if
+                                    job.is_active %}checked{% endif %}>
                                 <span class="slider"></span>
                             </label>
                         </td>
@@ -505,11 +514,14 @@
         });
     }
 
-    searchInput.addEventListener('input', filterTable);
-    roleFilter.addEventListener('change', filterTable);
-    statusFilter.addEventListener('change', filterTable);
+    // Dynamic Status Toggle Implementation
+    document.querySelectorAll('.status-toggle-input').forEach(toggle => {
+        toggle.addEventListener('change', function () {
+            const jobId = this.dataset.jobId;
+            toggleJobStatus(jobId, this);
+        });
+    });
 
-    // Dynamic Status Toggle
     async function toggleJobStatus(jobId, checkbox) {
         try {
             const response = await fetch(`/api/admin/jobs/toggle/${jobId}`, {

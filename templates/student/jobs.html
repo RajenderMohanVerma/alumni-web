@@ -1,90 +1,419 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="jobs-dashboard-wrapper py-5"
-    style="margin-top: 90px; min-height: 100vh; background: #0f172a; position: relative;">
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Outfit:wght@300;400;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap');
+
+    :root {
+        --cyber-blue: #00f2ff;
+        --cyber-purple: #bc13fe;
+        --cyber-pink: #ff00c1;
+        --dark-bg: #050510;
+        --glass-bg: rgba(10, 10, 25, 0.75);
+        --glass-border: rgba(0, 242, 255, 0.15);
+    }
+
+    body {
+        background: var(--dark-bg);
+        font-family: 'Outfit', sans-serif;
+        color: #e0e0f0;
+        overflow-x: hidden;
+    }
+
+    /* Particle Nexus Background */
+    #nexus-canvas {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+        opacity: 0.4;
+    }
+
+    .jobs-dashboard-wrapper {
+        padding: 130px 0 100px;
+        min-height: 100vh;
+        position: relative;
+    }
+
+    /* Hero Unit: Cyber Reveal */
+    .hero-glow {
+        position: absolute;
+        top: 5%;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 60%;
+        height: 300px;
+        background: radial-gradient(circle, rgba(188, 19, 254, 0.15) 0%, transparent 70%);
+        filter: blur(80px);
+        z-index: 0;
+        pointer-events: none;
+    }
+
+    .hero-title-cyber {
+        font-family: 'Space Grotesk', sans-serif;
+        font-weight: 800;
+        font-size: 5rem;
+        letter-spacing: -3px;
+        text-transform: uppercase;
+        margin-bottom: 0;
+        line-height: 0.9;
+    }
+
+    .char {
+        display: inline-block;
+        opacity: 0;
+        transform: translateY(20px) skewX(-20deg);
+        filter: blur(10px);
+        animation: charReveal 0.6s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+    }
+
+    @keyframes charReveal {
+        to {
+            opacity: 1;
+            transform: translateY(0) skewX(0);
+            filter: blur(0);
+        }
+    }
+
+    .cyber-gradient-text {
+        background: linear-gradient(90deg, var(--cyber-blue), var(--cyber-purple), var(--cyber-pink));
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-size: 200% auto;
+        animation: textShimmer 4s linear infinite;
+    }
+
+    @keyframes textShimmer {
+        to {
+            background-position: 200% center;
+        }
+    }
+
+    /* System Status Bar */
+    .system-status-bar {
+        font-family: 'JetBrains+Mono', monospace;
+        font-size: 0.75rem;
+        color: var(--cyber-blue);
+        border-left: 2px solid var(--cyber-blue);
+        padding-left: 15px;
+        margin-top: 20px;
+        opacity: 0.8;
+    }
+
+    .status-blink {
+        animation: blink 1s infinite;
+    }
+
+    @keyframes blink {
+        50% {
+            opacity: 0;
+        }
+    }
+
+    /* Command Console (Filters) */
+    .console-box {
+        background: var(--glass-bg);
+        border: 1px solid var(--glass-border);
+        border-radius: 20px;
+        padding: 5px;
+        backdrop-filter: blur(15px);
+        box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+        margin-top: -30px;
+        z-index: 10;
+        position: relative;
+    }
+
+    .console-inner {
+        padding: 20px 30px;
+        border: 1px dashed rgba(0, 242, 255, 0.2);
+        border-radius: 16px;
+        display: flex;
+        gap: 20px;
+        align-items: center;
+    }
+
+    .console-input {
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        color: white;
+        padding: 12px 20px;
+        border-radius: 12px;
+        font-family: 'JetBrains+Mono', monospace;
+        font-size: 0.9rem;
+        transition: all 0.3s ease;
+    }
+
+    .console-input:focus {
+        background: rgba(0, 242, 255, 0.05);
+        border-color: var(--cyber-blue);
+        box-shadow: 0 0 15px rgba(0, 242, 255, 0.2);
+        outline: none;
+    }
+
+    /* Holographic Job Card */
+    .tilt-card-container {
+        perspective: 1000px;
+    }
+
+    .cyber-card {
+        background: linear-gradient(135deg, rgba(15, 15, 30, 0.8), rgba(5, 5, 15, 0.9));
+        border: 1px solid var(--glass-border);
+        border-radius: 28px;
+        padding: 35px;
+        transition: transform 0.1s ease-out, border-color 0.4s ease;
+        position: relative;
+        overflow: hidden;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        transform-style: preserve-3d;
+    }
+
+    .cyber-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(135deg, transparent 0%, rgba(0, 242, 255, 0.05) 50%, transparent 100%);
+        transform: translateX(-100%);
+        transition: transform 0.6s ease;
+    }
+
+    .cyber-card:hover {
+        border-color: var(--cyber-blue);
+        box-shadow: 0 0 40px rgba(0, 242, 255, 0.15);
+    }
+
+    .cyber-card:hover::before {
+        transform: translateX(100%);
+    }
+
+    .hologram-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: repeating-linear-gradient(0deg, transparent, transparent 1px, rgba(0, 242, 255, 0.03) 1px, rgba(0, 242, 255, 0.03) 2px);
+        pointer-events: none;
+        z-index: 2;
+    }
+
+    .brand-glitch {
+        width: 100px;
+        height: 100px;
+        background: white;
+        border-radius: 22px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 30px;
+        position: relative;
+        box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+        transform: translateZ(30px);
+    }
+
+    .brand-glitch img {
+        width: 70%;
+        height: 70%;
+        object-fit: contain;
+    }
+
+    .cyber-badge {
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 0.65rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        padding: 5px 12px;
+        border-radius: 6px;
+        background: rgba(0, 242, 255, 0.1);
+        color: var(--cyber-blue);
+        border: 1px solid rgba(0, 242, 255, 0.2);
+        letter-spacing: 1px;
+    }
+
+    .tech-metadata {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+        margin: 25px 0;
+        transform: translateZ(20px);
+    }
+
+    .meta-node {
+        border-left: 2px solid rgba(255, 255, 255, 0.1);
+        padding-left: 12px;
+    }
+
+    .label-mono {
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 0.6rem;
+        color: rgba(255, 255, 255, 0.4);
+        display: block;
+        margin-bottom: 4px;
+    }
+
+    .value-bold {
+        font-weight: 700;
+        font-size: 0.85rem;
+        color: #fff;
+    }
+
+    /* Cyber Button */
+    .btn-cyber-action {
+        background: transparent;
+        border: 1px solid var(--cyber-blue);
+        color: var(--cyber-blue);
+        padding: 14px 25px;
+        border-radius: 12px;
+        font-weight: 800;
+        font-family: 'Space Grotesk', sans-serif;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+        text-align: center;
+        text-decoration: none;
+        display: block;
+        width: 100%;
+    }
+
+    .btn-cyber-action:hover {
+        background: var(--cyber-blue);
+        color: #000;
+        box-shadow: 0 0 30px var(--cyber-blue);
+    }
+
+    /* Grid View List Item */
+    .cyber-list-item {
+        background: rgba(15, 15, 30, 0.5);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        border-radius: 20px;
+        padding: 20px 30px;
+        margin-bottom: 12px;
+        transition: 0.3s;
+        display: flex;
+        align-items: center;
+        gap: 25px;
+    }
+
+    .cyber-list-item:hover {
+        background: rgba(0, 242, 255, 0.03);
+        border-color: rgba(0, 242, 255, 0.2);
+        transform: translateX(10px);
+    }
+
+    @media (max-width: 992px) {
+        .hero-title-cyber {
+            font-size: 3.5rem;
+        }
+
+        .console-inner {
+            flex-direction: column;
+            align-items: stretch;
+        }
+    }
+</style>
+
+<canvas id="nexus-canvas"></canvas>
+
+<div class="jobs-dashboard-wrapper">
+    <div class="hero-glow"></div>
+
     <div class="container">
-        <!-- Header -->
-        <div class="header-section mb-5" data-aos="fade-down">
-            <h1 class="text-white fw-bold">Career <span class="text-primary-gradient">Opportunities</span></h1>
-            <p class="text-slate-400">Discover jobs and internships posted by your DBIT Alumni network.</p>
+        <!-- Futuristic Hero Section -->
+        <div class="row mb-5">
+            <div class="col-lg-10">
+                <div class="hero-content">
+                    <h1 class="hero-title-cyber" id="cyber-title">
+                        <span class="char-wrap"></span>
+                    </h1>
+                    <div class="system-status-bar" data-aos="fade-right" data-aos-delay="800">
+                        <span class="status-blink">●</span> SYSTEM_READY: AGENT_PORTAL_ACTIVE // FETCHING_NODES... [OK]
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Command Console (Filter) -->
+        <div class="console-box" data-aos="zoom-in" data-aos-delay="1000">
+            <form class="console-inner">
+                <div class="flex-grow-1">
+                    <input type="text" class="console-input w-100"
+                        placeholder=">> ENTER SEARCH KEYWORDS (ROLE / COMPANY / SKILL)">
+                </div>
+                <div style="min-width: 200px;">
+                    <select class="console-input w-100">
+                        <option selected>_MODALITY: ALL</option>
+                        <option>_MODALITY: ONSITE</option>
+                        <option>_MODALITY: REMOTE</option>
+                        <option>_MODALITY: HYBRID</option>
+                    </select>
+                </div>
+                <button type="button" class="btn btn-cyber-action w-auto px-5"
+                    style="padding: 10px 40px !important;">EXECUTE</button>
+            </form>
         </div>
 
         {% if recommended %}
-        <!-- Recommended Section -->
-        <section class="recommended-jobs mb-5">
-            <div class="section-title d-flex align-items-center mb-4">
-                <div class="title-icon me-3 p-2"
-                    style="background: rgba(99, 102, 241, 0.2); border-radius: 12px; border: 1px solid rgba(99, 102, 241, 0.3);">
-                    <i class="fas fa-star text-indigo-400"></i>
-                </div>
-                <h4 class="text-white fw-bold mb-0">Recommended for You</h4>
+        <!-- Recommended Sections -->
+        <section class="mt-5 pt-5">
+            <div class="d-flex align-items-center mb-5" data-aos="fade-up">
+                <div style="width: 40px; height: 2px; background: var(--cyber-blue); margin-right: 15px;"></div>
+                <h2 class="fw-800 text-white mb-0" style="font-family: 'Space Grotesk', sans-serif;">PRIORITY_MATCHES
+                </h2>
             </div>
 
             <div class="row g-4">
                 {% for job in recommended %}
-                <div class="col-lg-4 col-md-6" data-aos="zoom-in" data-aos-delay="{{ loop.index * 100 }}">
-                    <div class="job-card-premium p-4"
-                        style="background: rgba(30, 41, 59, 0.4); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 20px; height: 100%; transition: 0.3s; position: relative; overflow: hidden;">
+                <div class="col-lg-4 col-md-6 tilt-card-container">
+                    <div class="cyber-card" data-aos="fade-up" data-aos-delay="{{ loop.index * 150 }}">
+                        <div class="hologram-overlay"></div>
 
-                        <div class="d-flex align-items-center gap-3 mb-3">
-                            <div class="company-logo-container"
-                                style="width: 50px; height: 50px; background: white; border-radius: 12px; display: flex; align-items: center; justify-content: center; overflow: hidden; border: 1px solid rgba(255,255,255,0.1);">
-                                {% if job.company_logo %}
-                                <img src="{{ job.company_logo }}" alt="{{ job.company }}"
-                                    style="width: 100%; height: 100%; object-fit: contain;">
-                                {% else %}
-                                <span style="font-weight: 800; color: #6366f1;">{{ job.company[0] }}</span>
-                                {% endif %}
+                        <div class="brand-glitch">
+                            {% if job.company_logo %}
+                            <img src="{{ job.company_logo }}" alt="{{ job.company }}">
+                            {% else %}
+                            <span class="fw-800 fs-1" style="color: var(--dark-bg);">{{ job.company[0] }}</span>
+                            {% endif %}
+                        </div>
+
+                        <div class="job-header mb-4" style="transform: translateZ(25px);">
+                            <div class="cyber-badge mb-2">MATCH_SCORE: 98%</div>
+                            <h4 class="fw-800 text-white mb-1">{{ job.title }}</h4>
+                            <p class="text-info fw-bold small mb-0">{{ job.company_name or job.company }}</p>
+                        </div>
+
+                        <div class="tech-metadata">
+                            <div class="meta-node">
+                                <span class="label-mono">COORD:L0CATION</span>
+                                <span class="value-bold text-truncate d-block">{{ job.location or 'REMOTE' }}</span>
                             </div>
-                            <div>
-                                <h5 class="text-white fw-bold mb-0" style="font-size: 1rem;">{{ job.title }}</h5>
-                                <p class="text-indigo-400 extra-small fw-bold mb-0">{{ job.company }}</p>
+                            <div class="meta-node">
+                                <span class="label-mono">VALU:SALARY</span>
+                                <span class="value-bold">{{ job.salary or 'CONFIDENTIAL' }}</span>
+                            </div>
+                            <div class="meta-node">
+                                <span class="label-mono">MODL:TYPE</span>
+                                <span class="value-bold">{{ job.employment_type or 'FULL_TIME' }}</span>
+                            </div>
+                            <div class="meta-node">
+                                <span class="label-mono">SYNC:DEADLINE</span>
+                                <span class="value-bold text-cyber-pink">{{ job.deadline or 'OPEN' }}</span>
                             </div>
                         </div>
 
-                        <div class="job-badges mb-3 d-flex flex-wrap gap-2">
-                            {% if job.category %}
-                            <span
-                                class="badge bg-indigo-500/10 text-indigo-300 border border-indigo-500/20 extra-small">
-                                <i class="fas fa-tag me-1"></i> {{ job.category }}
-                            </span>
-                            {% endif %}
-                            <span
-                                class="badge bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 extra-small">
-                                <i class="fas fa-briefcase me-1"></i> {{ job.job_type }}
-                            </span>
-                        </div>
-
-                        <div class="job-details-mini mb-3">
-                            {% if job.location %}
-                            <div class="text-slate-400 extra-small mb-1"><i class="fas fa-map-marker-alt me-1 w-15"></i>
-                                {{ job.location }}</div>
-                            {% endif %}
-                            {% if job.deadline %}
-                            <div class="text-rose-400 extra-small mb-1"><i class="fas fa-calendar-times me-1 w-15"></i>
-                                Deadine: {{ job.deadline }}</div>
-                            {% endif %}
-                        </div>
-
-                        <div class="skills-tag-cloud mb-4">
-                            {% if job.required_skills %}
-                            {% for skill in job.required_skills.split(',') %}
-                            <span
-                                class="badge rounded-pill bg-slate-800/50 text-slate-300 border border-slate-700/50 me-1 mb-1"
-                                style="font-size: 0.65rem;">{{ skill.strip() }}</span>
-                            {% endfor %}
-                            {% endif %}
-                        </div>
-
-                        <div class="d-flex justify-content-between align-items-center mt-auto">
-                            <div class="job-meta text-slate-500 small" style="font-size: 0.7rem;">
-                                Posted {{ job.created_at[:10] }}
-                            </div>
-                            {% if job.apply_link %}
+                        <div class="mt-auto pt-4 border-top border-white-subtle" style="transform: translateZ(40px);">
                             <a href="{{ job.apply_link if '://' in job.apply_link else 'mailto:' + job.apply_link }}"
-                                target="_blank" class="btn btn-primary btn-sm rounded-pill px-3 fw-bold">Apply</a>
-                            {% endif %}
+                                target="_blank" class="btn-cyber-action">
+                                APPLY
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -93,56 +422,45 @@
         </section>
         {% endif %}
 
-        <!-- All Jobs Section -->
-        <section class="all-jobs">
-            <div class="section-title mb-4">
-                <h4 class="text-white fw-bold">All Opportunities</h4>
+        <!-- Universal Grid -->
+        <section class="mt-5 pt-5">
+            <div class="d-flex align-items-center mb-5" data-aos="fade-up">
+                <div style="width: 40px; height: 2px; background: rgba(255,255,255,0.2); margin-right: 15px;"></div>
+                <h3 class="fw-800 text-white mb-0 opacity-50" style="font-family: 'Space Grotesk', sans-serif;">
+                    UNIVERSAL_INDEX</h3>
             </div>
 
-            <div class="row g-3">
+            <div class="row g-2 pb-5">
                 {% for job in jobs %}
-                <div class="col-12" data-aos="fade-up">
-                    <div class="job-list-item p-3 d-flex align-items-center gap-4"
-                        style="background: rgba(30, 41, 59, 0.2); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 15px; transition: 0.3s;">
-                        <div class="company-logo-container"
-                            style="width: 50px; height: 50px; background: white; border-radius: 10px; display: flex; align-items: center; justify-content: center; overflow: hidden; flex-shrink: 0;">
+                <div class="col-12" data-aos="fade-right" data-aos-delay="{{ loop.index * 50 }}">
+                    <div class="cyber-list-item">
+                        <div
+                            style="width: 60px; height: 60px; background: #fff; border-radius: 12px; flex-shrink: 0; display: flex; align-items: center; justify-content: center;">
                             {% if job.company_logo %}
-                            <img src="{{ job.company_logo }}" alt="{{ job.company }}"
-                                style="width: 100%; height: 100%; object-fit: contain;">
+                            <img src="{{ job.company_logo }}" style="width: 70%; height: 70%; object-fit: contain;">
                             {% else %}
-                            <span style="font-weight: 800; color: #6366f1;">{{ job.company[0] }}</span>
+                            <span class="fw-bold text-dark">{{ job.company[0] }}</span>
                             {% endif %}
                         </div>
+
                         <div class="flex-grow-1">
-                            <h6 class="text-white mb-1 fw-bold">{{ job.title }}</h6>
-                            <div class="d-flex align-items-center flex-wrap gap-x-3 gap-y-1">
-                                <span class="text-indigo-400 small fw-bold">{{ job.company }}</span>
-                                {% if job.location %}
-                                <span class="text-slate-500 extra-small"><i class="fas fa-map-marker-alt me-1"></i> {{
-                                    job.location }}</span>
-                                {% endif %}
-                                {% if job.salary %}
-                                <span class="text-emerald-400 extra-small fw-bold"><i
-                                        class="fas fa-money-bill-wave me-1"></i> {{ job.salary }}</span>
-                                {% endif %}
-                                {% if job.category %}
-                                <span class="text-slate-500 extra-small"><i class="fas fa-tag me-1"></i> {{ job.category
+                            <h5 class="fw-700 text-white mb-1">{{ job.title }}</h5>
+                            <div class="d-flex gap-4 opacity-75 small">
+                                <span class="text-cyber-blue fw-bold">{{ job.company }}</span>
+                                <span><i class="fas fa-map-pin me-2"></i>{{ job.location }}</span>
+                                <span class="text-success fw-bold"><i class="fas fa-coins me-2"></i>{{ job.salary
                                     }}</span>
-                                {% endif %}
                             </div>
                         </div>
-                        <div class="d-none d-md-block text-slate-500 small text-end">
-                            <div class="mb-1"><i class="far fa-clock me-1"></i> {{ job.created_at[:10] }}</div>
-                            {% if job.deadline %}
-                            <div class="text-rose-400 extra-small">Ends: {{ job.deadline }}</div>
-                            {% endif %}
+
+                        <div class="d-none d-lg-block text-end pe-4 border-end border-white-subtle">
+                            <div class="label-mono mb-1">REQ_BRANCH</div>
+                            <div class="fw-bold text-cyber-purple small">{{ job.eligible_branch or 'ALL_BRANCH' }}</div>
                         </div>
-                        <div class="actions">
-                            {% if job.apply_link %}
+
+                        <div class="actions ps-4">
                             <a href="{{ job.apply_link if '://' in job.apply_link else 'mailto:' + job.apply_link }}"
-                                target="_blank"
-                                class="btn btn-primary text-white rounded-pill px-4 btn-sm fw-bold">Apply</a>
-                            {% endif %}
+                                target="_blank" class="btn btn-outline-info rounded-pill px-4 btn-sm fw-800">APPLY</a>
                         </div>
                     </div>
                 </div>
@@ -152,42 +470,101 @@
     </div>
 </div>
 
-<style>
-    .extra-small {
-        font-size: 0.75rem;
+<script>
+    // Particle Nexus Logic
+    const canvas = document.getElementById('nexus-canvas');
+    const ctx = canvas.getContext('2d');
+    let particles = [];
+    let mouse = { x: null, y: null };
+
+    function resize() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resize);
+    resize();
+
+    window.addEventListener('mousemove', e => {
+        mouse.x = e.x;
+        mouse.y = e.y;
+    });
+
+    class Particle {
+        constructor() {
+            this.x = Math.random() * canvas.width;
+            this.y = Math.random() * canvas.height;
+            this.size = Math.random() * 2 + 1;
+            this.vx = Math.random() * 1 - 0.5;
+            this.vy = Math.random() * 1 - 0.5;
+        }
+        update() {
+            this.x += this.vx;
+            this.y += this.vy;
+            if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
+            if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
+
+            if (mouse.x) {
+                let dx = mouse.x - this.x;
+                let dy = mouse.y - this.y;
+                let dist = Math.sqrt(dx * dx + dy * dy);
+                if (dist < 150) {
+                    this.x -= dx * 0.02;
+                    this.y -= dy * 0.02;
+                }
+            }
+        }
+        draw() {
+            ctx.fillStyle = '#00f2ff';
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+            ctx.fill();
+        }
     }
 
-    .text-emerald-400 {
-        color: #34d399;
+    function init() {
+        for (let i = 0; i < 80; i++) particles.push(new Particle());
     }
+    init();
 
-    .text-primary-gradient {
-        background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
-        -webkit-background-clip: text;
-        background-clip: text;
-        -webkit-text-fill-color: transparent;
+    function animate() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        particles.forEach(p => {
+            p.update();
+            p.draw();
+        });
+        requestAnimationFrame(animate);
     }
+    animate();
 
-    .job-card-premium:hover {
-        transform: translateY(-5px);
-        background: rgba(30, 41, 59, 0.6) !important;
-        border-color: rgba(99, 102, 241, 0.3) !important;
-        box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.5);
-    }
+    // Cyber Title Reveal
+    document.addEventListener('DOMContentLoaded', () => {
+        const titleContainer = document.querySelector('.char-wrap');
+        const text1 = "CAREER_";
+        const text2 = "EXPANSION";
 
-    .job-list-item:hover {
-        background: rgba(30, 41, 59, 0.5) !important;
-        border-color: rgba(255, 255, 255, 0.1) !important;
-        transform: scale(1.01);
-    }
+        const createChars = (text, className) => {
+            return text.split('').map((c, i) => `<span class="char ${className}" style="animation-delay: ${i * 40}ms">${c === ' ' ? '&nbsp;' : c}</span>`).join('');
+        };
 
-    .btn-slate-700 {
-        background: #334155;
-        border: none;
-    }
+        titleContainer.innerHTML = createChars(text1, '') + `<span class="cyber-gradient-text">${createChars(text2, '')}</span>`;
 
-    .btn-slate-700:hover {
-        background: #475569;
-    }
-</style>
+        // 3D Tilt Logic
+        const cards = document.querySelectorAll('.cyber-card');
+        cards.forEach(card => {
+            card.addEventListener('mousemove', e => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                const xc = rect.width / 2;
+                const yc = rect.height / 2;
+                const dx = x - xc;
+                const dy = y - yc;
+                card.style.transform = `rotateY(${dx / 15}deg) rotateX(${-dy / 15}deg)`;
+            });
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'rotateY(0) rotateX(0)';
+            });
+        });
+    });
+</script>
 {% endblock %}

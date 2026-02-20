@@ -1641,8 +1641,10 @@ def alumni_jobs():
         WHERE j.is_active = 1
         ORDER BY j.created_at DESC
     ''').fetchall()
+    # Use modular recommendation logic for recommended jobs
+    recommended = get_recommended_jobs(current_user)
     conn.close()
-    return render_template('alumni/jobs.html', jobs=jobs)
+    return render_template('alumni/jobs.html', jobs=jobs, recommended=recommended)
 
 @app.route('/alumni/spotlight')
 @login_required
@@ -2770,18 +2772,52 @@ def admin_add_job():
         return jsonify({'error': 'Unauthorized'}), 403
         
     if request.method == 'POST':
+        # Basic Info
         title = request.form.get('title')
-        company = request.form.get('company')
-        location = request.form.get('location')
-        salary = request.form.get('salary')
-        job_type = request.form.get('job_type')
-        apply_link = request.form.get('apply_link')
+        company_name = request.form.get('company_name')
+        company_website = request.form.get('company_website')
         description = request.form.get('description')
-        skills = request.form.get('skills')
-        category = request.form.get('category')
-        deadline = request.form.get('deadline')
         
-        if not title or not company:
+        # Location & Mode
+        location_select = request.form.get('location_select')
+        location_manual = request.form.get('location_manual')
+        location = location_manual if location_select == 'Other' else location_select
+        work_mode = request.form.get('work_mode')
+        
+        # Type & Eligibility
+        employment_type = request.form.get('employment_type')
+        eligible_branch = request.form.get('eligible_branch')
+        eligible_batch = request.form.get('eligible_batch')
+        qualification = request.form.get('qualification')
+        min_cgpa = request.form.get('min_cgpa')
+        experience_required = request.form.get('experience_required')
+        
+        # Skills
+        skills_required = request.form.get('skills_required')
+        skills_preferred = request.form.get('skills_preferred')
+        
+        # Salary
+        salary = request.form.get('salary')
+        ctc_range = request.form.get('ctc_range')
+        perks = request.form.get('perks')
+        
+        # Dates
+        deadline = request.form.get('deadline')
+        joining_date = request.form.get('joining_date')
+        
+        # Apply & Hiring
+        apply_method = request.form.get('apply_method')
+        apply_link = request.form.get('apply_link')
+        openings = request.form.get('openings', 0)
+        selection_list = request.form.getlist('selection[]')
+        selection_process = ", ".join(selection_list) if selection_list else ""
+        
+        # Intel
+        category = request.form.get('category')
+        target_role = request.form.get('target_role')
+        skill_level = request.form.get('skill_level')
+        
+        if not title or not company_name:
             flash('Title and Company are required!', 'warning')
             return redirect(url_for('admin_add_job'))
             
@@ -2794,14 +2830,28 @@ def admin_add_job():
                     filename = secure_filename(f"{int(time.time())}_{file.filename}")
                     logo_path = os.path.join('static/uploads/company_logos', filename)
                     file.save(logo_path)
-                    logo_path = '/' + logo_path.replace('\\', '/') # Ensure browser format
+                    logo_path = '/' + logo_path.replace('\\', '/')
             
         conn = get_db_connection()
         c = conn.cursor()
         c.execute('''
-            INSERT INTO jobs (title, company, location, salary, job_type, apply_link, description, required_skills, posted_by, company_logo, category, deadline) 
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-        ''', (title, company, location, salary, job_type, apply_link, description, skills, current_user.id, logo_path, category, deadline))
+            INSERT INTO jobs (
+                title, company, company_name, company_website, description, 
+                location, work_mode, employment_type, eligible_branch, eligible_batch, 
+                qualification, min_cgpa, experience_required, skills_required, skills_preferred, 
+                salary, ctc_range, perks, deadline, joining_date, 
+                apply_method, apply_link, openings, selection_process, category, 
+                target_role, skill_level, posted_by, company_logo, job_status
+            ) 
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        ''', (
+            title, company_name, company_name, company_website, description,
+            location, work_mode, employment_type, eligible_branch, eligible_batch,
+            qualification, min_cgpa, experience_required, skills_required, skills_preferred,
+            salary, ctc_range, perks, deadline, joining_date,
+            apply_method, apply_link, openings, selection_process, category,
+            target_role, skill_level, current_user.id, logo_path, 'Open'
+        ))
         conn.commit()
         conn.close()
         
@@ -2826,36 +2876,74 @@ def admin_edit_job(job_id):
         return redirect(url_for('admin_jobs'))
         
     if request.method == 'POST':
+        # Field Extraction
         title = request.form.get('title')
-        company = request.form.get('company')
-        location = request.form.get('location')
-        salary = request.form.get('salary')
-        job_type = request.form.get('job_type')
-        apply_link = request.form.get('apply_link')
+        company_name = request.form.get('company_name')
+        company_website = request.form.get('company_website')
         description = request.form.get('description')
-        skills = request.form.get('skills')
-        category = request.form.get('category')
-        deadline = request.form.get('deadline')
-        is_active = request.form.get('is_active', 1)
         
-        # Handle Logo Upload
-        logo_path = job['company_logo'] # Keep old one by default
+        location_select = request.form.get('location_select')
+        location_manual = request.form.get('location_manual')
+        location = location_manual if location_select == 'Other' else location_select
+        work_mode = request.form.get('work_mode')
+        
+        employment_type = request.form.get('employment_type')
+        eligible_branch = request.form.get('eligible_branch')
+        eligible_batch = request.form.get('eligible_batch')
+        qualification = request.form.get('qualification')
+        min_cgpa = request.form.get('min_cgpa')
+        experience_required = request.form.get('experience_required')
+        
+        skills_required = request.form.get('skills_required')
+        skills_preferred = request.form.get('skills_preferred')
+        
+        salary = request.form.get('salary')
+        ctc_range = request.form.get('ctc_range')
+        perks = request.form.get('perks')
+        
+        deadline = request.form.get('deadline')
+        joining_date = request.form.get('joining_date')
+        
+        apply_method = request.form.get('apply_method')
+        apply_link = request.form.get('apply_link')
+        openings = request.form.get('openings', job['openings'])
+        selection_list = request.form.getlist('selection[]')
+        selection_process = ", ".join(selection_list) if selection_list else job['selection_process']
+        
+        category = request.form.get('category')
+        target_role = request.form.get('target_role')
+        skill_level = request.form.get('skill_level')
+        job_status = request.form.get('job_status', job['job_status'])
+
+        logo_path = job['company_logo']
         if 'company_logo' in request.files:
             file = request.files['company_logo']
             if file and file.filename != '':
                 if allowed_file(file.filename):
                     filename = secure_filename(f"{int(time.time())}_{file.filename}")
-                    full_path = os.path.join('static/uploads/company_logos', filename)
-                    file.save(full_path)
-                    logo_path = '/' + full_path.replace('\\', '/')
-        
+                    logo_path = os.path.join('static/uploads/company_logos', filename)
+                    file.save(logo_path)
+                    logo_path = '/' + logo_path.replace('\\', '/')
+
         c.execute('''
-            UPDATE jobs SET title=?, company=?, location=?, salary=?, job_type=?, apply_link=?, description=?, required_skills=?, is_active=?, company_logo=?, category=?, deadline=?
+            UPDATE jobs SET 
+                title=?, company=?, company_name=?, company_website=?, description=?,
+                location=?, work_mode=?, employment_type=?, eligible_branch=?, eligible_batch=?,
+                qualification=?, min_cgpa=?, experience_required=?, skills_required=?, skills_preferred=?,
+                salary=?, ctc_range=?, perks=?, deadline=?, joining_date=?,
+                apply_method=?, apply_link=?, openings=?, selection_process=?, category=?,
+                target_role=?, skill_level=?, company_logo=?, job_status=?
             WHERE id=?
-        ''', (title, company, location, salary, job_type, apply_link, description, skills, is_active, logo_path, category, deadline, job_id))
+        ''', (
+            title, company_name, company_name, company_website, description,
+            location, work_mode, employment_type, eligible_branch, eligible_batch,
+            qualification, min_cgpa, experience_required, skills_required, skills_preferred,
+            salary, ctc_range, perks, deadline, joining_date,
+            apply_method, apply_link, openings, selection_process, category,
+            target_role, skill_level, logo_path, job_status, job_id
+        ))
         conn.commit()
         conn.close()
-        
         flash('Job updated successfully!', 'success')
         return redirect(url_for('admin_jobs'))
         
@@ -3872,6 +3960,12 @@ def post_job():
         category = request.form.get('category')
         deadline = request.form.get('deadline')
         
+        # New Fields
+        work_mode = request.form.get('work_mode', 'Onsite')
+        eligible_branch = request.form.get('eligible_branch', 'All Branches')
+        experience_required = request.form.get('experience_required', 'Freshers')
+        employment_type = request.form.get('employment_type', 'Full-time')
+        
         if not title or not company:
             flash('Title and Company are required!', 'warning')
             return redirect(url_for('post_job'))
@@ -3890,9 +3984,19 @@ def post_job():
         conn = get_db_connection()
         c = conn.cursor()
         c.execute('''
-            INSERT INTO jobs (title, company, location, salary, job_type, apply_link, description, required_skills, posted_by, company_logo, category, deadline) 
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-        ''', (title, company, location, salary, job_type, apply_link, description, skills, current_user.id, logo_path, category, deadline))
+            INSERT INTO jobs (
+                title, company, location, salary, job_type, 
+                apply_link, description, required_skills, posted_by, 
+                company_logo, category, deadline,
+                work_mode, eligible_branch, experience_required, employment_type
+            ) 
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        ''', (
+            title, company, location, salary, job_type, 
+            apply_link, description, skills, current_user.id, 
+            logo_path, category, deadline,
+            work_mode, eligible_branch, experience_required, employment_type
+        ))
         conn.commit()
         conn.close()
         
@@ -3919,11 +4023,11 @@ def list_jobs():
     ''').fetchall()
     
     # Use modular recommendation logic
-    recommended = get_recommended_jobs(current_user.id)
+    recommended = get_recommended_jobs(current_user)
     conn.close()
     
     if current_user.role == 'alumni':
-        return render_template('alumni/jobs.html', jobs=all_jobs)
+        return render_template('alumni/jobs.html', jobs=all_jobs, recommended=recommended)
     return render_template('student/jobs.html', jobs=all_jobs, recommended=recommended)
 
 @app.route('/spotlight')
